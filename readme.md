@@ -53,3 +53,14 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
 - **Barres de vie des ennemis** : Barres de vie visibles pour chaque ennemi.
 - **Évolutions des tours** : Système d'amélioration des tours.
 - **Timer et compteur de vagues** : Affichage du temps restant pour la vague actuelle et le nombre de vagues restantes.
+
+## Conclusion
+
+Ce projet de Tower Defense est une excellente occasion de mettre en pratique des concepts de conception logicielle. 
+Grâce à l'utilisation du MVC et de design patterns, nous visons à créer un jeu structuré et évolutif. 
+
+## Instructions de Lancement
+
+1. Clonez le dépôt.
+2. Installez les dépendances requises.
+3. Exécutez le fichier principal pour démarrer le jeu.
