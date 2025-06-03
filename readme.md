@@ -288,6 +288,21 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 ### **Diagramme utilisateur** : 
 Montre les interactions de l'utilisateur avec le système.
 
+```
++--------------------+
+|     Utilisateur    |
++--------------------+
+| - nom: string      |
+| - score: int       |
++--------------------+
+| + startGame()      |
+| + accessOptions()  |
+| + viewScores()     |
+| + quitGame()       |
++--------------------+
+
+```
+
 ## Fonctionnalités du Jeu
 
 - **Vagues d'ennemis** : Gestion dynamique des vagues d'ennemis avec un timer.
