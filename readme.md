@@ -19,3 +19,10 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
         - `Wave` : Gère les vagues d'ennemis.
         - `Game` : Logique principale du jeu.
         - `ScoreManager` : Gère le score et les tableaux des scores.
+
+- **Vue (View)** : Interface utilisateur.
+    - **Composants** :
+        - `MainMenu` : Menu principal du jeu.
+        - `GameView` : Interface de jeu en cours.
+        - `ScoreBoard` : Affichage des scores.
+        - `Settings` : Options de jeu.
