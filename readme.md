@@ -40,8 +40,114 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
 
 ## Diagrammes UML
 
-- **Diagramme de classes** : Illustre les relations entre les classes principales.
-- **Diagramme utilisateur** : Montre les interactions de l'utilisateur avec le système.
+### **Diagramme de classes** :
+
+Le diagramme de classes illustre les relations entre les différentes classes du projet.
+
+```
++------------------------------+
+|      Game                    |
++------------------------------+
+| - waves: List<Wave>          |
+| - scoreManager: ScoreManager |
+| - currentWave: int           |
+| - isGameOver: boolean        |
++------------------------------+
+| + startGame()                |
+| + endGame()                  |
+| + updateScore()              |
++------------------------------+
+
++------------------------------+
+|      Wave                    |
++------------------------------+
+| - enemies: List<Enemy>       |
+| - waveNumber: int            |
+| - difficulty: string         |
++------------------------------+
+| + spawnEnemies()             |
+| + nextWave()                 |
++------------------------------+
+
++------------------------------+
+|      Enemy                   |
++------------------------------+
+| - health: int                |
+| - speed: float               |
+| - damage: int                |
++------------------------------+
+| + attack()                   |
+| + takeDamage(int)            |
++------------------------------+
+
++------------------------------+
+|      Tower                   |
++------------------------------+
+| - damage: int                |
+| - range: float               |
+| - upgradeLevel: int          |
++------------------------------+
+| + attack(Enemy)              |
+| + upgrade()                  |
++------------------------------+
+
++------------------------------+
+|   ScoreManager               |
++------------------------------+
+| - score: int                 |
+| - highScores: List<int>      |
++------------------------------+
+| + addScore(int)              |
+| + getHighScores()            |
++------------------------------+
+```
+Rôle de chaque fonction dans les classes du diagramme de classes
+
+#### 1. Classe `Game`
+
+- **`+ startGame()`** : Cette méthode initialise le jeu, configure les paramètres de départ, et commence la première vague d'ennemis. 
+                        Elle est responsable de l'organisation générale du flux de jeu.
+
+  - **`+ endGame()`** : Cette méthode termine le jeu, que ce soit par une victoire ou une défaite.
+                        Elle peut afficher les scores finaux et éventuellement retourner au menu principal.
+
+  - **`+ updateScore()`** : Cette méthode met à jour le score en fonction des actions du joueur, comme la destruction d'ennemis. 
+                            Elle interagit avec le `ScoreManager` pour garantir que le score est correct et à jour.
+
+#### 2. Classe `Wave`
+
+- **`+ spawnEnemies()`** : Cette méthode est responsable de la création et du déploiement d'une liste d'ennemis pour la vague actuelle. 
+                            Elle utilise des paramètres comme le nombre d'ennemis et leur type, en fonction de la difficulté de la vague.
+
+- **`+ nextWave()`** : Cette méthode prépare et lance la prochaine vague d'ennemis. 
+                      Elle peut inclure des logiques pour augmenter la difficulté ou le nombre d'ennemis à mesure que le jeu progresse.
+
+#### 3. Classe `Enemy`
+
+- **`+ attack()`** : Cette méthode définit le comportement de l'ennemi lorsqu'il attaque, par exemple, infligeant des dégâts à la zone protégée ou aux tours. 
+                    Elle peut également inclure des animations ou des effets sonores.
+
+- **`+ takeDamage(int)`** : Cette méthode réduit la santé de l'ennemi en fonction des dégâts subis. 
+                            Elle vérifie également si la santé de l'ennemi atteint zéro pour le détruire et éventuellement notifier le `Game` pour le score.
+
+#### 4. Classe `Tower`
+
+- **`+ attack(Enemy)`** : Cette méthode permet à la tour d'attaquer un ennemi spécifique, infligeant des dégâts en fonction de ses caractéristiques. 
+                            Elle peut également gérer les animations d'attaque ou les effets spéciaux.
+
+- **`+ upgrade()`** : Cette méthode améliore la tour en augmentant ses statistiques (dégâts, portée, etc.). 
+                      Elle peut affecter l'apparence de la tour.
+
+#### 5. Classe `ScoreManager`
+
+- **`+ addScore(int)`** : Cette méthode ajoute un certain nombre de points au score du joueur. 
+                            Elle peut être appelée après la destruction d'un ennemi ou à la fin d'une vague victorieuse.
+
+- **`+ getHighScores()`** : Cette méthode retourne une liste des meilleurs scores, permettant au joueur de voir ses performances par rapport à d'autres joueurs. 
+                              Elle peut également trier et stocker les scores pour une utilisation future.
+
+### **Diagramme utilisateur** : 
+Montre les interactions de l'utilisateur avec le système.
 
 ## Fonctionnalités du Jeu
 
