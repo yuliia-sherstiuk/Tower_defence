@@ -309,56 +309,60 @@ Montre les interactions de l'utilisateur avec le système.
 
 ```
 _ source
-     |___ models
-     |        |__ Game.cpp
-     |        |__ Wave.cpp
-     |        |__ Enemy.cpp
-     |        |__ Tower.cpp
-     |        |__ ScoreManager.cpp
-     |
-     |___ views
-     |        |__ MainMenu.cpp
-     |        |__ GameView.cpp
-     |        |__ ScoreBoard.cpp
-     |        |__ Settings.cpp
-     |
-     |___ controllers
-     |        |__ GameController.cpp
-     |        |__ MenuController.cpp
-     |        |__ SettingsController.cpp
-     |
-     |___ assets
-     |        |__images
-     |        |
-     |        |__sounds
-     |
-     |___ utils
-              |__ ?
-              |__ ?
-     
+   |
+   |__ logic
+   |    |___ models
+   |    |      |__ Game.cpp
+   |    |      |__ Wave.cpp
+   |    |      |__ Enemy.cpp
+   |    |      |__ Tower.cpp
+   |    |      |__ ScoreManager.cpp
+   |    |
+   |    |___ controllers
+   |           |__ GameController.cpp
+   |           |__ MenuController.cpp
+   |           |__ SettingsController.cpp
+   |
+   |__ graphics
+   |    |___ views
+   |    |    |__ MainMenu.cpp
+   |    |    |__ GameView.cpp
+   |    |    |__ ScoreBoard.cpp
+   |    |    |__ Settings.cpp
+   |    |
+   |    |___ assets
+   |         |__images
+   |         |__sounds
+   |
+   |___ utils
+         |__ ?
+         |__ ?
+         
 _ includes
-     |___ models
-     |        |__ Game.h
-     |        |__ Wave.h
-     |        |__ Enemy.h
-     |        |__ Tower.h
-     |        |__ ScoreManager.h
-     |
-     |___ views
-     |        |__ MainMenu.h
-     |        |__ GameView.h
-     |        |__ ScoreBoard.h
-     |        |__ Settings.h
-     |
-     |___ controllers
-     |        |__ GameController.h
-     |        |__ MenuController.h
-     |        |__ SettingsController.h
-     |
-     |___ utils
-              |__ ?
-              |__ ?
-     
+   |
+   |__ logic
+   |    |___ models
+   |    |      |__ Game.h
+   |    |      |__ Wave.h
+   |    |      |__ Enemy.h
+   |    |      |__ Tower.h
+   |    |      |__ ScoreManager.h
+   |    |
+   |    |___ controllers
+   |           |__ GameController.h
+   |           |__ MenuController.h
+   |           |__ SettingsController.h
+   |
+   |__ graphics
+   |    |___ views
+   |         |__ MainMenu.h
+   |         |__ GameView.h
+   |         |__ ScoreBoard.h
+   |         |__ Settings.h
+   |
+   |___ utils
+         |__ ?
+         |__ ?
 
 ```
 
