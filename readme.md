@@ -43,3 +43,13 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
 - **Diagramme de classes** : Illustre les relations entre les classes principales.
 - **Diagramme utilisateur** : Montre les interactions de l'utilisateur avec le système.
 
+## Fonctionnalités du Jeu
+
+- **Vagues d'ennemis** : Gestion dynamique des vagues d'ennemis avec un timer.
+- **Victoire/Défaite** : Conditions de victoire et de défaite basées sur l'arrivée des ennemis dans la zone protégée.
+- **Gestion du score** : Calcul du score basé sur les ennemis éliminés et les vagues complétées, affiché dans un tableau des scores.
+- **Gestion du son** : Options pour activer/désactiver la musique et les effets sonores.
+- **Graphisme travaillé** : Interface attrayante avec des animations pour les tours et les ennemis.
+- **Barres de vie des ennemis** : Barres de vie visibles pour chaque ennemi.
+- **Évolutions des tours** : Système d'amélioration des tours.
+- **Timer et compteur de vagues** : Affichage du temps restant pour la vague actuelle et le nombre de vagues restantes.
