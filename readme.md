@@ -26,3 +26,9 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
         - `GameView` : Interface de jeu en cours.
         - `ScoreBoard` : Affichage des scores.
         - `Settings` : Options de jeu.
+
+- **Contrôleur (Controller)** : Gère les interactions entre le modèle et la vue.
+    - **Classes** :
+        - `GameController` : Contrôle le flux du jeu.
+        - `MenuController` : Gère les interactions du menu.
+        - `SettingsController` : Gère les options de configuration.
