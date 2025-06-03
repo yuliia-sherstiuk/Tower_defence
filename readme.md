@@ -77,6 +77,7 @@ Le diagramme de classes illustre les relations entre les différentes classes du
 | - speed: float               |
 | - damage: int                |
 +------------------------------+
+| + move()                     |
 | + attack()                   |
 | + takeDamage(int)            |
 +------------------------------+
@@ -206,6 +207,8 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 #### 3. Classe `Enemy`
 
+- **`move`** : Cette méthode gère le déplacement des ennemis.
+
 - **`+ attack()`** : Cette méthode définit le comportement de l'ennemi lorsqu'il attaque, par exemple, infligeant des dégâts à la zone protégée ou aux tours. 
                     Elle peut également inclure des animations ou des effets sonores.
 
@@ -330,9 +333,9 @@ _ source
      |        |__sounds
      |
      |___ utils
-     |        |__ ?
-     |        |__ ?
-     |
+              |__ ?
+              |__ ?
+     
 _ includes
      |___ models
      |        |__ Game.h
