@@ -32,3 +32,8 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
         - `GameController` : Contrôle le flux du jeu.
         - `MenuController` : Gère les interactions du menu.
         - `SettingsController` : Gère les options de configuration.
+
+### Design Patterns Utilisés
+
+- **Singleton** : Pour le gestionnaire du son et la gestion du score, garantissant qu'il n'y a qu'une seule instance de ces classes.
+- **Factory** : Pour créer dynamiquement des instances de tours et d'ennemis.
