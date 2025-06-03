@@ -108,8 +108,21 @@ Le diagramme de classes illustre les relations entre les différentes classes du
 +------------------------------+
 |        Window                |
 +------------------------------+
+| - window: RenderWindow       |
+| - videoMode: VideoMode       |
+| - event: Event               |
+| - frameRate: int             |
+| - isFullscreen: boolean      |
+| - title: string              |
++------------------------------+
 | + setup()                    |
 | + events()                   |
+| + clear()                    |
+| + display()                  |
+| + isOpen()                   |
+| + close()                    |
+| + setFrameRate(int)          |
+| + toggleFullscreen()         |
 +------------------------------+
 
 +------------------------------+
@@ -241,9 +254,21 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 #### 6. Classe `Window`
 
-- **`setup()`** : Set up Sfml window.
+- **`setup()`** : Configure la fenêtre SFML initiale avec tous les paramètres nécessaires
 
-- **`event()`** : Gère les évènements. 
+- **`events()`** : Gère tous les événements de la fenêtre (souris, clavier, système)
+
+- **`clear()`** : Efface le contenu de la fenêtre.
+
+- **`display()`** : Affiche le contenu rendu.
+
+- **`isOpen()`** : Vérifie si la fenêtre est ouverte.
+
+- **`close()`** : Ferme proprement la fenêtre.
+
+- **`setFrameRate()`** : Définit le taux de rafraîchissement.
+
+- **`toggleFullscreen()`** : Bascule entre mode fenêtré et plein écran.
 
 #### 7. Classe `MainMenu`
 
