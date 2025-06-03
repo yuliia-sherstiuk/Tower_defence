@@ -45,6 +45,7 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
 Le diagramme de classes illustre les relations entre les différentes classes du projet.
 
 ```
+            MODEL
 +------------------------------+
 |      Game                    |
 +------------------------------+
@@ -100,6 +101,55 @@ Le diagramme de classes illustre les relations entre les différentes classes du
 | + addScore(int)              |
 | + getHighScores()            |
 +------------------------------+
+
+        VUE
++------------------------------+
+|        MainMenu              |
++------------------------------+
+| - options: List<string>      |
+| - selectedOption: int        |
++------------------------------+
+| + display()                  |
+| + handleInput()              |
+| + update()                   |
++------------------------------+
+
++------------------------------+
+|        GameView              |
++------------------------------+
+| - gameMap: Map               |
+| - towers: List<Tower>        |
+| - enemies: List<Enemy>       |
+| - playerHealth: int          |
++------------------------------+
+| + renderGame()               |
+| + update()                   |
+| + showGameOver()             |
++------------------------------+
+
++------------------------------+
+|        ScoreBoard            |
++------------------------------+
+| - currentScore: int          |
+| - highScores: List<int>      |
++------------------------------+
+| + displayScores()            |
+| + updateScore(int)           |
+| + showHighScores()           |
++------------------------------+
+
++------------------------------+
+|        Settings              |
++------------------------------+
+| - volume: int                |
+| - difficulty: string         |
++------------------------------+
+| + displaySettings()          |
+| + changeVolume(int)          |
+| + setDifficulty(string)      |
++------------------------------+
+
+
 ```
 Rôle de chaque fonction dans les classes du diagramme de classes
 
@@ -108,11 +158,11 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 - **`+ startGame()`** : Cette méthode initialise le jeu, configure les paramètres de départ, et commence la première vague d'ennemis. 
                         Elle est responsable de l'organisation générale du flux de jeu.
 
-  - **`+ endGame()`** : Cette méthode termine le jeu, que ce soit par une victoire ou une défaite.
-                        Elle peut afficher les scores finaux et éventuellement retourner au menu principal.
+- **`+ endGame()`** : Cette méthode termine le jeu, que ce soit par une victoire ou une défaite.
+                      Elle peut afficher les scores finaux et éventuellement retourner au menu principal.
 
-  - **`+ updateScore()`** : Cette méthode met à jour le score en fonction des actions du joueur, comme la destruction d'ennemis. 
-                            Elle interagit avec le `ScoreManager` pour garantir que le score est correct et à jour.
+- **`+ updateScore()`** : Cette méthode met à jour le score en fonction des actions du joueur, comme la destruction d'ennemis. 
+                          Elle interagit avec le `ScoreManager` pour garantir que le score est correct et à jour.
 
 #### 2. Classe `Wave`
 
@@ -145,6 +195,38 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 - **`+ getHighScores()`** : Cette méthode retourne une liste des meilleurs scores, permettant au joueur de voir ses performances par rapport à d'autres joueurs. 
                               Elle peut également trier et stocker les scores pour une utilisation future.
+
+#### 6. Classe `MainMenu`
+
+- **`display()`** : Affiche les options du menu principal comme "Démarrer le Jeu", "Options", "Crédits" et "Quitter".
+
+- **`handleInput()`** : Gère les interactions utilisateur, comme les clics ou les pressions de touches, pour sélectionner une option dans le menu.
+
+- **`update()`** : Met à jour l'affichage du menu si nécessaire, par exemple, en surlignant une option sélectionnée.
+
+#### 7. Classe `GameView`
+
+- **`renderGame()`** : Dessine tous les éléments du jeu, y compris les tours, les ennemis, et les barres de vie.
+
+- **`update()`** : Met à jour l'affichage en fonction des actions du joueur et des événements en cours, comme les attaques des tours et les mouvements des ennemis.
+
+- **`showGameOver()`** : Affiche l'écran de fin de jeu lorsque le joueur perd ou termine toutes les vagues.
+
+#### 8. Classe `ScoreBoard`
+
+- **`displayScores()`** : Affiche le score actuel et le tableau des meilleurs scores.
+
+- **`updateScore(int)`** : Met à jour le score affiché en fonction des changements dans le jeu.
+
+- **`showHighScores()`** : Affiche une liste des meilleurs scores enregistrés.
+
+#### 9. Classe `Settings`
+
+- **`displaySettings()`** : Affiche les options de configuration disponibles.
+
+- **`changeVolume(int)`** : Modifie le niveau du volume sonore en fonction des réglages choisis par l'utilisateur.
+
+- **`setDifficulty(string)`** : Change le niveau de difficulté du jeu en fonction de la sélection de l'utilisateur.
 
 ### **Diagramme utilisateur** : 
 Montre les interactions de l'utilisateur avec le système.
