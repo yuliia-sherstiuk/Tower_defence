@@ -104,6 +104,14 @@ Le diagramme de classes illustre les relations entre les différentes classes du
 +------------------------------+
 
         VUE
+        
++------------------------------+
+|        Window                |
++------------------------------+
+| + setup()                    |
+| + events()                   |
++------------------------------+
+
 +------------------------------+
 |        MainMenu              |
 +------------------------------+
@@ -231,7 +239,13 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 - **`+ getHighScores()`** : Cette méthode retourne une liste des meilleurs scores, permettant au joueur de voir ses performances par rapport à d'autres joueurs. 
                               Elle peut également trier et stocker les scores pour une utilisation future.
 
-#### 6. Classe `MainMenu`
+#### 6. Classe `Window`
+
+- **`setup()`** : Set up Sfml window.
+
+- **`event()`** : Gère les évènements. 
+
+#### 7. Classe `MainMenu`
 
 - **`display()`** : Affiche les options du menu principal comme "Démarrer le Jeu", "Options", "Scores", "Crédits" et "Quitter".
 
@@ -239,7 +253,7 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 - **`update()`** : Met à jour l'affichage du menu si nécessaire, par exemple, en surlignant une option sélectionnée.
 
-#### 7. Classe `GameView`
+#### 8. Classe `GameView`
 
 - **`renderGame()`** : Dessine tous les éléments du jeu, y compris les tours, les ennemis, et les barres de vie.
 
@@ -247,7 +261,7 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 - **`showGameOver()`** : Affiche l'écran de fin de jeu lorsque le joueur perd ou termine toutes les vagues.
 
-#### 8. Classe `ScoreBoard`
+#### 9. Classe `ScoreBoard`
 
 - **`displayScores()`** : Affiche le score actuel et le tableau des meilleurs scores.
 
@@ -255,7 +269,7 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 - **`showHighScores()`** : Affiche une liste des meilleurs scores enregistrés.
 
-#### 9. Classe `Settings`
+#### 10. Classe `Settings`
 
 - **`displaySettings()`** : Affiche les options de configuration disponibles.
 
@@ -263,7 +277,7 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 - **`setDifficulty(string)`** : Change le niveau de difficulté du jeu en fonction de la sélection de l'utilisateur.
 
-#### 10. Classe `GameController`
+#### 11. Classe `GameController`
 
 - **`startGame()`** : Démarre un nouveau jeu en initialisant le modèle et en affichant la vue du jeu.
 
@@ -271,7 +285,7 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 - **`endGame()`** : Gère la logique de fin de jeu et passe à l'affichage des résultats.
 
-#### 11. Classe `MenuController`
+#### 12. Classe `MenuController`
 
 - **`selectOption(int option)`** : Gère la sélection d'une option dans le menu, en appelant les fonctions appropriées pour démarrer le jeu, accéder aux paramètres, etc.
 
@@ -279,7 +293,7 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 - **`quitGame()`** : Gère la logique pour quitter le jeu de manière appropriée.
 
-#### 12. Classe `SettingsController`
+#### 13. Classe `SettingsController`
 
 - **`changeVolume(int volume)`** : Appelle la méthode de la vue pour mettre à jour le volume sonore et le modèle pour sauvegarder le nouveau paramètre.
 
@@ -325,6 +339,7 @@ _ source
    |
    |__ graphics
    |    |___ views
+   |    |    |__ Window.cpp
    |    |    |__ MainMenu.cpp
    |    |    |__ GameView.cpp
    |    |    |__ ScoreBoard.cpp
@@ -355,6 +370,7 @@ _ includes
    |
    |__ graphics
    |    |___ views
+   |         |__ Window.h
    |         |__ MainMenu.h
    |         |__ GameView.h
    |         |__ ScoreBoard.h
