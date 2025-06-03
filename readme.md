@@ -149,6 +149,38 @@ Le diagramme de classes illustre les relations entre les différentes classes du
 | + setDifficulty(string)      |
 +------------------------------+
 
+        CONTROLLEUR
+
++------------------------------+
+|       GameController         |
++------------------------------+
+| - game: Game                 |
+| - gameView: GameView         |
++------------------------------+
+| + startGame()                |
+| + updateGame()               |
+| + endGame()                  |
++------------------------------+
+
++------------------------------+
+|      MenuController          |
++------------------------------+
+| - mainMenu: MainMenu         |
++------------------------------+
+| + selectOption(int option)   |
+| + showCredits()              |
+| + quitGame()                 |
++------------------------------+
+
++------------------------------+
+|     SettingsController       |
++------------------------------+
+| - settings: Settings         |
++------------------------------+
+| + changeVolume(int volume)   |
+| + setDifficulty(string)      |
+| + resetSettings()            |
++------------------------------+
 
 ```
 Rôle de chaque fonction dans les classes du diagramme de classes
@@ -227,6 +259,31 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 - **`changeVolume(int)`** : Modifie le niveau du volume sonore en fonction des réglages choisis par l'utilisateur.
 
 - **`setDifficulty(string)`** : Change le niveau de difficulté du jeu en fonction de la sélection de l'utilisateur.
+
+#### 10. Classe `GameController`
+
+- **`startGame()`** : Démarre un nouveau jeu en initialisant le modèle et en affichant la vue du jeu.
+
+- **`updateGame()`** : Met à jour l'état du jeu, gére les vagues d'ennemis et les attaques des tours.
+
+- **`endGame()`** : Gère la logique de fin de jeu et passe à l'affichage des résultats.
+
+#### 11. Classe `MenuController`
+
+- **`selectOption(int option)`** : Gère la sélection d'une option dans le menu, en appelant les fonctions appropriées pour démarrer le jeu, accéder aux paramètres, etc.
+
+- **`showCredits()`** : Affiche les crédits du jeu lorsque l'utilisateur choisit cette option. (Liste des contributeurs, autres credits... comme l'utilisation de design tiers)
+
+- **`quitGame()`** : Gère la logique pour quitter le jeu de manière appropriée.
+
+#### 12. Classe `SettingsController`
+
+- **`changeVolume(int volume)`** : Appelle la méthode de la vue pour mettre à jour le volume sonore et le modèle pour sauvegarder le nouveau paramètre.
+
+- **`setDifficulty(string difficulty)`** : Change la difficulté du jeu en mettant à jour le modèle et en informant la vue.
+
+- **`resetSettings()`** : Réinitialise les paramètres aux valeurs par défaut.
+
 
 ### **Diagramme utilisateur** : 
 Montre les interactions de l'utilisateur avec le système.
