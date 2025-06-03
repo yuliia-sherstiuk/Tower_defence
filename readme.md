@@ -230,7 +230,7 @@ Rôle de chaque fonction dans les classes du diagramme de classes
 
 #### 6. Classe `MainMenu`
 
-- **`display()`** : Affiche les options du menu principal comme "Démarrer le Jeu", "Options", "Crédits" et "Quitter".
+- **`display()`** : Affiche les options du menu principal comme "Démarrer le Jeu", "Options", "Scores", "Crédits" et "Quitter".
 
 - **`handleInput()`** : Gère les interactions utilisateur, comme les clics ou les pressions de touches, pour sélectionner une option dans le menu.
 
