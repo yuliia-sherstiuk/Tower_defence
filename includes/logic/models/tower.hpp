@@ -11,7 +11,7 @@ class Tower{
     int atk=1;
     int level=1;
     double atkMultiplier=0.1;
-    bool visible=false;
+    bool visible=true;
 
     Tower(std::string name, int hp, int atk);
 

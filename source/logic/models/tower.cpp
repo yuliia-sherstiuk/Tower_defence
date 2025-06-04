@@ -7,6 +7,7 @@ Tower::Tower(std::string name, int hp, int atk) {
 
     if (hp<=0) {
         std::cout<<"Tower "<<this->name<<" has been destroyed"<<std::endl;
+        this->visible=false;
     }
 }
 
