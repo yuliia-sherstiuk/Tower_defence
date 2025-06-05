@@ -15,4 +15,10 @@ add_executable(Tower_defence
         includes/logic/models/tower.hpp
         source/logic/controllers/SettingsController.cpp
         source/logic/models/ScoreManager.cpp
-        source/logic/models/tower.cpp)
+        source/logic/models/tower.cpp
+        includes/utils/Position.h
+        includes/utils/Level.h
+        includes/utils/LevelLoader.h
+        includes/utils/Pathnode.h
+
+        )
