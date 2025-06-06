@@ -20,5 +20,5 @@ add_executable(Tower_defence
         includes/utils/Level.h
         includes/utils/LevelLoader.h
         includes/utils/Pathnode.h
-
-        )
+        includes/logic/models/scoreEntry.h
+)
