@@ -1,16 +1,33 @@
 //
 // Created by chris on 04/06/2025.
 //
-
 #include "Enemy.h"
 #include "PathNode.h"
 #include "Tower.h"
 
-Enemy::Enemy(int id, int health, float speed, int damage, std::shared_ptr<PathNode> startNode)
+Enemy::Enemy(int id, int health, float speed, int damage,
+             std::shared_ptr<PathNode> startNode, EnemyType type)
     : id(id), health(health), speed(speed), damage(damage),
-      currentNode(std::move(startNode)), nextNode(nullptr), progress(0.0f) {
+      currentNode(std::move(startNode)), nextNode(nullptr),
+      progress(0.0f), type(type) {
+
     if (currentNode) {
         position = currentNode->getPixelPosition();
+    }
+
+    // Adjust stats depending on type
+    switch(type) {
+        case EnemyType::CORPORAL:
+            health *= 2;
+            damage *= 1.5;
+            break;
+        case EnemyType::SERGEANT:
+            health *= 3;
+            damage *= 2;
+            speed *= 0.8f; // speed see if not relevant comment
+            break;
+        default:
+            break;
     }
 }
 

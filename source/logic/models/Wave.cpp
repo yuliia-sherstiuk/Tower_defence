@@ -4,7 +4,7 @@
 
 #include "Wave.h"
 #include "Enemy.h"
-#include <algorithm> //for remove if
+#include <algorithm>
 
 Wave::Wave(int number, std::string diff, const std::shared_ptr<PathNode>& spawn)
     : waveNumber(number), difficulty(std::move(diff)), spawnNode(spawn),
@@ -17,16 +17,38 @@ void Wave::spawnEnemies(float deltaTime) {
 
     spawnTimer += deltaTime;
     if (spawnTimer >= spawnInterval) {
-        // Create a new enemy
-        int health = static_cast<int>(100 + waveNumber * 10); // to adjust
-        float speed = 50.0f + static_cast<float>(waveNumber * 2); // to adjust
-        int damage = static_cast<int>(1 + waveNumber / 2); // to adjust
+        // Base stats
+        int baseHealth = 100 + waveNumber * 10;
+        float baseSpeed = 50.0f + static_cast<float>(waveNumber * 2);
+        int baseDamage = 1 + waveNumber / 2;
+
+        // Determine enemy type based on difficulty and wave patterns
+        EnemyType enemyType = EnemyType::PRIVATE;
+
+        if (difficulty == "corporal" || difficulty == "sergeant") {
+            // for each 5 ennemies, create a Corporal
+            if (enemiesToSpawn % 5 == 0) {
+                enemyType = EnemyType::CORPORAL;
+            }
+        }
+
+        if (difficulty == "sergeant") {
+            // for each 15 ennemies (5 * 3) create a Sergeant
+            if (enemiesToSpawn % 15 == 0) {
+                enemyType = EnemyType::SERGEANT;
+            }
+        }
 
         auto enemy = std::make_shared<Enemy>(
-            enemies.size(), health, speed, damage, spawnNode
+            enemies.size(),
+            baseHealth,
+            baseSpeed,
+            baseDamage,
+            spawnNode,
+            enemyType
         );
-        enemies.push_back(enemy);
 
+        enemies.push_back(enemy);
         enemiesToSpawn--;
         spawnTimer = 0.0f;
     }

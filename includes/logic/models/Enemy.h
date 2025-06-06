@@ -10,6 +10,12 @@
 
 class PathNode;
 
+enum class EnemyType {
+	PRIVATE,
+	CORPORAL,
+	SERGEANT
+};
+
 class Enemy {
 private:
 	int id;
@@ -22,9 +28,12 @@ private:
 	float progress; //progress between currentNode and nextNode (0.0 to 1.0)
 	float attackTimer = 0.0f;
 	const float attackCooldown = 1.0f; //attack each second
+	EnemyType type;
 
 public:
-	Enemy(int id, int health, float speed, int damage, std::shared_ptr<PathNode> startNode);
+	Enemy(int id, int health, float speed, int damage,
+		  std::shared_ptr<PathNode> startNode,
+		  EnemyType type = EnemyType::PRIVATE);
 
 	//Getters
 	int getId() const { return id; }
@@ -32,6 +41,8 @@ public:
 	float getSpeed() const { return speed; }
 	int getDamage() const { return damage; }
 	const Position& getPosition() const { return position; }
+	//int getGoldValue() const { return 10 + health / 10; } //gold gain when enemy is defeated
+	EnemyType getType() const { return type; }
 
 	//methods
 	void move(float deltaTime);
