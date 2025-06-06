@@ -1042,5 +1042,5 @@ dkms.conf
 # Raspberry Pi Pico disassembler file
 *.dis
 
-#file
+# IGNORE
 *.exe
