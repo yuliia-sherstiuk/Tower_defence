@@ -6,10 +6,11 @@
 #include <string>
 #include "scoreEntry.h"
 
+/** class to manage scores of players */
 class ScoreManager {
     public:
-    int score = 0;
-    std::vector<scoreEntry> scoreList{};
+
+    std::vector<scoreEntry> scoreList{}; //list of all scores
 
     void addScore(std::string name,int score);
     std::vector<scoreEntry> getHighScores();
