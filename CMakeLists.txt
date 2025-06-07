@@ -23,4 +23,5 @@ add_executable(Tower_defence
         includes/logic/models/scoreEntry.h
         source/logic/models/Economy.cpp
         source/logic/models/Economy.h
+        source/logic/models/Enemy.cpp
 )
