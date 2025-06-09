@@ -1,6 +1,7 @@
 //
 // Created by chris on 04/06/2025.
 //
+
 #ifndef PATHNODE_H
 #define PATHNODE_H
 
@@ -39,15 +40,30 @@ public:
     }
 
     std::shared_ptr<PathNode> findNextNode(const std::shared_ptr<PathNode>& previousNode = nullptr) const {
-        if (!previousNode && !connections.empty()) {
+        if (connections.empty()) {
+            return nullptr;
+        }
+
+        if (!previousNode) {
             return connections[0];
         }
 
-        for (size_t i = 0; i < connections.size(); ++i) {
-            if (connections[i] == previousNode && i + 1 < connections.size()) {
-                return connections[i + 1];
+        auto it = std::find(connections.begin(), connections.end(), previousNode);
+        if (it != connections.end() && std::next(it) != connections.end()) {
+            return *(std::next(it));
+        }
+
+
+        if (connections.size() == 1 && connections[0] == previousNode) {
+            return nullptr;
+        }
+
+        for (const auto& conn : connections) {
+            if (conn != previousNode) {
+                return conn;
             }
         }
+
         return nullptr;
     }
 

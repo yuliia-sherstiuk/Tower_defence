@@ -32,31 +32,30 @@ private:
 
 public:
 	Enemy(int id, int health, float speed, int damage,
-		  std::shared_ptr<PathNode> startNode,
-		  EnemyType type = EnemyType::PRIVATE);
+		 std::shared_ptr<PathNode> startNode,
+		 EnemyType type = EnemyType::PRIVATE);
 
-	//Getters
+	// Getters
 	int getId() const { return id; }
 	int getHealth() const { return health; }
 	float getSpeed() const { return speed; }
 	int getDamage() const { return damage; }
 	const Position& getPosition() const { return position; }
-	//int getGoldValue() const { return 10 + health / 10; } //gold gain when enemy is defeated
 	EnemyType getType() const { return type; }
 
-	//methods
 	void move(float deltaTime);
 	void attack();
 	void takeDamage(int amount);
 
-	//State methods
 	bool isDead() const { return health <= 0; }
+	bool isAlive() const { return !isDead(); }
 	bool hasReachedEnd() const;
 
-	//Handling the path
 	void setNextNode(std::shared_ptr<PathNode>&& node) { nextNode = std::move(node); }
 	std::shared_ptr<PathNode> getCurrentNode() const { return currentNode; }
 	std::shared_ptr<PathNode> getNextNode() const { return nextNode; }
+
+	void setPosition(const Position& pos) { position = pos; }
 };
 
-#endif //ENEMY_H
+#endif // ENEMY_H
