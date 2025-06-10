@@ -402,9 +402,12 @@ _ includes
    |         |__ Settings.h
    |
    |___ utils
-         |__ ?
-         |__ ?
-
+           |__ GridPosition.h
+           |__ Level.h
+           |__ LevelLoader.h
+           |__ PathNode.h
+           |__ Position.h
+           
 ```
 
 ## Fonctionnalités du Jeu
