@@ -3,6 +3,10 @@ project(Tower_defence)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(CMAKE_PREFIX_PATH "C:/msys64/mingw64")
+
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
 include_directories(includes)
 include_directories(includes/logic)
 include_directories(includes/logic/controllers)
@@ -25,3 +29,5 @@ add_executable(Tower_defence
         source/logic/models/Economy.h
         source/logic/models/Enemy.cpp
 )
+
+target_link_libraries(Tower_defence sfml-graphics sfml-window sfml-system)
