@@ -2,42 +2,34 @@
 #ifndef GAME_H
 #define GAME_H
 
-
 #include <vector>
-
-#include "Wave.h"
-#include "ScoreManager.h"
-
+#include "logic/models/Wave.h"
+#include "logic/models/ScoreManager.h"
+#include "logic/models/Enemy.h"
 
 class Game {
 private:
-
     std::vector<Wave> waves;
-
-    ScoreManager scoreManager;
-
+    //ScoreManager scoreManager;
     int currentWave;
-
     bool isGameOver;
-
-public:
-
-    Game();
-
-    void startGame();
-
-    void endGame();
-
-    void updateScore(int points);
-
-private:
+    int playerHealth;
+    int playerResources;
 
     void setupInitialWaves();
+    void displayFinalScore() const;
+    void returnToMainMenu() const;
 
-    void displayFinalScore();
-
-    void returnToMainMenu();
+public:
+    Game();
+    void startGame();                 // Initialization of the game and the first wave
+    void endGame(bool victory);
+    void updateScore(int points);
+    void spawnWave();                  // Spawn the current wave and move to the next one
+    void playerTakeDamage(int damage);
+    bool checkGameOver() const;
+    void update();                     // Update logic (optional)
+    std::vector<Enemy>& getCurrentWaveEnemies();
 };
-
 
 #endif // GAME_H
