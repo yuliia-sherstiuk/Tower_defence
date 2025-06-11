@@ -1,4 +1,5 @@
 #include "controllers/GameController.h"
+#include "models/Tower.h"
 #include <iostream>
 
 // Constructor: Initializes the game and the window.
