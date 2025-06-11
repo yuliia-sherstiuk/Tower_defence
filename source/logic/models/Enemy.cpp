@@ -27,16 +27,19 @@ Enemy::Enemy(int id, int health, float speed, int damage,
 
     switch(type) {
         case EnemyType::CORPORAL:
+            reward = 20;
             this->health *= CORPORAL_HEALTH_MULT; // Apply corporal health multiplier
             this->damage *= CORPORAL_DAMAGE_MULT; // Apply corporal damage multiplier
             this->speed *= ELITE_SPEED_MULT;      // Apply elite speed multiplier
             break;
         case EnemyType::SERGEANT:
+            reward = 30;
             this->health *= SERGEANT_HEALTH_MULT; // Apply sergeant health multiplier
             this->damage *= SERGEANT_DAMAGE_MULT; // Apply sergeant damage multiplier
             this->speed *= ELITE_SPEED_MULT;      // Apply elite speed multiplier
             break;
         default:
+            reward = 10;
             break;
     }
 }

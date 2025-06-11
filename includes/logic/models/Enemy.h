@@ -24,6 +24,7 @@ private:
 	int health;
 	float speed;
 	int damage;
+	int reward;
 	Position position;
 	std::shared_ptr<PathNode> currentNode;
 	std::shared_ptr<PathNode> nextNode;
@@ -44,6 +45,7 @@ public:
 	int getDamage() const { return damage; }
 	const Position& getPosition() const { return position; }
 	EnemyType getType() const { return type; }
+	int getReward() const { return reward; }
 
 	// Methods
 	void move(float deltaTime);
