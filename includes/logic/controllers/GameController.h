@@ -1,6 +1,7 @@
 #ifndef GAMECONTROLLER_HPP
 #define GAMECONTROLLER_HPP
 
+
 #include <string>
 #include <memory>
 #include <SFML/Graphics.hpp>
@@ -10,29 +11,46 @@
 #include "ScoreManager.h"
 #include "scoreEntry.h"
 
+// Main controller class that manages the overall game flow.
 class GameController {
 public:
+    // Constructor: initializes the game, score manager, and the window.
     GameController();
 
+    // Logs in a player with the given name.
     void loginPlayer(const std::string& playerName);
+
+    // Starts the game if a player is logged in.
     void startGame();
+
+    // Updates the game logic every frame.
     void update(float deltaTime);
+
+    // Stops the game and performs cleanup.
     void stopGame();
+
+    // Applies damage to the tower base.
     void handleTowerDamage(int damage);
+
+    // Adds score points to the current player.
     void addPlayerScore(int score);
+
+    // Returns the list of high scores.
     std::vector<scoreEntry> getHighScores() const;
 
+    // Checks if the game is currently running.
     bool isGameRunning() const;
 
-    void runGameLoop();  // новый метод
+    // Runs the main game loop: processes events, updates game, renders graphics.
+    void runGameLoop();
 
 private:
-    std::unique_ptr<Game> game;
-    std::unique_ptr<ScoreManager> scoreManager;
-    std::string currentPlayer;
-    int currentScore;
+    std::unique_ptr<Game> game;               // Core game logic.
+    std::unique_ptr<ScoreManager> scoreManager; // Manages the player scores.
+    std::string currentPlayer;                // Current player's name.
+    int currentScore;                         // Current player's score.
 
-    sf::RenderWindow window;  // окно
+    sf::RenderWindow window;                  // Main SFML window for rendering.
 };
 
 #endif // GAMECONTROLLER_HPP
