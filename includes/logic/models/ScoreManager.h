@@ -17,9 +17,4 @@ class ScoreManager {
 };
 
 
-
-
-
-
-
 #endif

@@ -8,7 +8,7 @@ Game::Game()
     : running(false)
 {
     waveManager = std::make_unique<WaveManager>();
-    currentLevel = std::make_shared<Level>(1); // Укажите номер уровня
+    currentLevel = std::make_shared<Level>(1); 
     waveManager->setLevel(currentLevel);
 }
 
