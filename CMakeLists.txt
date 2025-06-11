@@ -26,7 +26,7 @@ add_executable(Tower_defence
         includes/utils/Pathnode.h
         includes/logic/models/scoreEntry.h
         source/logic/models/Economy.cpp
-        source/logic/models/Economy.h
+        includes/logic/models/Economy.h
         source/logic/models/Enemy.cpp
 )
 
