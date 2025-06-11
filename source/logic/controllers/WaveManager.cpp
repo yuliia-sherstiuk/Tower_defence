@@ -1,7 +1,7 @@
 //
 // Created by chris on 09/06/2025.
 //
-#include "WaveManager.h"
+#include "../../../includes/logic/controllers/WaveManager.h"
 
 WaveManager::WaveManager()
     : waveTimer(0.0f)

@@ -7,10 +7,10 @@
 #include <memory>
 #include <vector>
 #include <string>
-#include "Wave.h"
+#include "../models/Wave.h"
 #include "PathNode.h"
 #include "Level.h"
-#include "Enemy.h"
+#include "../models/Enemy.h"
 
 class WaveManager {
 private:
