@@ -2,7 +2,7 @@
 //
 #include "Wave.h"
 #include "Enemy.h"
-#include "../../../includes/logic/models/Economy.h"
+#include "models/Economy.h"
 #include <algorithm>
 
 // Returns the corresponding EnemyType based on the difficulty string.

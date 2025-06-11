@@ -6,7 +6,7 @@
 #define LEVELLOADER_H
 
 #include <memory>
-#include "Level.h"
+#include "utils/Level.h"
 
 class LevelLoader {
 public:

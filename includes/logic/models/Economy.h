@@ -1,8 +1,8 @@
 #ifndef ECONOMY_H
 #define ECONOMY_H
 
-#include "Enemy.h"
-#include "Tower.h"
+#include "models/Enemy.h"
+#include "models/Tower.h"
 #include <vector>
 
 class Economy {

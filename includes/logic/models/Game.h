@@ -2,8 +2,8 @@
 #define GAME_H
 
 #include <memory>
-#include "WaveManager.h"
-#include "Level.h"
+#include "controllers/WaveManager.h"
+#include "utils/Level.h"
 
 class Game {
 public:

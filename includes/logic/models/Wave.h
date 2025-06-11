@@ -9,7 +9,7 @@
 #include <memory>
 #include <string>
 #include <algorithm>
-#include "Enemy.h"
+#include "models/Enemy.h"
 
 // Forward declarations
 class PathNode;

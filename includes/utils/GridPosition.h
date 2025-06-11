@@ -5,7 +5,7 @@
 #ifndef GRIDPOSITION_H
 #define GRIDPOSITION_H
 
-#include "Position.h"
+#include "utils/Position.h"
 
 //Grid position structure
 struct GridPosition {

@@ -1,4 +1,4 @@
-#include "Economy.h"
+#include "models/Economy.h"
 
 /** multiplies gold with the profit multiplier and adds the result to the gold amount the player has
  *@param enemiesDefeated a list of enemies that were previously defeated in case they drop different

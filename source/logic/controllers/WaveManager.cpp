@@ -1,7 +1,7 @@
 //
 // Created by chris on 09/06/2025.
 //
-#include "../controllers/WaveManager.h"
+#include "controllers/WaveManager.h"
 
 WaveManager::WaveManager()
     : waveTimer(0.0f)

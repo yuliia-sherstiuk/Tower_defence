@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "scoreEntry.h"
+#include "models/scoreEntry.h"
 
 /** class to manage scores of players */
 class ScoreManager {
