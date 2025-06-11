@@ -82,14 +82,13 @@ void Wave::nextWave() {
 
 // Removes dead enemies from the list and rewards the economy.
 void Wave::removeDeadEnemies() {
+    Economy economy;
     enemies.erase(
         std::remove_if(enemies.begin(), enemies.end(),
-            [](const auto& enemy) {
+            [&economy](const auto& enemy) {
                 if (enemy->isDead()) {
-                    Economy::getInstance().addEnemyReward(
-                        enemy->getType(),
-                        enemy->getHealth()
-                    );
+                    std::vector<Enemy*> deadEnemy = {enemy.get()};
+                    economy.earnGold(deadEnemy);
                     return true;
                 }
                 return false;

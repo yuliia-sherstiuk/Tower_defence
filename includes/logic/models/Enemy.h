@@ -19,12 +19,13 @@ enum class EnemyType {
 };
 
 class Enemy {
+public:
+	int reward;
 private:
 	int id;
 	int health;
 	float speed;
 	int damage;
-	int reward;
 	Position position;
 	std::shared_ptr<PathNode> currentNode;
 	std::shared_ptr<PathNode> nextNode;
