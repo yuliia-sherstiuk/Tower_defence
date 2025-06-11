@@ -24,4 +24,5 @@ add_executable(Tower_defence
         source/logic/models/Economy.cpp
         source/logic/models/Economy.h
         source/logic/models/Enemy.cpp
+        source/logic/models/towerVariants.cpp
 )
