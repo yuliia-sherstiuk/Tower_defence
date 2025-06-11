@@ -7,6 +7,7 @@
 
 #include "Position.h"
 
+//Grid position structure
 struct GridPosition {
     int row;
     int col;
@@ -19,15 +20,18 @@ struct GridPosition {
                        static_cast<float>(row * CELL_SIZE));
     }
 
+    //Grid pos from pix pos
     static GridPosition fromPixelPosition(const Position& pos) {
         return GridPosition(static_cast<int>(pos.y / CELL_SIZE),
                           static_cast<int>(pos.x / CELL_SIZE));
     }
 
+    // Add comparison operator
     bool operator==(const GridPosition& other) const {
         return row == other.row && col == other.col;
     }
 
+    //Add operator !=
     bool operator!=(const GridPosition& other) const {
         return !(*this == other);
     }

@@ -23,10 +23,9 @@ public:
     PathNode(int id, std::string type, GridPosition pos)
         : id(id), type(std::move(type)), gridPos(pos) {}
 
+    //Getters
     const GridPosition& getGridPosition() const { return gridPos; }
     Position getPixelPosition() const { return gridPos.toPixelPosition(); }
-
-    //Getters
     int getId() const { return id; }
     const std::string& getType() const { return type; }
 
@@ -39,6 +38,7 @@ public:
         return connections;
     }
 
+    // Find next node
     std::shared_ptr<PathNode> findNextNode(const std::shared_ptr<PathNode>& previousNode = nullptr) const {
         if (connections.empty()) {
             return nullptr;
@@ -53,11 +53,12 @@ public:
             return *(std::next(it));
         }
 
-
+        // if current node had only one connection and if it is not the previous node, return nullptr
         if (connections.size() == 1 && connections[0] == previousNode) {
             return nullptr;
         }
 
+        // else, return first connection that is not the previous node
         for (const auto& conn : connections) {
             if (conn != previousNode) {
                 return conn;
