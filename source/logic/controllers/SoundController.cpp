@@ -45,3 +45,8 @@ void SoundController::playMusic(const std::string& name, bool loop) {
 void SoundController::stopMusic() {
     currentMusic->stop();
 }
+
+//Pause the music
+void SoundController::pauseMusic() {
+    currentMusic->pause();
+}
