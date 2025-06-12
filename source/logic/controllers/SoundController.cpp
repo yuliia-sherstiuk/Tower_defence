@@ -63,3 +63,13 @@ void SoundController::setMasterVolume(float volume) {
     masterVolume = std::max(0.0f, std::min(100.0f, volume));
     updateAllVolumes();
 }
+
+//Mute
+void SoundController::mute() {
+    if (!muted) {
+        savedMasterVolume = masterVolume;
+        muted = true;
+        stopAllSounds();
+        pauseMusic();
+    }
+}
