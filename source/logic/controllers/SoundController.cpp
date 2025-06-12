@@ -48,6 +48,13 @@ void SoundController::stopSound(const std::string& name) {
     }
 }
 
+// Stops all currently playing sounds
+void SoundController::stopAllSounds() {
+    for (auto& [name, sound] : sounds) {
+        sound->stop();
+    }
+}
+
 // Plays the specified music if not muted
 void SoundController::playMusic(const std::string& name, bool loop) {
     if (!muted) {
