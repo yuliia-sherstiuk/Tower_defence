@@ -95,6 +95,12 @@ void SoundController::setMasterVolume(float volume) {
     updateAllVolumes();
 }
 
+//Set sound effects volume
+void SoundController::setSoundVolume(float volume) {
+    soundVolume = std::max(0.0f, std::min(100.0f, volume));
+    updateAllVolumes();
+}
+
 //Mute
 void SoundController::mute() {
     if (!muted) {
