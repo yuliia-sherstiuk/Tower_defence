@@ -121,7 +121,7 @@ void SoundController::mute() {
 
 //Unmute
 void SoundController::unmute() {
-    if (!muted) {
+    if (muted) {
         muted = false;
         masterVolume = savedMasterVolume;
         updateAllVolumes();
