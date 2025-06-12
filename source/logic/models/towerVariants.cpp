@@ -1,5 +1,8 @@
 #include "../../../includes/logic/models/towerVariants.h"
 
+/**
+ * punches enemies in close range. low damage, low cost
+ */
 Puncher::Puncher() : Tower("Punchy", 200, 2, 10, " "){}
 
 void Puncher::attack(Enemy* enemy) {
@@ -31,6 +34,9 @@ void Puncher::getDestroyed() {
  * START FREEZER↓
  */
 
+/**
+ *a bomb that freezes enemies for 3 seconds when they get in range, destroys itself after attacking
+ */
 Freezer:: Freezer():Tower("Freezie", 1, 10, 30, " ") {}
 
 void Freezer::attack(Enemy* enemy) {
@@ -66,6 +72,9 @@ void Freezer::getDestroyed() {
  * START BOMBER↓
  */
 
+/**
+ *a bomb that destroys whatever it attacks. high price, instant kill.
+ */
 Bomber::Bomber(): Tower("bombie",1, 999, 100, " "){}
 
 void Bomber::attack(Enemy *enemy) {
@@ -91,6 +100,9 @@ void Bomber::upgrade() {
     std::cout<<"the bomb was upgraded, explosion radius increased"<<std::endl;
 }
 
+/**
+ * the home base to be defended, if its health reaches 0 then the game is lost
+ */
 Base::Base(): Tower("Base",500, 0, 0, " ") {}
 
 void Base::takeDamage(int damage) {

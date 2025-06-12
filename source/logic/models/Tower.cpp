@@ -57,6 +57,11 @@ void Tower::getDestroyed() {
         // overload with an animation or something for when a tower gets destroyed
 }
 
+/**
+ *@brief returns a tower type depending on the name passed in
+ * @param towerType tower name to be returned
+ * @return a tower variant depending on the name
+ */
 Tower* Tower::createTower(std::string towerType) {
     switch (towerType) {
         case "Puncher":
