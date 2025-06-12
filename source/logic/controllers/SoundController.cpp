@@ -31,3 +31,12 @@ bool SoundController::loadSound(const std::string& name, const std::string& file
     sounds[name]->setVolume(soundVolume*(masterVolume/100.0f));
     return true;
 }
+
+// Plays the specified music if not muted
+void SoundController::playMusic(const std::string& name, bool loop) {
+    if (!muted) {
+        currentMusic->setLoop(loop);
+        currentMusic->setVolume(musicVolume * (masterVolume / 100.0f));
+        currentMusic->play();
+    }
+}
