@@ -2,7 +2,7 @@
 // Created by chris on 12/06/2025.
 //
 
-#include "SoundController.h"
+#include "../controllers/SoundController.h"
 #include <iostream>
 #include <algorithm>
 

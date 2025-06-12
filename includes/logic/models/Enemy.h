@@ -7,7 +7,7 @@
 #define ENEMY_H
 
 #include <memory>
-#include "utils/Position.h"
+#include "../../utils/Position.h"
 
 //Forward declaration
 class PathNode;

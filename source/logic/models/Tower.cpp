@@ -1,6 +1,6 @@
-#include "Tower.h"
+#include "../models/Tower.h"
 
-#include "towerVariants.h"
+#include "../models/towerVariants.h"
 
 /**Tower constructor, params should be obvious enough */
 Tower::Tower(std::string name, int hp, int atk,int price, std::string spritePath) {

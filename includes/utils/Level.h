@@ -7,8 +7,8 @@
 
 #include <vector>
 #include <memory>
-#include "utils/Position.h"
-#include "utils/PathNode.h"
+#include "../utils/Position.h"
+#include "../utils/PathNode.h"
 
 class Level {
 private:

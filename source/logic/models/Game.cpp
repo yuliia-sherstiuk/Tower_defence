@@ -1,7 +1,7 @@
-#include "Game.h"
-#include "WaveManager.h"
-#include "Level.h"
-#include "Tower.h"
+#include "../models/Game.h"
+#include "../controllers/WaveManager.h"
+#include "../../utils/Level.h"
+#include "../models/Tower.h"
 #include <iostream>
 
 Game::Game()

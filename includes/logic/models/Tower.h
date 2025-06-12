@@ -4,8 +4,8 @@
 #include <iostream>
 #include <memory>
 #include <string>
-#include "utils/Position.h"
-#include "models/Enemy.h"
+#include "../../utils/Position.h"
+#include "../models/Enemy.h"
 
 class Tower{
 private:

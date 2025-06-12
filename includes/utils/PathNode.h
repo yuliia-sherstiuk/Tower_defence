@@ -9,8 +9,8 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
-#include "utils/Position.h"
-#include "utils/GridPosition.h"
+#include "../utils/Position.h"
+#include "../utils/GridPosition.h"
 
 class PathNode {
 private:

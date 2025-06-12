@@ -1,8 +1,8 @@
 // Created by chris on 04/06/2025.
 //
-#include "Wave.h"
-#include "Enemy.h"
-#include "models/Economy.h"
+#include "../models/Wave.h"
+#include "../models/Enemy.h"
+#include "../models/Economy.h"
 #include <algorithm>
 
 // Returns the corresponding EnemyType based on the difficulty string.

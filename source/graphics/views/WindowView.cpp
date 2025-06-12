@@ -1,4 +1,4 @@
-#include "graphics/views/WindowView.h"
+#include "../views/WindowView.h"
 
 WindowView::WindowView(sf::RenderWindow& window, Game* game)
     : window(window), game(game) {}

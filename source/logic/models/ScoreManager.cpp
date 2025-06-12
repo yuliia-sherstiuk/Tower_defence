@@ -1,4 +1,4 @@
-#include "ScoreManager.h"
+#include "../models/ScoreManager.h"
 
 /** creates a scoreEntry struct and places the name and score into it, then places that into the score list
  * @param name(string) the player's name

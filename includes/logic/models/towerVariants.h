@@ -1,8 +1,8 @@
 #ifndef TOWERVARIANTS_H
 #define TOWERVARIANTS_H
 
-#include "Enemy.h"
-#include "Tower.h"
+#include "../models/Enemy.h"
+#include "../models/Tower.h"
 
 class Puncher final: public Tower {
     public:

@@ -8,10 +8,10 @@
 #include <memory>
 #include <vector>
 #include <string>
-#include "models/Wave.h"
-#include "utils/PathNode.h"
-#include "utils/Level.h"
-#include "models/Enemy.h"
+#include "../models/Wave.h"
+#include "../../utils/PathNode.h"
+#include "../../utils/Level.h"
+#include "../models/Enemy.h"
 
 class WaveManager {
 private:

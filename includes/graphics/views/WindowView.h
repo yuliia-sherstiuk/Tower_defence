@@ -3,7 +3,7 @@
 #define TOWER_WINDOWVIEW_H
 
 #include <SFML/Graphics.hpp>
-#include "models/Game.h"
+#include "../models/Game.h"
 
 class WindowView {
 private:

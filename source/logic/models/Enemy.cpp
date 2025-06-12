@@ -1,9 +1,9 @@
 //
 // Created by chris on 04/06/2025.
 //
-#include "models/Enemy.h"
-#include "utils/PathNode.h"
-#include "models/Tower.h"
+#include "../models/Enemy.h"
+#include "../../utils/PathNode.h"
+#include "../models/Tower.h"
 
 // Multiplier const stats
 static constexpr int CORPORAL_HEALTH_MULT = 2;    // Life Multiplier for corporal

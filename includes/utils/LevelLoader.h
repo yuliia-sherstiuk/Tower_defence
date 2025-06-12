@@ -6,8 +6,8 @@
 #define LEVELLOADER_H
 
 #include <memory>
-#include "utils/Level.h"
-#include "utils/GridPosition.h"
+#include "../utils/Level.h"
+#include "../utils/GridPosition.h"
 
 class LevelLoader {
 public:
