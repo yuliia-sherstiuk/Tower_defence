@@ -55,6 +55,14 @@ void SoundController::stopAllSounds() {
     }
 }
 
+//Loads music from a file
+bool SoundController::loadMusic(const std::string& name, const std::string& filepath) {
+    if (!currentMusic->openFromFile(filepath)) {
+        return false;
+    }
+    return true;
+}
+
 // Plays the specified music if not muted
 void SoundController::playMusic(const std::string& name, bool loop) {
     if (!muted) {
