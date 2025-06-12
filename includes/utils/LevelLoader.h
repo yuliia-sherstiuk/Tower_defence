@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "utils/Level.h"
+#include "utils/GridPosition.h"
 
 class LevelLoader {
 public:
