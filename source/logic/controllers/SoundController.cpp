@@ -91,3 +91,12 @@ void SoundController::toggleMute() {
         muted();
     }
 }
+
+//Update all volumes
+void SoundController::updateAllVolumes() {
+    float effectiveVolume = muted ? 0.0f : masterVolume / 100.0f;
+    for (auto& [name, sound] : sounds) {
+        sound->setVolume(soundVolume*effectiveVolume);
+    }
+    currentMusic->setVolume(musicVolume*effectiveVolume);
+}
