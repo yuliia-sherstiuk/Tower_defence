@@ -101,6 +101,14 @@ void SoundController::setSoundVolume(float volume) {
     updateAllVolumes();
 }
 
+// Set music volume
+void SoundController::setMusicVolume(float volume) {
+    musicVolume = std::max(0.0f, std::min(100.0f, volume));
+    if (!muted) {
+        currentMusic->setVolume(musicVolume * (masterVolume / 100.0f));
+    }
+}
+
 //Mute
 void SoundController::mute() {
     if (!muted) {
