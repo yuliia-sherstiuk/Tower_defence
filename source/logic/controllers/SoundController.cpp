@@ -130,10 +130,10 @@ void SoundController::unmute() {
 
 //Toggle mute
 void SoundController::toggleMute() {
-    if (!muted) {
+    if (muted) {
         unmute();
     } else {
-        muted();
+        mute();
     }
 }
 
