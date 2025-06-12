@@ -10,3 +10,9 @@ SoundController &SoundController::getInstance() {
     static SoundController instance;
     return instance;
 }
+
+SoundController::SoundController()
+    : masterVolume(100.0f), soundVolume(100.0f), musicVolume(100.0f), muted(false), savedMasterVolume(100.0f) {
+        currentMusic = std::make_unique<sf::Music>();
+    };
+
