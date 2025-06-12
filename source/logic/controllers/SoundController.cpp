@@ -3,3 +3,10 @@
 //
 
 #include "controllers/SoundController.h"
+#include <iostream>
+#include <algorithm>
+
+SoundController &SoundController::getInstance() {
+    static SoundController instance;
+    return instance;
+}
