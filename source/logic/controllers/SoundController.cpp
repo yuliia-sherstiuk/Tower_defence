@@ -50,3 +50,10 @@ void SoundController::stopMusic() {
 void SoundController::pauseMusic() {
     currentMusic->pause();
 }
+
+//Resume music
+void SoundController::resumeMusic() {
+    if (!muted) {
+        currentMusic->play();
+    }
+}
