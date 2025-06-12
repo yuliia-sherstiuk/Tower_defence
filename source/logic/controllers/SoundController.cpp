@@ -57,3 +57,9 @@ void SoundController::resumeMusic() {
         currentMusic->play();
     }
 }
+
+//Setting Master volume
+void SoundController::setMasterVolume(float volume) {
+    masterVolume = std::max(0.0f, std::min(100.0f, volume));
+    updateAllVolumes();
+}
