@@ -4,51 +4,51 @@
 #include "Enemy.h"
 #include "Tower.h"
 
-class Puncher: public Tower {
+class Puncher final: public Tower {
     public:
     Puncher();
-    void Puncher::attack(Enemy* enemy);
+    void Puncher::attack(Enemy* enemy) override;
 
-    void Puncher::takeDamage(int damage);
+    void Puncher::takeDamage(int damage) override;
 
-    void Puncher::upgrade();
+    void Puncher::upgrade() override;
 
-    void Puncher::getDestroyed();
+    void Puncher::getDestroyed() override;
 
 };
 
-class Freezer: public Tower {
+class Freezer final: public Tower {
 public:
     Freezer();
-    void Freezer::attack(Enemy* enemy);
+    void Freezer::attack(Enemy* enemy) override;
 
-    void Freezer::takeDamage(int damage);
+    void Freezer::takeDamage(int damage) override;
 
-    void Freezer::upgrade();
+    void Freezer::upgrade() override;
 
-    void Freezer::getDestroyed();
+    void Freezer::getDestroyed() override;
 };
 
-class Bomber: public Tower {
+class Bomber final: public Tower {
 public:
     Bomber();
-    void Bomber::attack(Enemy* enemy);
+    void Bomber::attack(Enemy* enemy) override;
 
-    void Bomber::takeDamage(int damage);
+    void Bomber::takeDamage(int damage) override;
 
-    void Bomber::upgrade();
+    void Bomber::upgrade() override;
 
-    void Bomber::getDestroyed();
+    void Bomber::getDestroyed() override;
 };
 
-class Base: public Tower {
+class Base final: public Tower {
     public:
 
         Base();
 
-        void Base::takeDamage(int damage);
+        void Base::takeDamage(int damage) override;
 
-        void Base::getDestroyed();
+        void Base::getDestroyed() override;
 };
 
 

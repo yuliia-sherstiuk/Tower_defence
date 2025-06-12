@@ -33,12 +33,14 @@ public:
 
     Tower(std::string name, int hp, int atk,int price, std::string spritePath);
 
-    void attack(Enemy* enemy);
-    void upgrade();
-    void takeDamage(int amount);
-    void getDestroyed();
+    virtual void attack(Enemy* enemy);
+    virtual void upgrade();
+    virtual void takeDamage(int amount);
+    virtual void getDestroyed();
 
     Tower* createTower(std::string towerType);
+
+    virtual ~Tower();
 };
 
 
