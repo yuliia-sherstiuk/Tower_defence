@@ -73,3 +73,12 @@ void SoundController::mute() {
         pauseMusic();
     }
 }
+
+//Unmute
+void SoundController::unmute() {
+    if (!muted) {
+        muted = false;
+        masterVolume = savedMasterVolume;
+        updateAllVolumes();
+    }
+}
