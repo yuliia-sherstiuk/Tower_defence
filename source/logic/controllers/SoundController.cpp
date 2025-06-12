@@ -82,3 +82,12 @@ void SoundController::unmute() {
         updateAllVolumes();
     }
 }
+
+//Toggle mute
+void SoundController::toggleMute() {
+    if (!muted) {
+        unmute();
+    } else {
+        muted();
+    }
+}
