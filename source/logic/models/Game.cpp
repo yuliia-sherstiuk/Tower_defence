@@ -1,7 +1,7 @@
 #include "Game.h"
-#include "controllers/WaveManager.h"
-#include "utils/Level.h"
-#include "models/Tower.h"
+#include "WaveManager.h"
+#include "Level.h"
+#include "Tower.h"
 #include <iostream>
 
 Game::Game()
@@ -17,6 +17,27 @@ void Game::start() {
     std::cout << "Game started!\n";
     waveManager->initializeWave(currentLevel->getSpawnPoint());
 }
+
+void Game::pause() {
+    if (running && paused) {
+        paused = true;
+        std::cout << "Game paused.\n";
+    }
+}
+
+void Game::play() {
+    if (running && paused) {
+        paused = false;
+        std::cout << "Game resumed.\n";
+    }
+}
+
+void Game::quit() {
+    running = false;
+    std::cout << "Quit!\n";
+    waveManager->initializeWave(currentLevel->getSpawnPoint());
+}
+
 
 void Game::update(float deltaTime) {
     if (!running) return;

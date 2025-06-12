@@ -1,13 +1,15 @@
-#ifndef GAMECONTROLLER_HPP
-#define GAMECONTROLLER_HPP
+#ifndef GAMECONTROLLER_H
+#define GAMECONTROLLER_H
 
 
 #include <string>
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include "models/Game.h"
-#include "models/ScoreManager.h"
-#include "models/scoreEntry.h"
+#include "Game.h"
+#include "WaveManager.h"
+#include "Tower.h"
+#include "ScoreManager.h"
+#include "scoreEntry.h"
 
 // Main controller class that manages the overall game flow.
 class GameController {
@@ -20,6 +22,11 @@ public:
 
     // Starts the game if a player is logged in.
     void startGame();
+
+    void pauseGame();
+    void playGame();
+    void quitGame();
+
 
     // Updates the game logic every frame.
     void update(float deltaTime);
@@ -51,4 +58,4 @@ private:
     sf::RenderWindow window;                  // Main SFML window for rendering.
 };
 
-#endif // GAMECONTROLLER_HPP
+#endif // GAMECONTROLLER_H

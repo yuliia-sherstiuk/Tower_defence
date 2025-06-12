@@ -1,6 +1,4 @@
-#include "controllers/GameController.h"
-#include "models/Tower.h"
-#include "utils/LevelLoader.h"
+#include "GameController.h"
 #include <iostream>
 
 // Constructor: Initializes the game and the window.
@@ -26,38 +24,50 @@ void GameController::loginPlayer(const std::string& playerName) {
 void GameController::startGame() {
     if (!currentPlayer.empty()) {
         game->start();
-        std::cout << "Game started for " << currentPlayer << "!" << std::endl;
-    } else {
-        std::cerr << "No player logged in. Please login first." << std::endl;
-    }
+       
+    } 
 }
 
+// Pauses the game.
+void GameController::pauseGame() {
+    game->pause();
+    std::cout << "Game paused." << std::endl;
+}
+
+// Resumes the game from a paused state.
+void GameController::playGame() {
+    game->play();
+    std::cout << "" << std::endl;
+}
+
+
+void GameController::quitGame() {
+    game->quit();         
+    window.close();       
+    std::cout << "Game quit and window closed." << std::endl;
+}
 
 // Updates the game state (called every frame).
 void GameController::update(float deltaTime) {
     if (game->isRunning()) {
         game->update(deltaTime);
 
-        // Read the following words:
         int baseHealth = Tower::getInstance().getBaseHealth();
         if (baseHealth <= 0) {
             std::cout << "Base destroyed! Game over!" << std::endl;
             stopGame();
             addPlayerScore(currentScore);
         }
-
-        
     }
 }
 
-
-// Stops the game
+// Stops the game.
 void GameController::stopGame() {
     game->stop();
     std::cout << "Game stopped for " << currentPlayer << "." << std::endl;
 }
 
-// Applies damage to the tower's base and logs the new health.
+// ///Applies damage to the tower's base and logs the new health.
 void GameController::handleTowerDamage(int damage) {
     Tower::getInstance().damageBase(damage);
     std::cout << "Base took " << damage << " damage. Remaining health: "
