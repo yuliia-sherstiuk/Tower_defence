@@ -11,11 +11,12 @@
 #include <memory>
 
 class SoundController {
-    static SoundController getInstance();
+public:
+    static SoundController& getInstance();
 
     //Handle sound
     bool loadSound(const std::string& name, const std::string& filepath);
-    void playSound (const std::string& name);
+    void playSound(const std::string& name);
     void stopSound(const std::string& name);
     void stopAllSounds();
 
@@ -42,7 +43,7 @@ class SoundController {
     void unmute();
     void toggleMute();
 
-    private:
+private:
     SoundController();
     ~SoundController() = default;
     SoundController(const SoundController&) = delete;
