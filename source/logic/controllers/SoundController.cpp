@@ -40,6 +40,14 @@ void SoundController::playSound(const std::string& name) {
     }
 }
 
+// Stops a specific sound by name
+void SoundController::stopSound(const std::string& name) {
+    auto it = sounds.find(name);
+    if (it != sounds.end()) {
+        it->second->stop();
+    }
+}
+
 // Plays the specified music if not muted
 void SoundController::playMusic(const std::string& name, bool loop) {
     if (!muted) {
