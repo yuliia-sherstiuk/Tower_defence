@@ -16,7 +16,7 @@ SoundController &SoundController::getInstance() {
 SoundController::SoundController()
     : masterVolume(100.0f), soundVolume(100.0f), musicVolume(100.0f), muted(false), savedMasterVolume(100.0f) {
         currentMusic = std::make_unique<sf::Music>();
-    };
+    }
 
 // Loads a sound from a file and associates it with a specified name.
 bool SoundController::loadSound(const std::string& name, const std::string& filepath) {
@@ -30,6 +30,14 @@ bool SoundController::loadSound(const std::string& name, const std::string& file
     sounds[name]->setBuffer(soundBuffers[name]);
     sounds[name]->setVolume(soundVolume*(masterVolume/100.0f));
     return true;
+}
+
+//Plays a sound by name if not muted
+void SoundController::playSound(const std::string& name) {
+    auto it = sounds.find(name);
+    if (it == sounds.end() && !muted) {
+        it->second->play();
+    }
 }
 
 // Plays the specified music if not muted
