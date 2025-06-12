@@ -28,6 +28,18 @@ private:
     sf::Text inputField;
     sf::Text enterButton;
 
+    // Volume elements
+    sf::Text volumeLabel;
+    sf::RectangleShape volumeBarBackground;
+    sf::CircleShape volumeSlider;
+    float volume = 100.f;
+    bool isMuted = false;
+
+    sf::RectangleShape muteBox;
+    sf::Text muteLabel;
+    bool muteChecked = false;
+
+
     std::vector<sf::Text> scoreEntries;
     std::vector<std::string> usernames;
     int scrollOffset = 0;
