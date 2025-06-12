@@ -2,7 +2,7 @@
 // Created by chris on 12/06/2025.
 //
 
-#include "controllers/SoundController.h"
+#include "SoundController.h"
 #include <iostream>
 #include <algorithm>
 
@@ -50,8 +50,8 @@ void SoundController::stopSound(const std::string& name) {
 
 // Stops all currently playing sounds
 void SoundController::stopAllSounds() {
-    for (auto& [name, sound] : sounds) {
-        sound->stop();
+    for (auto& pair : sounds) {
+        pair.second->stop();
     }
 }
 
@@ -140,8 +140,8 @@ void SoundController::toggleMute() {
 //Update all volumes
 void SoundController::updateAllVolumes() {
     float effectiveVolume = muted ? 0.0f : masterVolume / 100.0f;
-    for (auto& [name, sound] : sounds) {
-        sound->setVolume(soundVolume*effectiveVolume);
+    for (auto& pair : sounds) {
+        pair.second->setVolume(soundVolume*effectiveVolume);
     }
     currentMusic->setVolume(musicVolume*effectiveVolume);
 }
