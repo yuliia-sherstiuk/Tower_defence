@@ -1046,3 +1046,5 @@ dkms.conf
 
 # IGNORE
 *.exe
+
+CmakeLists.txt

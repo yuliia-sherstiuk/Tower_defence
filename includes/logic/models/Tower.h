@@ -37,6 +37,8 @@ public:
     void upgrade();
     void takeDamage(int amount);
     void getDestroyed();
+
+    Tower* createTower(std::string towerType);
 };
 
 

@@ -1,4 +1,4 @@
-#include "towerVariants.h"
+#include "../../../includes/logic/models/towerVariants.h"
 
 Puncher::Puncher() : Tower("Punchy", 200, 2, 10, " "){}
 
@@ -36,10 +36,10 @@ Freezer:: Freezer():Tower("Freezie", 1, 10, 30, " ") {}
 void Freezer::attack(Enemy* enemy) {
     enemy->takeDamage(this->atk);
     std::cout<<"Enemy was frozen!"<<std::endl;
-    float originalSpeed=enemy->speed;
-    enemy->speed=0;
-    //wait 3 seconds then:
-    enemy->speed=originalSpeed;
+    // float originalSpeed=enemy->speed;
+    // enemy->speed=0;
+    // //wait 3 seconds then:
+    // enemy->speed=originalSpeed;
 }
 
 void Freezer::takeDamage(int damage) {
@@ -90,3 +90,18 @@ void Bomber::upgrade() {
     //increase explosion size
     std::cout<<"the bomb was upgraded, explosion radius increased"<<std::endl;
 }
+
+Base::Base(): Tower("Base",500, 0, 0, " ") {}
+
+void Base::takeDamage(int damage) {
+    health-=damage;
+    if (health<=0) {
+        health=0;
+    }
+    std::cout<<"THE BASE WAS ATTACKED, HEEEELPPPP"<<std::endl;
+}
+
+void Base::getDestroyed() {
+    std::cout<<"GAME OVER"<<std::endl;
+}
+

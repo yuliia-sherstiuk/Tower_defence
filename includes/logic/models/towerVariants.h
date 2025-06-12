@@ -41,6 +41,16 @@ public:
     void Bomber::getDestroyed();
 };
 
+class Base: public Tower {
+    public:
+
+        Base();
+
+        void Base::takeDamage(int damage);
+
+        void Base::getDestroyed();
+};
+
 
 
 #endif //TOWERVARIANTS_H

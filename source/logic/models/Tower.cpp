@@ -1,5 +1,7 @@
 #include "Tower.h"
 
+#include "towerVariants.h"
+
 /**Tower constructor, params should be obvious enough */
 Tower::Tower(std::string name, int hp, int atk,int price, std::string spritePath) {
     this->name = name;
@@ -53,4 +55,24 @@ void Tower::upgrade() {
 /** in case we want to add an animation or a special effect to a tower when destroyed*/
 void Tower::getDestroyed() {
         // overload with an animation or something for when a tower gets destroyed
+}
+
+Tower* Tower::createTower(std::string towerType) {
+    switch (towerType) {
+        case "Puncher":
+            return new Puncher;
+            break;
+        case "Freezer":
+            return new Freezer;
+            break;
+        case "Bomber":
+            return new Bomber;
+            break;
+        case "Base":
+            return new Base;
+            break;
+        default:
+            std::cerr<<"invalid tower type"<<std::endl;
+            return nullptr;
+    }
 }
