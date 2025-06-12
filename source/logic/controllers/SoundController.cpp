@@ -40,3 +40,8 @@ void SoundController::playMusic(const std::string& name, bool loop) {
         currentMusic->play();
     }
 }
+
+//Stop the music
+void SoundController::stopMusic() {
+    currentMusic->stop();
+}
