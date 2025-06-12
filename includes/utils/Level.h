@@ -7,8 +7,8 @@
 
 #include <vector>
 #include <memory>
-#include "Position.h"
-#include "PathNode.h"
+#include "utils/Position.h"
+#include "utils/PathNode.h"
 
 class Level {
 private:
@@ -35,10 +35,12 @@ public:
         nodes.push_back(node);
     }
 
+    //Add tower spot
     void addTowerSpot(const Position& pos) {
         towerSpots.push_back(pos);
     }
 
+    //connect nodes
     static void connectNodes(const std::shared_ptr<PathNode>& from, std::shared_ptr<PathNode> to) {
         from->addConnection(std::move(to));
     }

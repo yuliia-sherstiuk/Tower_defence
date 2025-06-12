@@ -4,8 +4,8 @@
 #include <iostream>
 #include <memory>
 #include <string>
-#include "Position.h"
-#include "Enemy.h"
+#include "utils/Position.h"
+#include "models/Enemy.h"
 
 class Tower{
 private:
@@ -22,21 +22,25 @@ public:
     void damageBase(int damage);
     int getBaseHealth() const;
 
-    std::string name; //tower name
-    int health=100; //tower health
-    int atk=1;
-    int level=1;
-    double atkMultiplier=0.1;
+    std::string name{}; //tower name
+    int health{}; //tower health
+    int atk{};
+    int level{};
+    double atkMultiplier{};
     bool visible=true;
-    std::string spritePath;
-    bool price;
+    std::string spritePath{};
+    int price{};
 
     Tower(std::string name, int hp, int atk,int price, std::string spritePath);
 
-    void attack(Enemy* enemy);
-    void upgrade();
-    void takeDamage(int amount);
-    void getDestroyed();
+    virtual void attack(Enemy* enemy);
+    virtual void upgrade();
+    virtual void takeDamage(int amount);
+    virtual void getDestroyed();
+
+    Tower* createTower(std::string towerType);
+
+    virtual ~Tower();
 };
 
 

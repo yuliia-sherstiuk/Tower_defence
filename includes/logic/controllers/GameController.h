@@ -5,11 +5,9 @@
 #include <string>
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include "Game.h"
-#include "WaveManager.h"
-#include "Tower.h"
-#include "ScoreManager.h"
-#include "scoreEntry.h"
+#include "models/Game.h"
+#include "models/ScoreManager.h"
+#include "models/scoreEntry.h"
 
 // Main controller class that manages the overall game flow.
 class GameController {

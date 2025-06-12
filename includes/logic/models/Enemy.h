@@ -2,12 +2,14 @@
 // Created by chris on 04/06/2025.
 //
 
+
 #ifndef ENEMY_H
 #define ENEMY_H
 
 #include <memory>
-#include "Position.h"
+#include "utils/Position.h"
 
+//Forward declaration
 class PathNode;
 
 enum class EnemyType {
@@ -17,6 +19,8 @@ enum class EnemyType {
 };
 
 class Enemy {
+public:
+	int reward;
 private:
 	int id;
 	int health;
@@ -25,9 +29,9 @@ private:
 	Position position;
 	std::shared_ptr<PathNode> currentNode;
 	std::shared_ptr<PathNode> nextNode;
-	float progress; //progress between currentNode and nextNode (0.0 to 1.0)
+	float progress; // Progress between currentNode and nextNode (0.0 à 1.0)
 	float attackTimer = 0.0f;
-	const float attackCooldown = 1.0f; //attack each second
+	const float attackCooldown = 1.0f; // Attack each sec
 	EnemyType type;
 
 public:
@@ -42,19 +46,24 @@ public:
 	int getDamage() const { return damage; }
 	const Position& getPosition() const { return position; }
 	EnemyType getType() const { return type; }
+	int getReward() const { return reward; }
 
+	// Methods
 	void move(float deltaTime);
 	void attack();
 	void takeDamage(int amount);
 
+	// State methods
 	bool isDead() const { return health <= 0; }
 	bool isAlive() const { return !isDead(); }
 	bool hasReachedEnd() const;
 
+	//Handling the path
 	void setNextNode(std::shared_ptr<PathNode>&& node) { nextNode = std::move(node); }
 	std::shared_ptr<PathNode> getCurrentNode() const { return currentNode; }
 	std::shared_ptr<PathNode> getNextNode() const { return nextNode; }
 
+	//To define position
 	void setPosition(const Position& pos) { position = pos; }
 };
 
