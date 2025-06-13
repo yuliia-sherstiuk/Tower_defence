@@ -86,6 +86,13 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
             }
             break;
         }
+            //Resets dragging state on mouse button release
+        case sf::Event::MouseButtonReleased: {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                isDraggingVolume = false;
+            }
+            break;
+        }
     }
 
 }
