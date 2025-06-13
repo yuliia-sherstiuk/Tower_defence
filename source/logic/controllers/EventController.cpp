@@ -80,7 +80,14 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
                 return;
             }
 
+            // Calls the mouse click callback with the position and button type if the callback is set.
+            if (mouseClickCallback) {
+                mouseClickCallback(mousePosition, event.mouseButton.button);
+            }
+            break;
         }
     }
+
 }
+
 
