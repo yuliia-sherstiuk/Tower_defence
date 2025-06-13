@@ -51,6 +51,11 @@ public:
     //Specific method for the existing Ui
     void setupWindowViewButtons(); //auto configure buttons
 
+    //Entry states
+    bool isKeyPressed(sf::Keyboard::Key key) const;
+    bool isMouseButtonPressed(sf::Mouse::Button button) const;
+    sf::Vector2f getMousePosition() const;
+
 
 };
 
