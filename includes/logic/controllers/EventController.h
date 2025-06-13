@@ -48,6 +48,10 @@ public:
     void registerVolumeSlider(sf::FloatRect sliderBounds);
     void clearButtons();
 
+    //Specific method for the existing Ui
+    void setupWindowViewButtons(); //auto configure buttons
+
+
 };
 
 
