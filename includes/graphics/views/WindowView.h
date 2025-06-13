@@ -1,4 +1,4 @@
-
+//WindowView.h
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -14,7 +14,8 @@ public:
     void scrollUp();
     void scrollDown();
     void setInputText(const std::string& text);
-    void updateVolumeSliderPosition(); 
+    void updateVolumeSliderPosition();
+    void handleScrollEvent(const sf::Event& event);
 
 private:
     sf::Font font;
@@ -34,7 +35,7 @@ private:
     sf::RectangleShape volumeBarBackground;
     sf::CircleShape volumeSlider;
 
-    float volume = 1.f;        //  0 до 1
+    float volume = 1.f;
     bool isMuted = false;
     bool muteChecked = false;
     bool isDraggingVolume = false;
@@ -42,9 +43,9 @@ private:
     sf::RectangleShape muteBox;
     sf::Text muteLabel;
 
-    std::vector<sf::Text> scoreEntries;
+    //std::vector<sf::Text> scoreEntries;
     std::vector<std::string> usernames;
-    int scrollOffset = 0;
+
 
     sf::Text mapButtons[2];
     sf::Text difficultyButtons[3];
@@ -52,9 +53,16 @@ private:
     sf::Text bottomButtons[5];
 
     sf::Text nextWaveBtn;
-
+    sf::RectangleShape scrollBarBackground;
+    sf::RectangleShape scrollBarThumb;
     std::vector<sf::RectangleShape> labelBoxes;
     std::vector<sf::RectangleShape> buttonBoxes;
 
     std::string inputText;
+
+    sf::RectangleShape scoreListArea;
+    std::vector<sf::Text> scoreEntries;
+    int scrollOffset = 0;
+
+
 };

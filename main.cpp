@@ -1,3 +1,5 @@
+//main.cpp
+
 #include <SFML/Graphics.hpp>
 #include "graphics/views/WindowView.h"
 
