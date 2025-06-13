@@ -21,5 +21,13 @@ void EventController::setupWindowViewButtons() {
         sf::FloatRect bounds(890 + i*35, 350 ,30,30);
         registerUIButton(buttonId, bounds);
     }
+
+    //Map button - exact WindowView //update if needed: mapButtons
+    for (int i = 0; i <2; i++) {
+        std::string buttonId = "map_" + std::to_string(i+1);
+        sf::FloatRect bounds(890 + i*40, 250 ,30,30);
+        registerUIButton(buttonId, bounds);
+    }
+
 }
 
