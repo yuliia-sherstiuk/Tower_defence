@@ -13,7 +13,8 @@ public:
     void addUsername(const std::string& name);
     void scrollUp();
     void scrollDown();
-    void setInputText(const std::string& text); // для обновления текста из главного цикла
+    void setInputText(const std::string& text);
+    void updateVolumeSliderPosition(); 
 
 private:
     sf::Font font;
@@ -32,20 +33,18 @@ private:
     sf::Text volumeLabel;
     sf::RectangleShape volumeBarBackground;
     sf::CircleShape volumeSlider;
-    float volume = 100.f;
+
+    float volume = 1.f;        //  0 до 1
     bool isMuted = false;
+    bool muteChecked = false;
+    bool isDraggingVolume = false;
 
     sf::RectangleShape muteBox;
     sf::Text muteLabel;
-    bool muteChecked = false;
-
 
     std::vector<sf::Text> scoreEntries;
     std::vector<std::string> usernames;
     int scrollOffset = 0;
-
-
-
 
     sf::Text mapButtons[2];
     sf::Text difficultyButtons[3];

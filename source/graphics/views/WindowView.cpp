@@ -168,30 +168,30 @@ void WindowView::setupUI() {
     volumeLabel.setString("Volume");
     volumeLabel.setCharacterSize(18);
     volumeLabel.setFillColor(sf::Color::White);
-    volumeLabel.setPosition(890, 550);
+    volumeLabel.setPosition(890, 540);
     labelBoxes.push_back(scoreBox);
     labelBoxes.back().setPosition(volumeLabel.getPosition());
 
     volumeBarBackground.setSize({100, 5});
     volumeBarBackground.setFillColor(sf::Color(100, 100, 100));
-    volumeBarBackground.setPosition(890, 500);
+    volumeBarBackground.setPosition(890, 580);
 
     volumeSlider.setRadius(8);
     volumeSlider.setFillColor(sf::Color::White);
     volumeSlider.setOrigin(8, 8);
-    volumeSlider.setPosition(890 + 100, 502);
+    volumeSlider.setPosition(890 + 100, 580);
 
     muteBox.setSize({20, 20});
     muteBox.setFillColor(sf::Color::Transparent);
     muteBox.setOutlineColor(sf::Color::White);
     muteBox.setOutlineThickness(2);
-    muteBox.setPosition(890, 530);
+    muteBox.setPosition(890, 600);
 
     muteLabel.setFont(font);
     muteLabel.setString("Mute");
     muteLabel.setCharacterSize(18);
     muteLabel.setFillColor(sf::Color::White);
-    muteLabel.setPosition(915, 528);
+    muteLabel.setPosition(915, 610);
 
     const std::string labels[5] = { "START", "PAUSE", "PLAY", "QUIT" };
     for (int i = 0; i < 4; i++) {
@@ -246,8 +246,24 @@ void WindowView::render(sf::RenderWindow& window) {
         scoreEntries[i].setPosition(30.f, baseY + (i - scrollOffset) * 20.f);
         window.draw(scoreEntries[i]);
     }
-}
+    window.draw(muteBox);
+    window.draw(muteLabel);
 
+    if (isMuted) {
+        sf::RectangleShape checkMark({14, 14});
+        checkMark.setFillColor(sf::Color::White);
+        checkMark.setPosition(muteBox.getPosition().x + 3, muteBox.getPosition().y + 3);
+        window.draw(checkMark);
+    }
+
+    window.draw(volumeBarBackground);
+    window.draw(volumeSlider);
+}
+void WindowView::updateVolumeSliderPosition() {
+    float x = volumeBarBackground.getPosition().x + volume * volumeBarBackground.getSize().x;
+    float y = volumeBarBackground.getPosition().y + volumeBarBackground.getSize().y / 2.f;
+    volumeSlider.setPosition(x, y);
+}
 void WindowView::setInputText(const std::string& text) {
     inputText = text;
     inputField.setFont(font);
@@ -282,19 +298,37 @@ void WindowView::scrollDown() {
     }
 }
 
+
 void WindowView::handleClick(sf::Vector2f mousePos) {
+   //muteBox
+    if (muteBox.getGlobalBounds().contains(mousePos)) {
+        isMuted = !isMuted;
+        std::cout << "Mute toggled: " << (isMuted ? "ON" : "OFF") << std::endl;
+
+        if (isMuted) {
+            volume = 0.f;
+        } else {
+            volume = 1.f;
+        }
+        updateVolumeSliderPosition();
+        return;
+    }
+
+
+    if (volumeBarBackground.getGlobalBounds().contains(mousePos)) {
+        float localX = mousePos.x - volumeBarBackground.getPosition().x;
+        volume = std::clamp(localX / volumeBarBackground.getSize().x, 0.f, 1.f);
+        isMuted = (volume == 0.f);
+        updateVolumeSliderPosition();
+        std::cout << "Volume set to " << volume << std::endl;
+        return;
+    }
+
+
     for (size_t i = 0; i < buttonBoxes.size(); ++i) {
         if (buttonBoxes[i].getGlobalBounds().contains(mousePos)) {
             std::cout << "Button " << i << " clicked!" << std::endl;
-
-            switch (i) {
-                case 0:
-                    std::cout << "Action for button 0\n";
-                    break;
-                case 1:
-                    std::cout << "Action for button 1\n";
-                    break;
-            }
+            // ...
         }
     }
 }
