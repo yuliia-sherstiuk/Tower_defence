@@ -51,6 +51,8 @@ void EventController::setupWindowViewButtons() {
     sf::FloatRect MuteToggleBounds(890, 600,20,20);
     registerUIButton("mute_toggle", MuteToggleBounds);
 
+    //Volume slider - exact WindowView // VolumeSlider
+    registerVolumeSlider(sf::FloatRect(890, 580, 100, 5));
 
 
 }
