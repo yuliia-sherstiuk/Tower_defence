@@ -36,5 +36,12 @@ void EventController::setupWindowViewButtons() {
         registerUIButton(buttonId, bounds);
     }
 
+    //Bottom bar buttons - exact WindowView // bottomButtons
+    const std::string bottomIds[4] = {"start", "pause", "play", "quit"};
+    for (int i = 0; i <4; i++) {
+        sf::FloatRect bounds(20 + i*242, 650 ,100,30);
+        registerUIButton("bottomIds_" + std::to_string(i+1), bounds);
+    }
+
 }
 
