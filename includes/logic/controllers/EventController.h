@@ -42,6 +42,12 @@ public:
     void registerButtonCallback(ButtonCallback& callback);
     void registerVolumeCallback(VolumeCallback& callback);
     void registerScrollCallback(ScrollCallback& callback);
+
+    //Handling Ui buttons - adapted to WindowView positions
+    void registerUIButton(const std::string& buttonId, sf::FloatRect& bounds);
+    void registerVolumeSlider(sf::FloatRect sliderBounds);
+    void clearButtons();
+
 };
 
 
