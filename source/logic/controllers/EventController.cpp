@@ -47,6 +47,11 @@ void EventController::setupWindowViewButtons() {
     sf::FloatRect nextWaveBounds(890, 500, 140, 30);
     registerUIButton("next_wave", nextWaveBounds);
 
+    //Mute - exact WindowView // muteBox
+    sf::FloatRect MuteToggleBounds(890, 600,20,20);
+    registerUIButton("mute_toggle", MuteToggleBounds);
+
+
 
 }
 
