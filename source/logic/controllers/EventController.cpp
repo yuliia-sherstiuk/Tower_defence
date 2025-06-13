@@ -43,5 +43,10 @@ void EventController::setupWindowViewButtons() {
         registerUIButton("bottomIds_" + std::to_string(i+1), bounds);
     }
 
+    //Next wave button - exact WindowView // nextWaveBtn
+    sf::FloatRect nextWaveBounds(890, 500, 140, 30);
+    registerUIButton("next_wave", nextWaveBounds);
+
+
 }
 
