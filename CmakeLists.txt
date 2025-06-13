@@ -1,0 +1,68 @@
+cmake_minimum_required(VERSION 3.14)
+project(Tower)
+
+set(CMAKE_CXX_STANDARD 14)
+
+# Ajoutez le chemin vers les en-têtes SFML
+set(SFML_DIR "C:/msys64/mingw64/include")
+
+# Inclure les répertoires de SFML
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
+# Inclure les répertoires
+include_directories(Tower_defence/includes)
+include_directories(Tower_defence/includes/logic)
+include_directories(Tower_defence/includes/logic/models)
+include_directories(Tower_defence/includes/logic/controllers)
+include_directories(Tower_defence/includes/utils)
+include_directories(Tower_defence/includes/graphics/views)
+
+# Définir l'exécutable
+add_executable(Tower
+        #main
+        Tower_defence/source/main.cpp
+
+        #Includes views
+        Tower_defence/includes/graphics/views/WindowView.h
+
+        #Includes controllers
+        Tower_defence/includes/logic/controllers/GameController.h
+        Tower_defence/includes/logic/controllers/WaveManager.h
+        Tower_defence/includes/logic/controllers/SoundController.h
+
+        #Includes models
+        Tower_defence/includes/logic/models/Economy.h
+        Tower_defence/includes/logic/models/Enemy.h
+        Tower_defence/includes/logic/models/Game.h
+        Tower_defence/includes/logic/models/scoreEntry.h
+        Tower_defence/includes/logic/models/ScoreManager.h
+        Tower_defence/includes/logic/models/Tower.h
+        Tower_defence/includes/logic/models/Wave.h
+
+        #Includes utils
+        Tower_defence/includes/utils/GridPosition.h
+        Tower_defence/includes/utils/Level.h
+        Tower_defence/includes/utils/LevelLoader.h
+        Tower_defence/includes/utils/PathNode.h
+        Tower_defence/includes/utils/Position.h
+
+        #Controllers
+        Tower_defence/source/logic/controllers/GameController.cpp
+        Tower_defence/source/logic/controllers/WaveManager.cpp
+        Tower_defence/source/logic/controllers/SoundController.cpp
+
+        #Models
+        Tower_defence/source/logic/models/Economy.cpp
+        Tower_defence/source/logic/models/Enemy.cpp
+        Tower_defence/source/logic/models/Game.cpp
+        Tower_defence/source/logic/models/ScoreManager.cpp
+        Tower_defence/source/logic/models/Tower.cpp
+        Tower_defence/source/logic/models/Wave.cpp
+
+        #Views
+        Tower_defence/source/graphics/views/WindowView.cpp
+
+)
+
+# Lier les bibliothèques SFML
+target_link_libraries(Tower sfml-graphics sfml-window sfml-system)
