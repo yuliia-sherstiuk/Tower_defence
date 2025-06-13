@@ -73,6 +73,13 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
                 }
                 return;
             }
+            // Retrieves the button ID at the given mouse position and triggers the associated callback if valid.
+            std::string buttonId = getButtonAtPositon(mousePosition);
+            if (!buttonId.empty() && buttonCallback) {
+                ButtonCallback(buttonId);
+                return;
+            }
+
         }
     }
 }
