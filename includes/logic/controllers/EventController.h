@@ -31,6 +31,17 @@ public:
     using ScrollCallback = std::function<void(bool)>; // true = up, false = down
 
     EventController();
+
+    //Handling SFML events
+    void handleEvent(const sf::Event& event, sf::RenderWindow& window);
+
+    //Register callbacks
+    void registerKeyCallback(KeyCallback& callback);
+    void registerMouseClickCallback(MouseClickCallback& callback);
+    void registerMouseMoveCallback(MouseMoveCallback& callback);
+    void registerButtonCallback(ButtonCallback& callback);
+    void registerVolumeCallback(VolumeCallback& callback);
+    void registerScrollCallback(ScrollCallback& callback);
 };
 
 
