@@ -54,6 +54,26 @@ void EventController::setupWindowViewButtons() {
     //Volume slider - exact WindowView // VolumeSlider
     registerVolumeSlider(sf::FloatRect(890, 580, 100, 5));
 
+}
 
+// Handles mouse button events, specifically for volume slider adjustments
+void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
+    switch (event.type) {
+        case sf::Event::MouseButtonPressed: {
+            mousePosition = sf::Vector2f(
+                static_cast<float>(event.mouseButton.x),
+                static_cast<float>(event.mouseButton.y)
+                );
+            //Verify the slider volume
+            if (volumeSliderBounds.contains(mousePosition) && event.mouseButton.button == sf::Mouse::Left) {
+                isDraggingVolume = true;
+                float volume = calculateVolumeFromPosition(mousePosition);
+                if (volumeCallback) {
+                    volumeCallback(volume);
+                }
+                return;
+            }
+        }
+    }
 }
 
