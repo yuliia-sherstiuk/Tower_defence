@@ -56,7 +56,35 @@ public:
     bool isMouseButtonPressed(sf::Mouse::Button button) const;
     sf::Vector2f getMousePosition() const;
 
+    //Utility functions and button management structure
+    std::vector<std::string> getButtonAtPosition(sf::Vector2f position) const;
+    bool hasButton(const std::string& buttonId) const;
 
+    private:
+    struct ButtonInfo {
+        sf::FloatRect bounds;
+        bool enabled;
+
+        ButtonInfo(sf::FloatRect bounds): bounds(bounds), enabled(true) {}
+    };
+
+    std::map<std::string, ButtonInfo> buttons;
+    sf::Vector2f mousePosition;
+    sf::FloatRect volumeSliderBounds;
+    bool isDraggingVolume;
+
+    //Callbacks
+    KeyCallback keyCallback;
+    MouseClickCallback mouseClickCallback;
+    MouseMoveCallback mouseMoveCallback;
+    ButtonCallback buttonCallback;
+    VolumeCallback volumeCallback;
+    ScrollCallback scrollCallback;
+
+    //Utility functions
+    bool isPointInButton(sf::Vector2f point, const ButtonInfo& button) const;
+    std::string getButtonAtPositon(sf::Vector2f pos) const;
+    float calculateVolumeFromPosition(sf::Vector2f pos) const;
 };
 
 
