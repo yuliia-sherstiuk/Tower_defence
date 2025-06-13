@@ -29,5 +29,12 @@ void EventController::setupWindowViewButtons() {
         registerUIButton(buttonId, bounds);
     }
 
+    //Tower button - exact WindowView // update if needed : towerButtons
+    for (int i = 0; i <3; i++) {
+        std::string buttonId = "tower_" + std::to_string(i+1);
+        sf::FloatRect bounds(890 + i*23, 450 ,30,30);
+        registerUIButton(buttonId, bounds);
+    }
+
 }
 
