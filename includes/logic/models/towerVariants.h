@@ -7,38 +7,38 @@
 class Puncher final: public Tower {
     public:
     Puncher();
-    void Puncher::attack(Enemy* enemy) override;
+    void attack(Enemy* enemy) override;
 
-    void Puncher::takeDamage(int damage) override;
+    void takeDamage(int damage) override;
 
-    void Puncher::upgrade() override;
+    void upgrade() override;
 
-    void Puncher::getDestroyed() override;
+    void getDestroyed() override;
 
 };
 
 class Freezer final: public Tower {
 public:
     Freezer();
-    void Freezer::attack(Enemy* enemy) override;
+    void attack(Enemy* enemy) override;
 
-    void Freezer::takeDamage(int damage) override;
+    void takeDamage(int damage) override;
 
-    void Freezer::upgrade() override;
+    void upgrade() override;
 
-    void Freezer::getDestroyed() override;
+    void getDestroyed() override;
 };
 
 class Bomber final: public Tower {
 public:
     Bomber();
-    void Bomber::attack(Enemy* enemy) override;
+    void attack(Enemy* enemy) override;
 
-    void Bomber::takeDamage(int damage) override;
+    void takeDamage(int damage) override;
 
-    void Bomber::upgrade() override;
+    void upgrade() override;
 
-    void Bomber::getDestroyed() override;
+    void getDestroyed() override;
 };
 
 class Base final: public Tower {
@@ -46,9 +46,9 @@ class Base final: public Tower {
 
         Base();
 
-        void Base::takeDamage(int damage) override;
+        void takeDamage(int damage) override;
 
-        void Base::getDestroyed() override;
+        void getDestroyed() override;
 };
 
 

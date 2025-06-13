@@ -1,4 +1,4 @@
-#include "../controllers/GameController.h"
+#include "../../../includes/logic/controllers/GameController.h"
 #include <iostream>
 
 // Constructor: Initializes the game and the window.

@@ -1,6 +1,5 @@
-#include "../models/Tower.h"
-
-#include "../models/towerVariants.h"
+#include "../../../includes/logic/models/Tower.h"
+#include "../../../includes/logic/models/towerVariants.h"
 
 /**Tower constructor, params should be obvious enough */
 Tower::Tower(std::string name, int hp, int atk,int price, std::string spritePath) {
@@ -63,21 +62,22 @@ void Tower::getDestroyed() {
  * @return a tower variant depending on the name
  */
 Tower* Tower::createTower(std::string towerType) {
-    switch (towerType) {
-        case "Puncher":
-            return new Puncher;
-            break;
-        case "Freezer":
-            return new Freezer;
-            break;
-        case "Bomber":
-            return new Bomber;
-            break;
-        case "Base":
-            return new Base;
-            break;
-        default:
-            std::cerr<<"invalid tower type"<<std::endl;
-            return nullptr;
-    }
+
+    if (towerType=="Puncher"){
+        return new Puncher;
+        }
+    if (towerType=="Freezer"){
+        return new Freezer;
+        }
+    if (towerType=="Bomber"){
+        return new Bomber;
+        }
+    if (towerType=="Base"){
+        return new Base;
+        }
+
+    std::cerr<<"Tower creation failed, incorrect tower type"<<std::endl;
+    exit(1);
 }
+
+Tower:: ~Tower(){};

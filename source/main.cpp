@@ -1,4 +1,4 @@
-#include "../controllers/GameController.h"
+#include "../includes/logic/controllers/GameController.h"
 
 int main() {
     GameController controller;
