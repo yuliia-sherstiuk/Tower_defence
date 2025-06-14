@@ -1,9 +1,7 @@
 //
 // Created by chris on 14/06/2025.
 //
-//
-// Created by chris on 14/06/2025.
-//
+
 #include "../../../includes/logic/controllers/UIController.h"
 #include "../../../includes/logic/controllers/EventController.h"
 #include "../includes/graphics/views/WindowView.h"
