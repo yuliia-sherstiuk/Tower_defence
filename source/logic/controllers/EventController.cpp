@@ -159,3 +159,12 @@ void EventController::clearButtons() {
 bool EventController::isPointInButton(const sf::Vector2f& point, const ButtonInfo& button) {
     return button.enabled && button.bounds.contains(point);
 }
+// Retrieves the button ID at a specific position.
+std::string EventController::getButtonAtPosition(const sf::Vector2f& pos) const {
+    for (const auto& [buttonId, buttonInfo] : buttons) {
+        if (isPointInButton(pos, buttonInfo)) {
+            return buttonId;
+        }
+    }
+    return "";
+}
