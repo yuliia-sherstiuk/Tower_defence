@@ -155,3 +155,7 @@ void EventController::registerVolumeSlider(const sf::FloatRect& sliderBounds) {
 void EventController::clearButtons() {
     buttons.clear();
 }
+// Checks if a point is within a button's bounds.
+bool EventController::isPointInButton(const sf::Vector2f& point, const ButtonInfo& button) {
+    return button.enabled && button.bounds.contains(point);
+}
