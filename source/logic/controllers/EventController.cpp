@@ -168,3 +168,13 @@ std::string EventController::getButtonAtPosition(const sf::Vector2f& pos) const 
     }
     return "";
 }
+// Retrieves all button IDs at a specific position.
+std::vector<std::string> EventController::getButtonsAtPosition(const sf::Vector2f& pos) const {
+    std::vector<std::string> result;
+    for (const auto& [buttonId, buttonInfo] : buttons) {
+        if (isPointInButton(pos, buttonInfo)) {
+            result.push_back(buttonId);
+        }
+    }
+    return result;
+}
