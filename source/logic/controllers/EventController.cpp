@@ -147,3 +147,7 @@ void EventController::registerMouseMoveCallback(const MouseMoveCallback& callbac
 void EventController::registerUIButton(const std::string& buttonId, const sf::FloatRect& bounds) {
     buttons[buttonId] = ButtonInfo(bounds);
 }
+// Registers the bounds for the volume slider
+void EventController::registerVolumeSlider(const sf::FloatRect& sliderBounds) {
+    volumeSliderBounds = sliderBounds;
+}
