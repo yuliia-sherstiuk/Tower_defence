@@ -131,3 +131,7 @@ void EventController::registerMouseClickCallback(const MouseClickCallback& callb
 void EventController::registerButtonCallback(const ButtonCallback& callback) {
     buttonCallback = callback;
 }
+// Registers a callback for volume events.
+void EventController::registerVolumeCallback(const VolumeCallback& callback) {
+    volumeCallback = callback;
+}
