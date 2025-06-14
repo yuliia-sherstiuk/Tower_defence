@@ -43,6 +43,22 @@ public:
     void unmute();
     void toggleMute();
 
+    //Initialize game audio
+    void initializeGameAudio();
+
+    //Load game sounds and music
+    bool loadGameSounds();
+    bool loadGameMusic();
+
+    // Play specific sounds
+    void playTowerPlaceSound();
+    void playEnemyHitSound();
+    void playWaveStartSound();
+    void playButtonClickSound();
+    void playBackgroundMusic();
+    void playMoneySound();
+    void GameOverSound();
+
 private:
     SoundController();
     ~SoundController() = default;
