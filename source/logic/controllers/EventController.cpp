@@ -186,3 +186,7 @@ bool EventController::hasButton(const std::string& buttonId) const {
 bool EventController::isKeyPressed(sf::Keyboard::Key key) {
     return sf::Keyboard::isKeyPressed(key);
 }
+// Checks if a specific mouse button is pressed.
+bool EventController::isMouseButtonPressed(sf::Mouse::Button button) {
+    return sf::Mouse::isButtonPressed(button);
+}
