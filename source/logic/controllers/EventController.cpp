@@ -178,3 +178,7 @@ std::vector<std::string> EventController::getButtonsAtPosition(const sf::Vector2
     }
     return result;
 }
+// Checks if a button is registered by its ID.
+bool EventController::hasButton(const std::string& buttonId) const {
+    return buttons.find(buttonId) != buttons.end();
+}
