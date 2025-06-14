@@ -182,3 +182,7 @@ std::vector<std::string> EventController::getButtonsAtPosition(const sf::Vector2
 bool EventController::hasButton(const std::string& buttonId) const {
     return buttons.find(buttonId) != buttons.end();
 }
+// Checks if a specific key is pressed.
+bool EventController::isKeyPressed(sf::Keyboard::Key key) {
+    return sf::Keyboard::isKeyPressed(key);
+}
