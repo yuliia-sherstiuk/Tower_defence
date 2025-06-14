@@ -7,6 +7,11 @@
 class Puncher final: public Tower {
     public:
     Puncher();
+
+    double atkMultiplier=1.5;
+
+    int atkRange=1;
+
     void attack(Enemy* enemy) override;
 
     void takeDamage(int damage) override;
@@ -20,6 +25,11 @@ class Puncher final: public Tower {
 class Freezer final: public Tower {
 public:
     Freezer();
+
+    double atkMultiplier=1.5;
+
+    int atkRange=1;
+
     void attack(Enemy* enemy) override;
 
     void takeDamage(int damage) override;
@@ -32,6 +42,11 @@ public:
 class Bomber final: public Tower {
 public:
     Bomber();
+
+    double atkMultiplier=1.5;
+
+    int atkRange=1;
+
     void attack(Enemy* enemy) override;
 
     void takeDamage(int damage) override;

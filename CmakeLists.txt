@@ -64,6 +64,8 @@ add_executable(Tower
         source/graphics/views/WindowView.cpp
         source/graphics/views/towerView.cpp
         source/main.cpp
+        source/logic/controllers/towerManager.cpp
+        includes/logic/controllers/towerManager.h
 
 )
 

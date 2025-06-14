@@ -15,6 +15,15 @@ Tower::Tower(std::string name, int hp, int atk,int price, std::string spritePath
     }
 }
 
+void Tower::setRadius() {
+    {
+        if (this->level==2) {
+            this->atkRange= this->atkRange*this->rangeMultiplier;
+        }
+    }
+};
+
+
 
 void Tower::damageBase(int damage) {
     baseHealth -= damage;
