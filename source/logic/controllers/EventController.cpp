@@ -139,3 +139,7 @@ void EventController::registerVolumeCallback(const VolumeCallback& callback) {
 void EventController::registerScrollCallback(const ScrollCallback& callback) {
     scrollCallback = callback;
 }
+// Registers a callback for mouse move events.
+void EventController::registerMouseMoveCallback(const MouseMoveCallback& callback) {
+    mouseMoveCallback = callback;
+}
