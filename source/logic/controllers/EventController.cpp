@@ -3,8 +3,6 @@
 //
 
 #include "../../../includes/logic/controllers/EventController.h"
-#include <iostream>
-#include <algorithm>
 
 // Constructor for EventController class. Initializes mouse position coordinates to (0,0) and
 // sets dragging volume state to false. Sets up all window view buttons upon creation.
@@ -16,30 +14,30 @@ EventController::EventController()
 //Sets up and register Ui buttons for the window view : each button is assigned a unique ID and bounds
 void EventController::setupWindowViewButtons() {
     //difficulty buttons - exact WindowView //update if needed: difficultyButtons
-    for (int i = 0; i <3; i++) {
+    for (int i = 0; i < 3; i++) {
         std::string buttonId = "difficulty_" + std::to_string(i+1);
-        sf::FloatRect bounds(890 + i*35, 350 ,30,30);
+        sf::FloatRect bounds(890 + i*35, 350, 30, 30);
         registerUIButton(buttonId, bounds);
     }
 
     //Map button - exact WindowView //update if needed: mapButtons
-    for (int i = 0; i <2; i++) {
+    for (int i = 0; i < 2; i++) {
         std::string buttonId = "map_" + std::to_string(i+1);
-        sf::FloatRect bounds(890 + i*40, 250 ,30,30);
+        sf::FloatRect bounds(890 + i*40, 250, 30, 30);
         registerUIButton(buttonId, bounds);
     }
 
     //Tower button - exact WindowView // update if needed : towerButtons
-    for (int i = 0; i <3; i++) {
+    for (int i = 0; i < 3; i++) {
         std::string buttonId = "tower_" + std::to_string(i+1);
-        sf::FloatRect bounds(890 + i*23, 450 ,30,30);
+        sf::FloatRect bounds(890 + i*23, 450, 30, 30);
         registerUIButton(buttonId, bounds);
     }
 
     //Bottom bar buttons - exact WindowView // bottomButtons
     const std::string bottomIds[4] = {"start", "pause", "play", "quit"};
-    for (int i = 0; i <4; i++) {
-        sf::FloatRect bounds(20 + i*242, 650 ,100,30);
+    for (int i = 0; i < 4; i++) {
+        sf::FloatRect bounds(20 + i*242, 650, 100, 30);
         registerUIButton("bottomIds_" + std::to_string(i+1), bounds);
     }
 
@@ -48,12 +46,11 @@ void EventController::setupWindowViewButtons() {
     registerUIButton("next_wave", nextWaveBounds);
 
     //Mute - exact WindowView // muteBox
-    sf::FloatRect MuteToggleBounds(890, 600,20,20);
+    sf::FloatRect MuteToggleBounds(890, 600, 20, 20);
     registerUIButton("mute_toggle", MuteToggleBounds);
 
     //Volume slider - exact WindowView // VolumeSlider
     registerVolumeSlider(sf::FloatRect(890, 580, 100, 5));
-
 }
 
 // Handles mouse button events, specifically for volume slider adjustments
@@ -74,7 +71,7 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
                 return;
             }
             // Retrieves the button ID at the given mouse position and triggers the associated callback if valid.
-            std::string buttonId = getButtonAtPositon(mousePosition);
+            std::string buttonId = getButtonAtPosition(mousePosition);
             if (!buttonId.empty() && buttonCallback) {
                 buttonCallback(buttonId);
                 return;
@@ -123,10 +120,14 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
 }
 
 // Registers a callback for key events.
-void EventController::registerKeyCallback(KeyCallback callback) {
+void EventController::registerKeyCallback(const KeyCallback& callback) {
     keyCallback = callback;
 }
 // Registers a callback for mouse click events
-void EventController::registerMouseClickCallback(MouseClickCallback callback) {
+void EventController::registerMouseClickCallback(const MouseClickCallback& callback) {
     mouseClickCallback = callback;
+}
+// Registers a callback for button events.
+void EventController::registerButtonCallback(const ButtonCallback& callback) {
+    buttonCallback = callback;
 }

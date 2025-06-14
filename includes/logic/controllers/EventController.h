@@ -1,79 +1,41 @@
 //
 // Created by chris on 12/06/2025.
 //
-
-#ifndef EVENTCONTROLLER_H
-#define EVENTCONTROLLER_H
-
+#ifndef EVENT_CONTROLLER_H
+#define EVENT_CONTROLLER_H
 #include <SFML/Graphics.hpp>
 #include <functional>
-#include <map>
-#include <string>
+#include <unordered_map>
 #include <vector>
-//#include "../utils/Position.h"
+#include <string>
 
-//Check if this is the best solution or use existing Position file ?
-//Simple position for compatibility with existing Ui
-struct Position {
-    float x, y;
-    Position(float x, float y) : x(x), y(y) {}
+// Forward declarations and type definitions
+struct ButtonInfo {
+    sf::FloatRect bounds;
+    bool enabled = true;
+
+    ButtonInfo() = default;
+    ButtonInfo(const sf::FloatRect& rect) : bounds(rect) {}
 };
 
 class EventController {
 public:
-
-    //Callbacks
+    // Callback type definitions
     using KeyCallback = std::function<void(sf::Keyboard::Key)>;
-    using MouseClickCallback = std::function<void(sf::Vector2f,sf::Mouse::Button)>;//sf::Vector2f instead of Position
+    using MouseClickCallback = std::function<void(sf::Vector2f, sf::Mouse::Button)>;
     using MouseMoveCallback = std::function<void(sf::Vector2f)>;
     using ButtonCallback = std::function<void(const std::string&)>;
-    using VolumeCallback = std::function<void(float)>; // for slider volume
-    using ScrollCallback = std::function<void(bool)>; // true = up, false = down
+    using VolumeCallback = std::function<void(float)>;
+    using ScrollCallback = std::function<void(bool)>;
 
-    EventController();
-
-    //Handling SFML events
-    void handleEvent(const sf::Event& event, sf::RenderWindow& window);
-
-    //Register callbacks
-    void registerKeyCallback(KeyCallback& callback);
-    void registerMouseClickCallback(MouseClickCallback& callback);
-    void registerMouseMoveCallback(MouseMoveCallback& callback);
-    void registerButtonCallback(ButtonCallback& callback);
-    void registerVolumeCallback(VolumeCallback& callback);
-    void registerScrollCallback(ScrollCallback& callback);
-
-    //Handling Ui buttons - adapted to WindowView positions
-    void registerUIButton(const std::string& buttonId, sf::FloatRect& bounds);
-    void registerVolumeSlider(sf::FloatRect sliderBounds);
-    void clearButtons();
-
-    //Specific method for the existing Ui
-    void setupWindowViewButtons(); //auto configure buttons
-
-    //Entry states
-    bool isKeyPressed(sf::Keyboard::Key key) const;
-    bool isMouseButtonPressed(sf::Mouse::Button button) const;
-    sf::Vector2f getMousePosition() const;
-
-    //Utility functions and button management structure
-    std::vector<std::string> getButtonAtPosition(sf::Vector2f position) const;
-    bool hasButton(const std::string& buttonId) const;
-
-    private:
-    struct ButtonInfo {
-        sf::FloatRect bounds;
-        bool enabled;
-
-        ButtonInfo(sf::FloatRect bounds): bounds(bounds), enabled(true) {}
-    };
-
-    std::map<std::string, ButtonInfo> buttons;
+private:
+    // Member variables
     sf::Vector2f mousePosition;
-    sf::FloatRect volumeSliderBounds;
     bool isDraggingVolume;
+    sf::FloatRect volumeSliderBounds;
+    std::unordered_map<std::string, ButtonInfo> buttons;
 
-    //Callbacks
+    // Callback members
     KeyCallback keyCallback;
     MouseClickCallback mouseClickCallback;
     MouseMoveCallback mouseMoveCallback;
@@ -81,11 +43,41 @@ public:
     VolumeCallback volumeCallback;
     ScrollCallback scrollCallback;
 
-    //Utility functions
-    bool isPointInButton(sf::Vector2f point, const ButtonInfo& button) const;
-    std::string getButtonAtPositon(sf::Vector2f pos) const;
-    float calculateVolumeFromPosition(sf::Vector2f pos) const;
+public:
+    // Constructor
+    EventController();
+
+    // Event handling
+    void handleEvent(const sf::Event& event, sf::RenderWindow& window);
+
+    // Callback registration methods
+    void registerKeyCallback(const KeyCallback& callback);
+    void registerMouseClickCallback(const MouseClickCallback& callback);
+    void registerMouseMoveCallback(const MouseMoveCallback& callback);
+    void registerButtonCallback(const ButtonCallback& callback);
+    void registerVolumeCallback(const VolumeCallback& callback);
+    void registerScrollCallback(const ScrollCallback& callback);
+
+    // UI management methods
+    void registerUIButton(const std::string& buttonId, const sf::FloatRect& bounds);
+    void registerVolumeSlider(const sf::FloatRect& sliderBounds);
+    void clearButtons();
+    void setupWindowViewButtons();
+
+    // Query methods
+    std::string getButtonAtPosition(const sf::Vector2f& pos) const;
+    std::vector<std::string> getButtonsAtPosition(const sf::Vector2f& pos) const;
+    bool hasButton(const std::string& buttonId) const;
+    static bool isPointInButton(const sf::Vector2f& point, const ButtonInfo& button);
+
+    // Input state methods
+    static bool isKeyPressed(sf::Keyboard::Key key);
+    static bool isMouseButtonPressed(sf::Mouse::Button button);
+    sf::Vector2f getMousePosition() const;
+
+    // Volume calculation
+    float calculateVolumeFromPosition(const sf::Vector2f& pos) const;
 };
 
+#endif // EVENT_CONTROLLER_H
 
-#endif //EVENTCONTROLLER_H
