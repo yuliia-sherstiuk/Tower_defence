@@ -16,7 +16,7 @@ public:
     void setInputText(const std::string& text);
     void updateVolumeSliderPosition();
     void handleScrollEvent(const sf::Event& event);
-    void handleEvent(const sf::Event& event, const sf::RenderWindow& window); // ✅ добавлено
+    void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
 
 private:
     sf::Font font;
@@ -48,7 +48,7 @@ private:
 
     sf::Text mapButtons[2];
     sf::Text difficultyButtons[3];
-    sf::Text towerButtons[3];
+    std::vector<sf::Text> towerButtons;
     sf::Text bottomButtons[5];
 
     sf::RectangleShape usernameInputBox;
@@ -60,7 +60,13 @@ private:
     bool isChronoRunning = true;
     sf::RectangleShape chronoTimeBox;
 
-
+    sf::Texture towerTextures[3];
+    sf::Sprite towerSprites[3];
+    bool isDragging = false;
+    int draggedTowerIndex = -1;
+    sf::Vector2f dragOffset;
+    sf::RectangleShape draggableRect;
+    std::vector<sf::RectangleShape> towerImageContainers;
 
 
     sf::RectangleShape enterButtonShape;

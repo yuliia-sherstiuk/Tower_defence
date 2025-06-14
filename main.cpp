@@ -26,7 +26,7 @@ int main() {
     bool isChronoRunning = true;
 
     sf::Font font;
-    font.loadFromFile("assets/fonts/SpaceGrotesk-Bold.ttf");
+    font.loadFromFile("C:/Windows/Fonts/arial.ttf");
 
     sf::Text chronoTimeText;
     chronoTimeText.setFont(font);

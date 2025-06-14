@@ -7,9 +7,8 @@
 #include <iomanip>
 #include <sstream>
 
-
 WindowView::WindowView() {
-    if (!font.loadFromFile("assets/Space_Grotesk.ttf")) {
+    if (!font.loadFromFile("assets/fonts/SpaceGrotesk-Bold.ttf")) {
         std::cerr << "Failed to load font\n";
     }
     setupUI();
@@ -109,7 +108,7 @@ void WindowView::setupUI() {
 	labelBoxes.push_back(livesValueBox);
 
 	sf::RectangleShape livesMoneyBox;
-	livesMoneyBox.setSize({180, 90});
+	livesMoneyBox.setSize({185, 90});
 	livesMoneyBox.setFillColor(sf::Color::Transparent);
 	livesMoneyBox.setOutlineColor(sf::Color::White);
 	livesMoneyBox.setOutlineThickness(1);
@@ -125,7 +124,7 @@ void WindowView::setupUI() {
 
 
 	sf::FloatRect chronoBounds = chronoLabel.getLocalBounds();
-	sf::RectangleShape chronoBox({180, chronoBounds.height + 25});
+	sf::RectangleShape chronoBox({185, chronoBounds.height + 25});
 	chronoBox.setFillColor(sf::Color::Transparent);
 	chronoBox.setOutlineColor(sf::Color::White);
 	chronoBox.setOutlineThickness(1);
@@ -156,7 +155,7 @@ void WindowView::setupUI() {
     mapLabel.setFillColor(sf::Color::White);
     mapLabel.setPosition(900,160);
 
-	sf::RectangleShape mapContainer({180,85});
+	sf::RectangleShape mapContainer({185,85});
     mapContainer.setFillColor(sf::Color::Transparent);
     mapContainer.setOutlineColor(sf::Color::White);
     mapContainer.setOutlineThickness(1);
@@ -184,7 +183,7 @@ void WindowView::setupUI() {
     difficultyLabel.setFillColor(sf::Color::White);
     difficultyLabel.setPosition(900, 250);
 
-    sf::RectangleShape difficultyContainer({180, 95});
+    sf::RectangleShape difficultyContainer({185, 95});
     difficultyContainer.setFillColor(sf::Color::Transparent);
     difficultyContainer.setOutlineColor(sf::Color::White);
     difficultyContainer.setOutlineThickness(1);
@@ -210,34 +209,53 @@ void WindowView::setupUI() {
         buttonBoxes.push_back(btnBox);
     }
 
-    towerLabel.setFont(font);
-    towerLabel.setString("TOWER");
-    towerLabel.setCharacterSize(18);
-    towerLabel.setFillColor(sf::Color::White);
-    towerLabel.setPosition(900, 350);
+    // Заголовок для секции башен
+	towerLabel.setFont(font);
+	towerLabel.setString("TOWER");
+	towerLabel.setCharacterSize(18);
+	towerLabel.setFillColor(sf::Color::White);
+	towerLabel.setPosition(900, 350);
 
-    sf::RectangleShape towerContainer({180, 95});
-    towerContainer.setFillColor(sf::Color::Transparent);
-    towerContainer.setOutlineColor(sf::Color::White);
-    towerContainer.setOutlineThickness(1);
-    towerContainer.setPosition(890, 340);
-    labelBoxes.push_back(towerContainer);
+	// Один большой контейнер-рамка вокруг башен
+	sf::RectangleShape towerContainer({185, 130});
+	towerContainer.setFillColor(sf::Color::Transparent);
+	towerContainer.setOutlineColor(sf::Color::White);
+	towerContainer.setOutlineThickness(1);
+	towerContainer.setPosition(890, 340);
+	labelBoxes.push_back(towerContainer);
 
-    const std::string towerSymbols[3] = { "1", "2", "3" };
-    for (int i = 0; i < 3; i++) {
-        towerButtons[i].setFont(font);
-        towerButtons[i].setString(towerSymbols[i]);
-        towerButtons[i].setCharacterSize(20);
-        towerButtons[i].setFillColor(sf::Color::White);
-        towerButtons[i].setPosition(900 + i * 65, 400);
+	// Пути к изображениям
+	const std::string towerImageFiles[3] = {
+    	"assets/images/tower1.png",
+    	"assets/images/tower2.png",
+    	"assets/images/tower3.png"
+	};
 
-        sf::RectangleShape btnBox({30, 30});
-        btnBox.setPosition(towerButtons[i].getPosition());
-        btnBox.setFillColor(sf::Color::Transparent);
-        btnBox.setOutlineColor(sf::Color::White);
-        btnBox.setOutlineThickness(1);
-        buttonBoxes.push_back(btnBox);
+	for (int i = 0; i < 3; ++i) {
+    if (!towerTextures[i].loadFromFile(towerImageFiles[i])) {
+        std::cerr << "Failed to load " << towerImageFiles[i] << std::endl;
     }
+    towerSprites[i].setTexture(towerTextures[i]);
+    towerSprites[i].setScale(0.3f, 0.3f);
+    towerSprites[i].setPosition(900 + i * 60, 390);
+
+    sf::RectangleShape container;
+    container.setSize({50, 50});
+    container.setFillColor(sf::Color::Transparent);
+    container.setOutlineColor(sf::Color::White);
+    container.setOutlineThickness(1);
+    container.setPosition(900 + i * 58, 385);
+    towerImageContainers.push_back(container);
+
+    sf::Text towerButton;
+    towerButton.setFont(font);
+    towerButton.setString("T" + std::to_string(i + 1));
+    towerButton.setCharacterSize(10);
+    towerButton.setFillColor(sf::Color::White);
+    towerButton.setPosition(900 + i * 58, 440);
+    towerButtons.push_back(towerButton);
+	}
+
 
     nextWaveBtn.setFont(font);
     nextWaveBtn.setString("NEXT WAVE");
@@ -246,7 +264,7 @@ void WindowView::setupUI() {
     nextWaveBtn.setPosition(900, 600);
 
 
-	sf::RectangleShape nwBox({180, 30});
+	sf::RectangleShape nwBox({185, 40});
 	nwBox.setPosition(890, 595);
 	nwBox.setFillColor(sf::Color::Transparent);
 	nwBox.setOutlineColor(sf::Color::White);
@@ -257,37 +275,37 @@ void WindowView::setupUI() {
     volumeLabel.setString("VOLUME");
     volumeLabel.setCharacterSize(18);
     volumeLabel.setFillColor(sf::Color::White);
-    volumeLabel.setPosition(900, 450);
+    volumeLabel.setPosition(900, 490);
 
 
 
-    sf::RectangleShape volumeContainer({180, 135});
+    sf::RectangleShape volumeContainer({185, 115});
     volumeContainer.setFillColor(sf::Color::Transparent);
     volumeContainer.setOutlineColor(sf::Color::White);
     volumeContainer.setOutlineThickness(1);
-    volumeContainer.setPosition(890, 440);
+    volumeContainer.setPosition(890, 475);
     labelBoxes.push_back(volumeContainer);
 
     volumeBarBackground.setSize({150, 5});
     volumeBarBackground.setFillColor(sf::Color(100, 100, 100));
-    volumeBarBackground.setPosition(900, 500);
+    volumeBarBackground.setPosition(900, 530);
 
     volumeSlider.setRadius(8);
     volumeSlider.setFillColor(sf::Color::White);
     volumeSlider.setOrigin(8, 8);
-    volumeSlider.setPosition(900 + volume * 150, 500);
+    volumeSlider.setPosition(900 + volume * 150, 530);
 
     muteBox.setSize({20, 20});
     muteBox.setFillColor(sf::Color::Transparent);
     muteBox.setOutlineColor(sf::Color::White);
     muteBox.setOutlineThickness(2);
-    muteBox.setPosition(900, 530);
+    muteBox.setPosition(900, 550);
 
     muteLabel.setFont(font);
     muteLabel.setString("Mute");
     muteLabel.setCharacterSize(18);
     muteLabel.setFillColor(sf::Color::White);
-    muteLabel.setPosition(940, 530);
+    muteLabel.setPosition(940, 550);
 
     const std::string labels[4] = { "START", "PAUSE", "PLAY", "QUIT"  };
     for (int i = 0; i < 4; i++) {
@@ -352,6 +370,10 @@ void WindowView::render(sf::RenderWindow& window) {
     window.draw(scrollBarThumb);
 
 
+
+	for (int i = 0; i < 3; ++i) {
+    	window.draw(towerSprites[i]);
+	}
     float baseY = scoreListArea.getPosition().y + 5.f;
     int visibleCount = 10 / 3;
     int totalEntries = static_cast<int>(scoreEntries.size());
@@ -407,7 +429,7 @@ void WindowView::render(sf::RenderWindow& window) {
 
 
     enterButtonText.setFont(font);
-    enterButtonText.setString("Entrer");
+    enterButtonText.setString("Enter");
     enterButtonText.setCharacterSize(18);
     enterButtonText.setFillColor(sf::Color::White);
 
@@ -433,6 +455,14 @@ void WindowView::render(sf::RenderWindow& window) {
 
 
     window.draw(usernameDisplayText);
+
+
+
+for (size_t i = 0; i < towerImageContainers.size(); ++i) {
+    window.draw(towerImageContainers[i]);
+    window.draw(towerSprites[i]);
+    window.draw(towerButtons[i]);
+}
 
 
 }
@@ -476,8 +506,9 @@ void WindowView::scrollDown() {
 }
 
 void WindowView::handleEvent(const sf::Event& event, const sf::RenderWindow& window) {
-    // --- Обработка скролла (из handleScrollEvent) ---
     int visibleCount = 10;
+
+
     if (event.type == sf::Event::MouseWheelScrolled) {
         if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
             if (event.mouseWheelScroll.delta < 0) {
@@ -493,7 +524,7 @@ void WindowView::handleEvent(const sf::Event& event, const sf::RenderWindow& win
 
     if (event.type == sf::Event::TextEntered) {
         if (event.text.unicode == '\b' && !currentUsernameInput.empty()) {
-            currentUsernameInput.pop_back(); // удаление символа
+            currentUsernameInput.pop_back();
         } else if (event.text.unicode < 128 && std::isprint(event.text.unicode)) {
             if (currentUsernameInput.size() < 20)
                 currentUsernameInput += static_cast<char>(event.text.unicode);
@@ -505,15 +536,30 @@ void WindowView::handleEvent(const sf::Event& event, const sf::RenderWindow& win
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2f mousePos = window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
 
+
         if (enterButtonShape.getGlobalBounds().contains(mousePos)) {
             usernameDisplayText.setString(currentUsernameInput);
+        }
 
+
+        if (draggableRect.getGlobalBounds().contains(mousePos)) {
+            isDragging = true;
+            dragOffset = mousePos - draggableRect.getPosition();
         }
     }
+
+
+    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+        isDragging = false;
+    }
+
+
+    if (event.type == sf::Event::MouseMoved && isDragging) {
+        sf::Vector2f mousePos = window.mapPixelToCoords({event.mouseMove.x, event.mouseMove.y});
+        draggableRect.setPosition(mousePos - dragOffset);
+    }
+
 }
-
-
-
 
 
 void WindowView::handleClick(sf::Vector2f mousePos) {
