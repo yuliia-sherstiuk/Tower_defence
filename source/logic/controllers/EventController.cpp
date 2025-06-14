@@ -143,3 +143,7 @@ void EventController::registerScrollCallback(const ScrollCallback& callback) {
 void EventController::registerMouseMoveCallback(const MouseMoveCallback& callback) {
     mouseMoveCallback = callback;
 }
+// Registers a button with its ID and bounds.
+void EventController::registerUIButton(const std::string& buttonId, const sf::FloatRect& bounds) {
+    buttons[buttonId] = ButtonInfo(bounds);
+}
