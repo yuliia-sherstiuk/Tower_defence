@@ -16,46 +16,60 @@ void EventController::setupWindowViewButtons() {
     //difficulty buttons - exact WindowView //update if needed: difficultyButtons
     for (int i = 0; i < 3; i++) {
         std::string buttonId = "difficulty_" + std::to_string(i+1);
-        sf::FloatRect bounds(890 + i*35, 350, 30, 30);
+        sf::FloatRect bounds(890 + i*35, 380, 30, 30);
         registerUIButton(buttonId, bounds);
     }
 
     //Map button - exact WindowView //update if needed: mapButtons
     for (int i = 0; i < 2; i++) {
         std::string buttonId = "map_" + std::to_string(i+1);
-        sf::FloatRect bounds(890 + i*40, 250, 30, 30);
+        sf::FloatRect bounds(890 + i*40, 280, 30, 30);
         registerUIButton(buttonId, bounds);
     }
 
     //Tower button - exact WindowView // update if needed : towerButtons
     for (int i = 0; i < 3; i++) {
         std::string buttonId = "tower_" + std::to_string(i+1);
-        sf::FloatRect bounds(890 + i*23, 450, 30, 30);
+        sf::FloatRect bounds(890 + i*35, 480, 30, 30);
         registerUIButton(buttonId, bounds);
     }
 
     //Bottom bar buttons - exact WindowView // bottomButtons
     const std::string bottomIds[4] = {"start", "pause", "play", "quit"};
     for (int i = 0; i < 4; i++) {
-        sf::FloatRect bounds(20 + i*242, 650, 100, 30);
+        sf::FloatRect bounds(20 + i*242, 680, 100, 30);
         registerUIButton("bottomIds_" + std::to_string(i+1), bounds);
     }
 
     //Next wave button - exact WindowView // nextWaveBtn
-    sf::FloatRect nextWaveBounds(890, 500, 140, 30);
+    sf::FloatRect nextWaveBounds(890, 530, 140, 30);
     registerUIButton("next_wave", nextWaveBounds);
 
     //Mute - exact WindowView // muteBox
-    sf::FloatRect MuteToggleBounds(890, 600, 20, 20);
+    sf::FloatRect MuteToggleBounds(890, 630, 20, 20);
     registerUIButton("mute_toggle", MuteToggleBounds);
 
     //Volume slider - exact WindowView // VolumeSlider
-    registerVolumeSlider(sf::FloatRect(890, 580, 100, 5));
+    registerVolumeSlider(sf::FloatRect(890, 610, 150, 5));
+
+    //Register button - exact WindowView // adjust if necessary
+    sf::FloatRect registerBounds(525, 65, 60, 25);
+    registerUIButton("register_username", registerBounds);
+
+    //Input for username - exact WindowView // adjust if necessary
+    sf::FloatRect inputBounds(400, 65, 120, 25);
+    registerUIButton("username_input", inputBounds);
 }
 
 // Handles mouse button events, specifically for volume slider adjustments
 void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
     switch (event.type) {
+        case sf::Event::TextEntered:
+            //Handle input text for username
+            if (textInputCallback) {
+                textInputCallback(event.text.unicode);
+            }
+            break;
         case sf::Event::MouseButtonPressed: {
             mousePosition = sf::Vector2f(
                 static_cast<float>(event.mouseButton.x),
@@ -83,7 +97,7 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
             }
             break;
         }
-            //Resets dragging state on mouse button release
+        //Resets dragging state on mouse button release
         case sf::Event::MouseButtonReleased: {
             if (event.mouseButton.button == sf::Mouse::Left) {
                 isDraggingVolume = false;
@@ -108,9 +122,19 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
             break;
         }
         case sf::Event::MouseWheelScrolled: {
-            // Handling scroll for scores
-            if (scrollCallback) {
-                scrollCallback(event.mouseWheelScroll.delta > 0);
+            //verify if mouse is in the list score area
+            sf::FloatRect scoreListBounds(20, 156, 180, 66);
+            if (scoreListBounds.contains(mousePosition)) {
+                if (scrollCallback) {
+                    scrollCallback(event.mouseWheelScroll.delta > 0);
+                }
+            }
+            break;
+        }
+        case sf::Event::KeyPressed: {
+            //handle keyboard press
+            if (keyCallback) {
+                keyCallback(event.key.code);
             }
             break;
         }
@@ -142,6 +166,10 @@ void EventController::registerScrollCallback(const ScrollCallback& callback) {
 // Registers a callback for mouse move events.
 void EventController::registerMouseMoveCallback(const MouseMoveCallback& callback) {
     mouseMoveCallback = callback;
+}
+// Registers a callback for text input events.
+void EventController::registerTextInputCallback(const TextInputCallback& callback) {
+    textInputCallback = callback;
 }
 // Registers a button with its ID and bounds.
 void EventController::registerUIButton(const std::string& buttonId, const sf::FloatRect& bounds) {

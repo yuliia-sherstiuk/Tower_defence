@@ -3,6 +3,7 @@
 //
 #ifndef EVENT_CONTROLLER_H
 #define EVENT_CONTROLLER_H
+
 #include <SFML/Graphics.hpp>
 #include <functional>
 #include <unordered_map>
@@ -27,6 +28,7 @@ public:
     using ButtonCallback = std::function<void(const std::string&)>;
     using VolumeCallback = std::function<void(float)>;
     using ScrollCallback = std::function<void(bool)>;
+    using TextInputCallback = std::function<void(sf::Uint32)>;
 
 private:
     // Member variables
@@ -42,6 +44,7 @@ private:
     ButtonCallback buttonCallback;
     VolumeCallback volumeCallback;
     ScrollCallback scrollCallback;
+    TextInputCallback textInputCallback;
 
 public:
     // Constructor
@@ -57,6 +60,7 @@ public:
     void registerButtonCallback(const ButtonCallback& callback);
     void registerVolumeCallback(const VolumeCallback& callback);
     void registerScrollCallback(const ScrollCallback& callback);
+    void registerTextInputCallback(const TextInputCallback& callback);
 
     // UI management methods
     void registerUIButton(const std::string& buttonId, const sf::FloatRect& bounds);
@@ -80,4 +84,3 @@ public:
 };
 
 #endif // EVENT_CONTROLLER_H
-
