@@ -194,3 +194,12 @@ bool EventController::isMouseButtonPressed(sf::Mouse::Button button) {
 sf::Vector2f EventController::getMousePosition() const {
     return mousePosition;
 }
+// Calculates volume based on mouse position on the slider.
+float EventController::calculateVolumeFromPosition(const sf::Vector2f& pos) const {
+    float localX = pos.x - volumeSliderBounds.left;
+    float ratio = localX / volumeSliderBounds.width;
+
+    if (ratio < 0.0f) return 0.0f;
+    if (ratio > 1.0f) return 1.0f;
+    return ratio;
+}
