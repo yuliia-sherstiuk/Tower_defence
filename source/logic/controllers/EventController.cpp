@@ -126,3 +126,7 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
 void EventController::registerKeyCallback(KeyCallback callback) {
     keyCallback = callback;
 }
+// Registers a callback for mouse click events
+void EventController::registerMouseClickCallback(MouseClickCallback callback) {
+    mouseClickCallback = callback;
+}
