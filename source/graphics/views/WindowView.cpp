@@ -122,7 +122,6 @@ void WindowView::setupUI() {
 	chronoLabel.setFillColor(sf::Color::White);
 	chronoLabel.setPosition(900, 110);
 
-
 	sf::FloatRect chronoBounds = chronoLabel.getLocalBounds();
 	sf::RectangleShape chronoBox({185, chronoBounds.height + 25});
 	chronoBox.setFillColor(sf::Color::Transparent);
@@ -146,7 +145,6 @@ void WindowView::setupUI() {
 	chronoTimeBox.setOutlineThickness(1);
 	chronoTimeBox.setPosition(chronoTimeText.getPosition().x, chronoTimeText.getPosition().y );
 	labelBoxes.push_back(chronoTimeBox);
-
 
 
     mapLabel.setFont(font);
@@ -190,9 +188,6 @@ void WindowView::setupUI() {
     difficultyContainer.setPosition(890, 240);
     labelBoxes.push_back(difficultyContainer);
 
-
-
-
 	const std::string difficultyLevels[3] = { "1", "2", "3" };
     	for (int i = 0; i < 3; i++) {
         difficultyButtons[i].setFont(font);
@@ -209,14 +204,14 @@ void WindowView::setupUI() {
         buttonBoxes.push_back(btnBox);
     }
 
-    // Заголовок для секции башен
+
 	towerLabel.setFont(font);
 	towerLabel.setString("TOWER");
 	towerLabel.setCharacterSize(18);
 	towerLabel.setFillColor(sf::Color::White);
 	towerLabel.setPosition(900, 350);
 
-	// Один большой контейнер-рамка вокруг башен
+
 	sf::RectangleShape towerContainer({185, 130});
 	towerContainer.setFillColor(sf::Color::Transparent);
 	towerContainer.setOutlineColor(sf::Color::White);
@@ -224,7 +219,6 @@ void WindowView::setupUI() {
 	towerContainer.setPosition(890, 340);
 	labelBoxes.push_back(towerContainer);
 
-	// Пути к изображениям
 	const std::string towerImageFiles[3] = {
     	"assets/images/tower1.png",
     	"assets/images/tower2.png",
@@ -263,7 +257,6 @@ void WindowView::setupUI() {
     nextWaveBtn.setFillColor(sf::Color::White);
     nextWaveBtn.setPosition(900, 600);
 
-
 	sf::RectangleShape nwBox({185, 40});
 	nwBox.setPosition(890, 595);
 	nwBox.setFillColor(sf::Color::Transparent);
@@ -276,8 +269,6 @@ void WindowView::setupUI() {
     volumeLabel.setCharacterSize(18);
     volumeLabel.setFillColor(sf::Color::White);
     volumeLabel.setPosition(900, 490);
-
-
 
     sf::RectangleShape volumeContainer({185, 115});
     volumeContainer.setFillColor(sf::Color::Transparent);
@@ -331,8 +322,6 @@ void WindowView::setupUI() {
         buttonBoxes.push_back(btnBox);
     }
 
-
-
     inputField.setFont(font);
     inputField.setCharacterSize(18);
     inputField.setFillColor(sf::Color::White);
@@ -365,10 +354,9 @@ void WindowView::render(sf::RenderWindow& window) {
     for (auto& b : bottomButtons) window.draw(b);
     window.draw(inputField);
 	window.draw(chronoTimeText);
-    // Отрисовка ползунка
+
     window.draw(scrollBarBackground);
     window.draw(scrollBarThumb);
-
 
 
 	for (int i = 0; i < 3; ++i) {
@@ -411,12 +399,10 @@ void WindowView::render(sf::RenderWindow& window) {
     usernameInputBox.setOutlineThickness(2);
     usernameInputBox.setPosition(usernameLabel.getPosition().x, usernameLabel.getPosition().y + 30);
 
-
     usernameInputText.setFont(font);
     usernameInputText.setCharacterSize(18);
     usernameInputText.setFillColor(sf::Color::White);
     usernameInputText.setPosition(usernameInputBox.getPosition().x + 5, usernameInputBox.getPosition().y + 5);
-
 
     enterButtonShape.setSize({100, 30});
     enterButtonShape.setFillColor(sf::Color(70, 70, 70));
@@ -427,19 +413,16 @@ void WindowView::render(sf::RenderWindow& window) {
         usernameInputBox.getPosition().y
     );
 
-
     enterButtonText.setFont(font);
     enterButtonText.setString("Enter");
     enterButtonText.setCharacterSize(18);
     enterButtonText.setFillColor(sf::Color::White);
-
 
     sf::FloatRect bounds = enterButtonText.getLocalBounds();
     enterButtonText.setPosition(
         enterButtonShape.getPosition().x + (enterButtonShape.getSize().x - bounds.width) / 2 - bounds.left,
         enterButtonShape.getPosition().y + (enterButtonShape.getSize().y - bounds.height) / 2 - bounds.top
     );
-
 
     usernameDisplayText.setFont(font);
     usernameDisplayText.setCharacterSize(18);
@@ -448,22 +431,15 @@ void WindowView::render(sf::RenderWindow& window) {
 
     window.draw(usernameInputBox);
     window.draw(usernameInputText);
-
-
     window.draw(enterButtonShape);
     window.draw(enterButtonText);
-
-
     window.draw(usernameDisplayText);
-
-
 
 for (size_t i = 0; i < towerImageContainers.size(); ++i) {
     window.draw(towerImageContainers[i]);
     window.draw(towerSprites[i]);
     window.draw(towerButtons[i]);
 }
-
 
 }
 
