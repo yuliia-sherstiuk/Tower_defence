@@ -1,9 +1,7 @@
-//main.cpp
-
 #include <SFML/Graphics.hpp>
+#include <sstream>
+#include <iomanip>
 #include "graphics/views/WindowView.h"
-
-
 
 sf::RectangleShape createLabelBox(sf::Vector2f position, sf::Vector2f size = {140, 30}) {
     sf::RectangleShape box(size);
@@ -14,7 +12,6 @@ sf::RectangleShape createLabelBox(sf::Vector2f position, sf::Vector2f size = {14
     return box;
 }
 
-
 int main() {
     sf::RenderWindow window(sf::VideoMode(1100, 700), "Tower Defense UI");
     window.setFramerateLimit(60);
@@ -24,13 +21,28 @@ int main() {
     std::string inputBuffer;
     bool inputActive = true;
 
+
+    sf::Clock chronoClock;
+    bool isChronoRunning = true;
+
+    sf::Font font;
+    font.loadFromFile("assets/fonts/SpaceGrotesk-Bold.ttf");
+
+    sf::Text chronoTimeText;
+    chronoTimeText.setFont(font);
+    chronoTimeText.setCharacterSize(20);
+    chronoTimeText.setFillColor(sf::Color::White);
+    chronoTimeText.setPosition(310, 105);
+    chronoTimeText.setString("00:00");
+
+    sf::RectangleShape chronoBox = createLabelBox({300, 100}, {80, 30});
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
 
             if (event.type == sf::Event::Closed)
                 window.close();
-
 
             if (event.type == sf::Event::TextEntered && inputActive) {
                 if (event.text.unicode == '\b') {
@@ -46,10 +58,8 @@ int main() {
                 }
             }
 
-
             if (event.type == sf::Event::MouseButtonPressed) {
                 sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
-
 
                 sf::FloatRect enterBounds(160, 110, 70, 25);
                 if (enterBounds.contains(mousePos)) {
@@ -58,10 +68,8 @@ int main() {
                     view.setInputText("");
                 }
 
-
                 view.handleClick(mousePos);
             }
-
 
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Up) {
@@ -73,10 +81,30 @@ int main() {
             }
         }
 
+
+        if (isChronoRunning) {
+            sf::Time elapsed = chronoClock.getElapsedTime();
+            int seconds = static_cast<int>(elapsed.asSeconds());
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            std::ostringstream oss;
+            oss << std::setfill('0') << std::setw(2) << minutes << ":"
+                << std::setfill('0') << std::setw(2) << seconds;
+            chronoTimeText.setString(oss.str());
+        }
+
         window.clear();
         view.render(window);
+
+
+        window.draw(chronoBox);
+        window.draw(chronoTimeText);
+
         window.display();
     }
 
     return 0;
 }
+
+

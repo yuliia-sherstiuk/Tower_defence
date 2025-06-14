@@ -16,6 +16,7 @@ public:
     void setInputText(const std::string& text);
     void updateVolumeSliderPosition();
     void handleScrollEvent(const sf::Event& event);
+    void handleEvent(const sf::Event& event, const sf::RenderWindow& window); // ✅ добавлено
 
 private:
     sf::Font font;
@@ -43,14 +44,29 @@ private:
     sf::RectangleShape muteBox;
     sf::Text muteLabel;
 
-    //std::vector<sf::Text> scoreEntries;
     std::vector<std::string> usernames;
-
 
     sf::Text mapButtons[2];
     sf::Text difficultyButtons[3];
     sf::Text towerButtons[3];
     sf::Text bottomButtons[5];
+
+    sf::RectangleShape usernameInputBox;
+    sf::Text usernameInputText;
+    sf::Text usernameDisplayText;
+
+    sf::Clock chronoClock;
+    sf::Text chronoTimeText;
+    bool isChronoRunning = true;
+    sf::RectangleShape chronoTimeBox;
+
+
+
+
+    sf::RectangleShape enterButtonShape;
+    sf::Text enterButtonText;
+
+    std::string currentUsernameInput;
 
     sf::Text nextWaveBtn;
     sf::RectangleShape scrollBarBackground;
@@ -63,6 +79,4 @@ private:
     sf::RectangleShape scoreListArea;
     std::vector<sf::Text> scoreEntries;
     int scrollOffset = 0;
-
-
 };
