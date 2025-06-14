@@ -166,9 +166,9 @@ void UIController::handleMouseClick(sf::Vector2f pos, sf::Mouse::Button button) 
         if (gameArea.contains(pos)) {
             Tower* selectedTower = nullptr;
             switch(gameData.selectedTower) {
-                case 1: selectedTower = Tower::createTower("Puncher"); break;
-                case 2: selectedTower = Tower::createTower("Freezer"); break;
-                case 3: selectedTower = Tower::createTower("Bomber"); break;
+                case 1: selectedTower = Tower::getInstance().createTower("Puncher"); break;
+                case 2: selectedTower = Tower::getInstance().createTower("Freezer"); break;
+                case 3: selectedTower = Tower::getInstance().createTower("Bomber"); break;
                 default: break;
             }
 
@@ -511,7 +511,7 @@ void UIController::scrollScoresDown() {
 
 //Force next wave
 void UIController::forceNextWave() {
-    waveManager->forceNextWave();
+    waveManager->forceStartWave();
 }
 
 //Notify click
@@ -773,9 +773,9 @@ void UIController::handleMouseClick(sf::Vector2f pos, sf::Mouse::Button button) 
         if (gameArea.contains(pos)) {
             Tower* selectedTower = nullptr;
             switch(gameData.selectedTower) {
-                case 1: selectedTower = Tower::createTower("Puncher"); break;
-                case 2: selectedTower = Tower::createTower("Freezer"); break;
-                case 3: selectedTower = Tower::createTower("Bomber"); break;
+                case 1: selectedTower = Tower::getInstance().createTower("Puncher"); break;
+                case 2: selectedTower = Tower::getInstance().createTower("Freezer"); break;
+                case 3: selectedTower = Tower::getInstance().createTower("Bomber"); break;
                 default: break;
             }
 
@@ -1114,7 +1114,7 @@ void UIController::scrollScoresDown() {
 
 //Force next wave
 void UIController::forceNextWave() {
-    waveManager->forceNextWave();
+waveManager->forceStartWave();
 }
 
 //Notify click
@@ -1215,3 +1215,4 @@ void UIController::handleClick(sf::Vector2f mousePos) {
 void UIController::setRegisterCallback(const std::function<void(const std::string&)>& callback) {
     registerCallback = callback;
 }
+*/
