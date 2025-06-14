@@ -151,3 +151,7 @@ void EventController::registerUIButton(const std::string& buttonId, const sf::Fl
 void EventController::registerVolumeSlider(const sf::FloatRect& sliderBounds) {
     volumeSliderBounds = sliderBounds;
 }
+// Clears all registered buttons.
+void EventController::clearButtons() {
+    buttons.clear();
+}
