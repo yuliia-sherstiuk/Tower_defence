@@ -136,7 +136,7 @@ void WindowView::setupUI() {
 	chronoTimeText.setFont(font);
 	chronoTimeText.setCharacterSize(20);
 	chronoTimeText.setFillColor(sf::Color::White);
-	chronoTimeText.setString("00:00");
+	chronoTimeText.setString(" ");
 	chronoTimeText.setPosition(chronoLabel.getPosition().x + 100, chronoLabel.getPosition().y);
 
 

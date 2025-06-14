@@ -32,10 +32,10 @@ int main() {
     chronoTimeText.setFont(font);
     chronoTimeText.setCharacterSize(20);
     chronoTimeText.setFillColor(sf::Color::White);
-    chronoTimeText.setPosition(310, 105);
+    chronoTimeText.setPosition(1000, 110);
     chronoTimeText.setString("00:00");
 
-    sf::RectangleShape chronoBox = createLabelBox({300, 100}, {80, 30});
+    sf::RectangleShape chronoBox = createLabelBox({1000, 110}, {60, 30});
 
     while (window.isOpen()) {
         sf::Event event;
