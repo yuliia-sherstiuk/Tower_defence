@@ -190,3 +190,7 @@ bool EventController::isKeyPressed(sf::Keyboard::Key key) {
 bool EventController::isMouseButtonPressed(sf::Mouse::Button button) {
     return sf::Mouse::isButtonPressed(button);
 }
+// Gets the current mouse position.
+sf::Vector2f EventController::getMousePosition() const {
+    return mousePosition;
+}
