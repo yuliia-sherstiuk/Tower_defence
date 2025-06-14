@@ -121,3 +121,8 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
             break;
     }
 }
+
+// Registers a callback for key events.
+void EventController::registerKeyCallback(KeyCallback callback) {
+    keyCallback = callback;
+}
