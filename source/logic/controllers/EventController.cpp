@@ -76,7 +76,7 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
             // Retrieves the button ID at the given mouse position and triggers the associated callback if valid.
             std::string buttonId = getButtonAtPositon(mousePosition);
             if (!buttonId.empty() && buttonCallback) {
-                ButtonCallback(buttonId);
+                buttonCallback(buttonId);
                 return;
             }
 
@@ -92,24 +92,32 @@ void EventController::handleEvent(const sf::Event& event, sf::RenderWindow& wind
                 isDraggingVolume = false;
             }
             break;
-
-            // Updates mouse position and handles volume adjustment and mouse movement callback.
-            case sf::Event::MouseMoved:mousePosition = sf::Vector2f(
-                static_cast<float>(event.mouseMove.x),static_cast<float>(event.mouseMove.y));
-                if (isDraggingVolume && volumeSliderBounds.contains(mousePosition)) {
-                    float volume = calculateVolumeFromPosition(mousePosition);
-                    if (volumeCallback) {
-                        volumeCallback(volume);
-                    }
+        }
+        // Updates mouse position and handles volume adjustment and mouse movement callback.
+        case sf::Event::MouseMoved: {
+            mousePosition = sf::Vector2f(
+                static_cast<float>(event.mouseMove.x),
+                static_cast<float>(event.mouseMove.y)
+            );
+            if (isDraggingVolume && volumeSliderBounds.contains(mousePosition)) {
+                float volume = calculateVolumeFromPosition(mousePosition);
+                if (volumeCallback) {
+                    volumeCallback(volume);
                 }
+            }
             if (mouseMoveCallback) {
                 mouseMoveCallback(mousePosition);
             }
             break;
-
         }
+        case sf::Event::MouseWheelScrolled: {
+            // Handling scroll for scores
+            if (scrollCallback) {
+                scrollCallback(event.mouseWheelScroll.delta > 0);
+            }
+            break;
+        }
+        default:
+            break;
     }
-
 }
-
-
