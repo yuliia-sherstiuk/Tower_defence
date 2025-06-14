@@ -135,3 +135,7 @@ void EventController::registerButtonCallback(const ButtonCallback& callback) {
 void EventController::registerVolumeCallback(const VolumeCallback& callback) {
     volumeCallback = callback;
 }
+// Registers a callback for scroll events.
+void EventController::registerScrollCallback(const ScrollCallback& callback) {
+    scrollCallback = callback;
+}
