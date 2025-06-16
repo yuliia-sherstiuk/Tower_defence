@@ -16,48 +16,48 @@ void EventController::setupWindowViewButtons() {
     //difficulty buttons - exact WindowView //update if needed: difficultyButtons
     for (int i = 0; i < 3; i++) {
         std::string buttonId = "difficulty_" + std::to_string(i+1);
-        sf::FloatRect bounds(890 + i*35, 380, 30, 30);
+        sf::FloatRect bounds(1780 + i*70, 760, 60, 60);
         registerUIButton(buttonId, bounds);
     }
 
     //Map button - exact WindowView //update if needed: mapButtons
     for (int i = 0; i < 2; i++) {
         std::string buttonId = "map_" + std::to_string(i+1);
-        sf::FloatRect bounds(890 + i*40, 280, 30, 30);
+        sf::FloatRect bounds(1780 + i*80, 560, 60, 60);
         registerUIButton(buttonId, bounds);
     }
 
     //Tower button - exact WindowView // update if needed : towerButtons
     for (int i = 0; i < 3; i++) {
         std::string buttonId = "tower_" + std::to_string(i+1);
-        sf::FloatRect bounds(890 + i*35, 480, 30, 30);
+        sf::FloatRect bounds(1780 + i*70, 960, 60, 60);
         registerUIButton(buttonId, bounds);
     }
 
     //Bottom bar buttons - exact WindowView // bottomButtons
     const std::string bottomIds[4] = {"start", "pause", "play", "quit"};
     for (int i = 0; i < 4; i++) {
-        sf::FloatRect bounds(20 + i*242, 680, 100, 30);
+        sf::FloatRect bounds(40 + i*484, 1360, 200, 60);
         registerUIButton("bottomIds_" + std::to_string(i+1), bounds);
     }
 
     //Next wave button - exact WindowView // nextWaveBtn
-    sf::FloatRect nextWaveBounds(890, 530, 140, 30);
+    sf::FloatRect nextWaveBounds(1780, 1060, 280, 60);
     registerUIButton("next_wave", nextWaveBounds);
 
     //Mute - exact WindowView // muteBox
-    sf::FloatRect MuteToggleBounds(890, 630, 20, 20);
+    sf::FloatRect MuteToggleBounds(1780, 1260, 40, 40);
     registerUIButton("mute_toggle", MuteToggleBounds);
 
     //Volume slider - exact WindowView // VolumeSlider
-    registerVolumeSlider(sf::FloatRect(890, 610, 150, 5));
+    registerVolumeSlider(sf::FloatRect(1780, 1220, 300, 10));
 
     //Register button - exact WindowView // adjust if necessary
-    sf::FloatRect registerBounds(525, 65, 60, 25);
+    sf::FloatRect registerBounds(1050, 130, 120, 50);
     registerUIButton("register_username", registerBounds);
 
     //Input for username - exact WindowView // adjust if necessary
-    sf::FloatRect inputBounds(400, 65, 120, 25);
+    sf::FloatRect inputBounds(800, 130, 240, 50);
     registerUIButton("username_input", inputBounds);
 }
 
@@ -189,7 +189,9 @@ bool EventController::isPointInButton(const sf::Vector2f& point, const ButtonInf
 }
 // Retrieves the button ID at a specific position.
 std::string EventController::getButtonAtPosition(const sf::Vector2f& pos) const {
-    for (const auto& [buttonId, buttonInfo] : buttons) {
+    for (const auto& pair : buttons) {
+        const std::string& buttonId = pair.first;
+        const ButtonInfo& buttonInfo = pair.second;
         if (isPointInButton(pos, buttonInfo)) {
             return buttonId;
         }
@@ -199,7 +201,9 @@ std::string EventController::getButtonAtPosition(const sf::Vector2f& pos) const 
 // Retrieves all button IDs at a specific position.
 std::vector<std::string> EventController::getButtonsAtPosition(const sf::Vector2f& pos) const {
     std::vector<std::string> result;
-    for (const auto& [buttonId, buttonInfo] : buttons) {
+    for (const auto& pair : buttons) {
+        const std::string& buttonId = pair.first;
+        const ButtonInfo& buttonInfo = pair.second;
         if (isPointInButton(pos, buttonInfo)) {
             result.push_back(buttonId);
         }

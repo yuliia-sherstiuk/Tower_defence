@@ -1,7 +1,8 @@
-#include "../includes/logic/controllers/GameController.h"
+
+#include "GameApplication.h"
 
 int main() {
-    GameController controller;
-    controller.runGameLoop();
+    GameApplication app;
+    app.run();
     return 0;
 }

@@ -1,8 +1,9 @@
 //
 // Created by chris on 14/06/2025.
 //
-
-
+//
+// Created by chris on 14/06/2025.
+//
 #ifndef UICONTROLLER_H
 #define UICONTROLLER_H
 
@@ -15,12 +16,13 @@
 #include "../graphics/views/WindowView.h"
 #include "../../../includes/logic/controllers/SoundController.h"
 #include "../logic/controllers/EventController.h"
-#include "../logic/controllers/GameController.h"
 #include "../logic/controllers/WaveManager.h"
 #include "../logic/models/Economy.h"
 #include "../logic/models/Tower.h"
 #include "../logic/models/Enemy.h"
 
+// Forward declaration instead of include
+class GameController;
 
 struct ScoreEntry {
     std::string username;
@@ -66,8 +68,8 @@ public:
     void pauseGame();
     void resumeGame();
     void quitGame();
-    void forceNextWave();
     void restartGame();
+    void forceNextWave();
 
     //Handle difficulty and map
     void setDifficulty(int difficulty);
@@ -88,72 +90,98 @@ public:
     std::string getCurrentMessage() const;
     bool hasActiveMessage() const;
 
-    //Update
+    //Update - MAIN COORDINATION POINT
     void update(float deltaTime);
 
-    //WindowView Methods
-    void notifyVolumeChange(float newVolume);
-    void notifyMuteToggle();
-    void notifyScroll(bool up);
-
-    //Get username
-    std::vector<std::string> getUsernames() const { return usernames; }
-
-    //Offset scroll
-    int getScrollOffset() const { return scrollOffset; }
-
-    //Handle user input
-    void handleUsernameInput(const std::string& input) { updateUsernameInput(input); }
-    void registerUsername() { if (!usernameInput.empty()) addUsername(usernameInput); }
-    std::string getCurrentUsernameInput() const { return getUsernameInput(); }
-
+    //WindowView notification methods
     void notifyClick(sf::Vector2f pos, const std::string& buttonId);
     void notifyUsernameInput(const std::string& input);
+    void notifyVolumeChange(float newVolume) { setVolume(newVolume); }
+    void notifyMuteToggle() { toggleMute(); }
+    void notifyScroll(bool up) { if(up) scrollScoresUp(); else scrollScoresDown(); }
 
-    //Update Ui data
+    //Get username methods
+    std::vector<std::string> getUsernames() const { return usernames; }
+    std::string getUsernameInput() const;
+    std::string getCurrentUsernameInput() const { return getUsernameInput(); }
+
+    //Scroll offset
+    int getScrollOffset() const { return scrollOffset; }
+
+    //Handle user input registration
+    void handleUsernameInput(const std::string& input) { updateUsernameInput(input); }
+    void registerUsername() { if (!usernameInput.empty()) addUsername(usernameInput); }
+
+    //Update UI data methods
     void updateScore(int score);
     void updateMoney(int money);
     void updateLives(int lives);
     void updateWaveCountdown(int countdown);
     void setMessage(const std::string& message);
 
-    //Handle user input
+    //Handle user text input
     void updateUsernameInput(const std::string& text);
-    std::string getUsernameInput() const;
     void handleTextInput(sf::Uint32 unicode);
 
-    //Handle volume
+    //Handle volume display
     void updateVolumeSliderPosition();
 
-    //Handle scrolling
-    void scrollUp();
-    void scrollDown();
+    //Handle scrolling events
+    void scrollUp() { scrollScoresUp(); }
+    void scrollDown() { scrollScoresDown(); }
     void handleScrollEvent(const sf::Event& event);
 
     //Handle clicks
     void handleClick(sf::Vector2f mousePos);
 
-    //Handle callbacks
+    //Handle callbacks registration
     void setRegisterCallback(const std::function<void(const std::string&)>& callback);
 
+    // Callback setters for GameController communication
+    void setGameStartCallback(const std::function<void()>& callback) { gameStartCallback = callback; }
+    void setGamePauseCallback(const std::function<void()>& callback) { gamePauseCallback = callback; }
+    void setGamePlayCallback(const std::function<void()>& callback) { gamePlayCallback = callback; }
+    void setGameQuitCallback(const std::function<void()>& callback) { gameQuitCallback = callback; }
+    void setNextWaveCallback(const std::function<void()>& callback) { nextWaveCallback = callback; }
+    void setTowerSelectionCallback(const std::function<void(int)>& callback) { towerSelectionCallback = callback; }
+    void setMapSelectionCallback(const std::function<void(int)>& callback) { mapSelectionCallback = callback; }
+    void setDifficultySelectionCallback(const std::function<void(int)>& callback) { difficultySelectionCallback = callback; }
+
 private:
+    // Core state management
     GameState currentState;
     GameState previousState;
+
+    // Connected components
     WindowView* windowView;
     std::shared_ptr<EventController> eventController;
     std::shared_ptr<GameController> gameController;
     std::shared_ptr<WaveManager> waveManager;
     std::unique_ptr<Economy> economy;
 
+    // UI state
     int scrollOffset;
     std::string usernameInput;
     std::function<void(const std::string&)> registerCallback;
     std::vector<std::string> usernames;
     std::vector<ScoreEntry> highScores;
+
+    // Message system
     std::string currentMessage;
     float messageTimer;
     std::queue<std::pair<std::string, float>> messageQueue;
 
+    // Callback functions for GameController communication
+    std::function<void()> gameStartCallback;
+    std::function<void()> gamePauseCallback;
+    std::function<void()> gamePlayCallback;
+    std::function<void()> gameQuitCallback;
+    std::function<void()> nextWaveCallback;
+    std::function<void(int)> towerSelectionCallback;
+    std::function<void(int)> mapSelectionCallback;
+    std::function<void(int)> difficultySelectionCallback;
+
+    // Game data structure
     struct GameData {
         int score;
         int money;
@@ -169,25 +197,27 @@ private:
         bool isGameOver;
     } gameData;
 
-    // Config callbacks
+    // Setup and configuration methods
+    void setupGameControllerCallbacks();
     void setupEventCallbacks();
 
-    // Sync with WindowView
+    // Synchronization methods
     void syncUIWithGameData();
+    void syncFromGameController();  // NEW: Sync data from GameController
 
-    // Handle state
+    // State management
     void onStateChange(GameState oldState, GameState newState);
     void resetGameData();
     void handleGameOver();
 
-    // Handle events
+    // Event handlers
     void handleKeyPress(sf::Keyboard::Key key);
     void handleMouseClick(sf::Vector2f pos, sf::Mouse::Button button);
     void handleButtonClick(const std::string& buttonId);
     void handleVolumeChange(float volume);
     void handleScroll(bool up);
 
-    // Utilitaries
+    // Utility methods
     std::string difficultyToString(int difficulty) const;
     int stringToDifficulty(const std::string& difficulty) const;
     bool canStartGame() const;
