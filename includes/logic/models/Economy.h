@@ -7,14 +7,23 @@
 
 class Economy {
 public:
-    int goldAmount{}; //amount of gold the player has
+    static Economy& getInstance();
+
+    static int goldAmount; //amount of gold the player has
     int profitMultiplier{}; //to increase the profit depending on the difficulty
 
     void earnGold(std::vector<Enemy*> enemiesDefeated);
 
-    int getGoldAmount();
+    static int returnGoldAmount();
 
     bool buyTower(Tower* towerToBuy);
+
+private:
+    Economy();
+
+    Economy(const Economy&)=delete;
+
+    Economy& operator=(const Economy&)=delete;
 
 };
 

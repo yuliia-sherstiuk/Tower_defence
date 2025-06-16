@@ -1,5 +1,11 @@
 #include "../../../includes/logic/models/Economy.h"
 
+
+Economy& Economy::getInstance() {
+    static Economy instance;
+    return instance;
+}
+
 /** multiplies gold with the profit multiplier and adds the result to the gold amount the player has
  *@param enemiesDefeated a list of enemies that were previously defeated in case they drop different
  *amounts of gold
@@ -11,7 +17,7 @@ void Economy::earnGold(std::vector<Enemy*> enemiesDefeated) {
 }
 
 /** @returns the goldAmount, useful for displaying */
-int Economy::getGoldAmount() {
+int Economy::returnGoldAmount() {
     return goldAmount;
 }
 
