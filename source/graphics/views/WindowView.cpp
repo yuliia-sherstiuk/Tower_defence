@@ -2,15 +2,24 @@
 #include <iostream>
 #include <algorithm>
 
-WindowView::WindowView() : currentScore(0), playerMoney(100), baseLives(100), waveCountdown(0), isCountingDown(false), isMuted(false), volume(1.0f)  {
+WindowView::WindowView(sf::RenderWindow& window)
+    : window(window)
+    , currentScore(0)
+    , playerMoney(100)
+    , baseLives(100)
+    , waveCountdown(0)
+    , isCountingDown(false)
+    , isMuted(false)
+    , volume(1.0f)
+{
     if (!font.loadFromFile("fonts/Space_Grotesk.ttf")) {
         std::cerr << "Failed to load font \"fonts/Space_Grotesk.ttf\" (failed to create the font face)\n";
         std::cerr << "Failed to load font\n";
     }
 
-    // Initialiser la vue
     view = sf::View(sf::FloatRect(0, 0, baseWidth, baseHeight));
     setupUI();
+    mapRenderer = std::make_unique<MapRenderer>(window);
 }
 
 void WindowView::updateView(sf::RenderWindow& window) {
@@ -301,6 +310,13 @@ void WindowView::setupUI() {
     }
 }
 
+void WindowView::setLevel(const std::shared_ptr<Level>& level) {
+    currentLevel = level;
+    if (mapRenderer) {
+        mapRenderer->setLevel(level);
+    }
+}
+
 void WindowView::render(sf::RenderWindow& window) {
     updateView(window);
     window.setView(view);
@@ -324,6 +340,10 @@ void WindowView::render(sf::RenderWindow& window) {
     window.draw(moneyText);
     window.draw(livesText);
     window.draw(chronoLabel);
+
+    if (mapRenderer && currentLevel) {
+        mapRenderer->render();
+    }
 
     if (isCountingDown) {
         window.draw(waveCountdownText);
@@ -365,9 +385,8 @@ void WindowView::render(sf::RenderWindow& window) {
         window.draw(scoreEntries[i]);
     }
 
-    // Dans la fonction render()
     if (isMuted) {
-        // Dessiner une croix (X)
+        // Draw x (X)
         sf::RectangleShape line1({14, 2});
         sf::RectangleShape line2({14, 2});
 

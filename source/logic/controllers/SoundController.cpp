@@ -157,12 +157,12 @@ bool SoundController::loadGameSounds() {
     bool success = true;
 
     //Load Sound effects
-    success &= loadSound("tower_place", "source/graphics/assets/sounds/tower_place.wav");//to change when add to folder
-    success &= loadSound("enemy_hit", "source/graphics/assets/sounds/enemy_hit.wav");//to change when add to folder
-    success &= loadSound("GameOver", "source/graphics/assets/sounds/game_over.wav");//to change when add to folder
-    success &= loadSound("wave_start", "source/graphics/assets/sounds/wave_start.wav");//to change when add to folder
-    success &= loadSound("button_click", "source/graphics/assets/sounds/button_click.wav");//to change when add to folder
-    success &= loadSound("Money", "source/graphics/assets/sounds/money.wav");//to change when add to folder
+    success &= loadSound("tower_place", "assets/sounds/tower_place.wav");
+    success &= loadSound("enemy_hit", "assets/sounds/enemy_hit.wav");
+    success &= loadSound("GameOver", "assets/sounds/game_over.wav");
+    success &= loadSound("wave_start", "assets/sounds/wave_start.wav");
+    success &= loadSound("button_click", "assets/sounds/button_click.wav");
+    success &= loadSound("Money", "assets/sounds/money.wav");
 
     if (!success) {
         std::cerr << "Error while loading sounds" << std::endl;
@@ -175,7 +175,7 @@ bool SoundController::loadGameSounds() {
 bool SoundController::loadGameMusic() {
     bool success = true;
 
-    success &= loadMusic("background", "source/graphics/assets/music/background.ogg");//to change when add to folder
+    success &= loadMusic("background", "assets/sounds/background.ogg");
 
     if (!success) {
         std::cerr << "Error while loading music" << std::endl;
