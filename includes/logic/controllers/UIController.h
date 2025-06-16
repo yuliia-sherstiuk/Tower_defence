@@ -146,6 +146,7 @@ public:
     void setTowerSelectionCallback(const std::function<void(int)>& callback) { towerSelectionCallback = callback; }
     void setMapSelectionCallback(const std::function<void(int)>& callback) { mapSelectionCallback = callback; }
     void setDifficultySelectionCallback(const std::function<void(int)>& callback) { difficultySelectionCallback = callback; }
+    void setApplicationQuitCallback(const std::function<void()>& callback);
 
 private:
     // Core state management
@@ -180,6 +181,7 @@ private:
     std::function<void(int)> towerSelectionCallback;
     std::function<void(int)> mapSelectionCallback;
     std::function<void(int)> difficultySelectionCallback;
+    std::function<void()> applicationQuitCallback;
 
     // Game data structure
     struct GameData {

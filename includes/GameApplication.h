@@ -7,21 +7,23 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include "graphics/views/WindowView.h"
 #include "logic/controllers/UIController.h"
 #include "logic/controllers/EventController.h"
-#include "graphics/views/WindowView.h"
 
 class GameApplication {
-private:
-    sf::RenderWindow window;
-    std::shared_ptr<UIController> uiController;
-    std::shared_ptr<EventController> eventController;
-    std::unique_ptr<WindowView> windowView;
-
 public:
     GameApplication();
     ~GameApplication();
+
     void run();
+
+private:
+    sf::RenderWindow window;
+    std::unique_ptr<WindowView> windowView;
+    std::shared_ptr<UIController> uiController;
+    std::shared_ptr<EventController> eventController;
+    bool applicationRunning;
 };
 
 #endif // GAMEAPPLICATION_H

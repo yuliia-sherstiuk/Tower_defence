@@ -10,12 +10,20 @@ GameApplication::GameApplication()
     , windowView(std::make_unique<WindowView>(window))
     , uiController(std::make_shared<UIController>())
     , eventController(std::make_shared<EventController>())
+    , applicationRunning(true)
 {
     std::cout << "[DEBUG] GameApplication: Constructor - Setting up controllers" << std::endl;
 
     // Connect all controllers together
     uiController->connectWithWindowView(windowView.get());
     uiController->connectWithEventController(eventController);
+
+    //Callback to close the app
+    uiController->setApplicationQuitCallback([this]() {
+        std::cout << "[DEBUG] GameApplication: Application quit requested" << std::endl;
+        applicationRunning = false;
+        window.close();
+    });
 
     std::cout << "[DEBUG] GameApplication: All controllers connected successfully" << std::endl;
 }
@@ -29,7 +37,7 @@ void GameApplication::run() {
 
     sf::Clock clock;
 
-    while (window.isOpen()) {
+    while (window.isOpen() && applicationRunning) {
         float deltaTime = clock.restart().asSeconds();
 
         // Handle events
@@ -37,6 +45,7 @@ void GameApplication::run() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 std::cout << "[DEBUG] GameApplication: Window close requested" << std::endl;
+                applicationRunning = false;
                 window.close();
             }
 

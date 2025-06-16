@@ -35,6 +35,7 @@ UIController::UIController()
     , towerSelectionCallback(nullptr)
     , mapSelectionCallback(nullptr)
     , difficultySelectionCallback(nullptr)
+    , applicationQuitCallback(nullptr)
 {
     std::cout << "[DEBUG] UIController: Constructor called" << std::endl;
 
@@ -247,6 +248,12 @@ void UIController::updateGameLogic(float deltaTime) {
 void UIController::handleButtonClick(const std::string& buttonId) {
     std::cout << "[DEBUG] UIController::handleButtonClick: Button clicked = " << buttonId << std::endl;
 
+    if (buttonId == "bottomIds_4" || buttonId == "quit") {
+        std::cout << "[DEBUG] UIController::handleButtonClick: Quit button pressed, initiating application shutdown" << std::endl;
+        quitGame();
+        return;
+    }
+
     if (buttonId == "start") {
         startGame();
         setMessage("Game started!");
@@ -402,8 +409,16 @@ void UIController::resumeGame() {
 
 // Quit game
 void UIController::quitGame() {
-    std::cout << "[DEBUG] UIController::quitGame: Quitting game" << std::endl;
-    if (gameQuitCallback) gameQuitCallback();
+    std::cout << "[DEBUG] UIController::quitGame: Quitting game and application" << std::endl;
+    if (gameQuitCallback) {
+        gameQuitCallback();
+    }
+
+    //Call callback to close the app
+    if (applicationQuitCallback) {
+        std::cout << "[DEBUG] UIController::quitGame: Calling application quit callback" << std::endl;
+        applicationQuitCallback();
+    }
 }
 
 // Restart game
@@ -766,4 +781,10 @@ void UIController::handleClick(sf::Vector2f mousePos) {
 void UIController::setRegisterCallback(const std::function<void(const std::string&)>& callback) {
     std::cout << "[DEBUG] UIController::setRegisterCallback: Register callback set" << std::endl;
     registerCallback = callback;
+}
+
+//Set application Quit callback
+void UIController::setApplicationQuitCallback(const std::function<void()>& callback) {
+    std::cout << "[DEBUG] UIController::setApplicationQuitCallback: Application quit callback set" << std::endl;
+    applicationQuitCallback = callback;
 }

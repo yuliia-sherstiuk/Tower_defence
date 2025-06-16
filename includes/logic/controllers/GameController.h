@@ -1,9 +1,6 @@
 //
 // Created by chris on 14/06/2025.
 //
-//
-// Created by chris on 14/06/2025.
-//
 
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
@@ -63,8 +60,8 @@ private:
     int currentScore;
 
     // Shared components (set by UIController)
-    WindowView* windowView;  // Shared with UIController
-    std::shared_ptr<EventController> eventController;  // Shared with UIController
+    WindowView* windowView;
+    std::shared_ptr<EventController> eventController;
 
     // Game state
     bool gameRunning;

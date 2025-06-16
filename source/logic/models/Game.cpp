@@ -6,20 +6,22 @@
 
 Game::Game()
     : running(false)
+    , paused(false)
 {
     waveManager = std::make_unique<WaveManager>();
-    currentLevel = std::make_shared<Level>(1); 
+    currentLevel = std::make_shared<Level>(1);
     waveManager->setLevel(currentLevel);
 }
 
 void Game::start() {
     running = true;
+    paused = false;
     std::cout << "Game started!\n";
     waveManager->initializeWave(currentLevel->getSpawnPoint());
 }
 
 void Game::pause() {
-    if (running && paused) {
+    if (running && !paused) {
         paused = true;
         std::cout << "Game paused.\n";
     }
@@ -34,13 +36,12 @@ void Game::play() {
 
 void Game::quit() {
     running = false;
+    paused = false;
     std::cout << "Quit!\n";
-    waveManager->initializeWave(currentLevel->getSpawnPoint());
 }
 
-
 void Game::update(float deltaTime) {
-    if (!running) return;
+    if (!running || paused) return;
 
     waveManager->update(deltaTime);
 
@@ -56,9 +57,14 @@ void Game::update(float deltaTime) {
 
 void Game::stop() {
     running = false;
+    paused = false;
     std::cout << "Game stopped.\n";
 }
 
 bool Game::isRunning() const {
     return running;
+}
+
+bool Game::isPaused() const {
+    return paused;
 }
