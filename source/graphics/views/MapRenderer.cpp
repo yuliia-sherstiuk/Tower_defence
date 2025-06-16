@@ -1,7 +1,5 @@
 //
 // Created by chris on 16/06/2025.
-
-
 #include "../../../includes/graphics/views/MapRenderer.h"
 
 const float MapRenderer::CELL_SIZE = 60.0f;
@@ -15,6 +13,7 @@ MapRenderer::MapRenderer(sf::RenderWindow& window)
     , towerSpotColor(100, 200, 100)
     , defaultColor(50, 50, 50)
     , gridColor(70, 70, 70)
+    , levelDebugPrinted(false)
 {
     if (!baseTexture.loadFromFile("assets/base.png")) {
         std::cerr << "Failed to load base texture!" << std::endl;
@@ -26,6 +25,7 @@ MapRenderer::MapRenderer(sf::RenderWindow& window)
 
 void MapRenderer::setLevel(const std::shared_ptr<Level>& level) {
     currentLevel = level;
+    levelDebugPrinted = false; // Reset flag for new level
     std::cout << "[DEBUG] MapRenderer: Setting new level" << std::endl;
 }
 
@@ -35,6 +35,56 @@ void MapRenderer::render() {
     renderGrid();
     renderLevelElements();
     renderTowerSpots();
+
+    // Print debug info only once per level
+    if (!levelDebugPrinted) {
+        printLevelDebugInfo();
+        levelDebugPrinted = true;
+    }
+}
+
+void MapRenderer::printLevelDebugInfo() {
+    std::cout << "[DEBUG] MapRenderer: Level loaded with:" << std::endl;
+
+    // Collect nodes by type
+    std::vector<GridPosition> spawns, paths, bases;
+    for (const auto& node : currentLevel->getNodes()) {
+        const GridPosition& nodePos = node->getGridPosition();
+        const std::string& nodeType = node->getType();
+
+        if (nodeType == "spawn") spawns.push_back(nodePos);
+        else if (nodeType == "path") paths.push_back(nodePos);
+        else if (nodeType == "base") bases.push_back(nodePos);
+    }
+
+    // Print spawns
+    std::cout << "[DEBUG] Spawns (" << spawns.size() << "):";
+    for (const auto& pos : spawns) {
+        std::cout << " (" << pos.col << "," << pos.row << ")";
+    }
+    std::cout << std::endl;
+
+    // Print paths
+    std::cout << "[DEBUG] Paths (" << paths.size() << "):";
+    for (const auto& pos : paths) {
+        std::cout << " (" << pos.col << "," << pos.row << ")";
+    }
+    std::cout << std::endl;
+
+    // Print bases
+    std::cout << "[DEBUG] Bases (" << bases.size() << "):";
+    for (const auto& pos : bases) {
+        std::cout << " (" << pos.col << "," << pos.row << ")";
+    }
+    std::cout << std::endl;
+
+    // Print tower spots
+    std::cout << "[DEBUG] Tower spots (" << currentLevel->getTowerSpots().size() << "):";
+    for (const auto& spot : currentLevel->getTowerSpots()) {
+        GridPosition gridPos = GridPosition::fromPixelPosition(spot);
+        std::cout << " (" << gridPos.col << "," << gridPos.row << ")";
+    }
+    std::cout << std::endl;
 }
 
 void MapRenderer::renderGrid() {
@@ -63,20 +113,17 @@ void MapRenderer::renderLevelElements() {
         if (nodeType == "spawn") {
             cell.setFillColor(spawnColor);
             window.draw(cell);
-            std::cout << "[DEBUG] MapRenderer: Drawing spawn at ("
-                     << nodePos.col << "," << nodePos.row << ")" << std::endl;
+
         }
         else if (nodeType == "path") {
             cell.setFillColor(pathColor);
             window.draw(cell);
-            std::cout << "[DEBUG] MapRenderer: Drawing path at ("
-                     << nodePos.col << "," << nodePos.row << ")" << std::endl;
+
         }
         else if (nodeType == "base") {
             baseSprite.setPosition(x, y);
             window.draw(baseSprite);
-            std::cout << "[DEBUG] MapRenderer: Drawing base at ("
-                     << nodePos.col << "," << nodePos.row << ")" << std::endl;
+
         }
 
         const auto& connections = node->getConnections();
@@ -113,7 +160,5 @@ void MapRenderer::renderTowerSpots() {
                             GAME_FIELD_Y + gridPos.row * CELL_SIZE);
         towerSpot.setFillColor(towerSpotColor);
         window.draw(towerSpot);
-        std::cout << "[DEBUG] MapRenderer: Drawing tower spot at ("
-                 << gridPos.col << "," << gridPos.row << ")" << std::endl;
     }
 }

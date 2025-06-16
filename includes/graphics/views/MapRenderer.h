@@ -1,6 +1,9 @@
 //
 // Created by chris on 16/06/2025.
 //
+//
+// Created by chris on 16/06/2025.
+//
 
 #ifndef MAP_RENDERER_H
 #define MAP_RENDERER_H
@@ -20,7 +23,7 @@ private:
 
     sf::RenderWindow& window;
     std::shared_ptr<Level> currentLevel;
-    bool needsRedraw; //implementation not completed
+    bool levelDebugPrinted;
     sf::Texture baseTexture;
     sf::Sprite baseSprite;
 
@@ -39,6 +42,7 @@ private:
     void renderGrid();
     void renderLevelElements();
     void renderTowerSpots();
+    void printLevelDebugInfo();
 };
 
 #endif // MAP_RENDERER_H
