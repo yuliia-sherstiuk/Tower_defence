@@ -16,9 +16,6 @@
 
 class MapRenderer {
 private:
-    static const float CELL_SIZE;
-    static const float GAME_FIELD_X;
-    static const float GAME_FIELD_Y;
 
     sf::RenderWindow& window;
     std::shared_ptr<Level> currentLevel;
@@ -33,6 +30,10 @@ private:
     const sf::Color gridColor;
 
 public:
+    static const float CELL_SIZE;
+    static const float GAME_FIELD_X;
+    static const float GAME_FIELD_Y;
+
     explicit MapRenderer(sf::RenderWindow& window);
     void setLevel(const std::shared_ptr<Level>& level);
     void render();

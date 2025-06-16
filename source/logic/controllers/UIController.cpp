@@ -254,13 +254,13 @@ void UIController::handleButtonClick(const std::string& buttonId) {
         return;
     }
 
-    if (buttonId == "start") {
+    if (buttonId == "bottomIds_1" ||  buttonId== "start") {
         startGame();
         setMessage("Game started!");
-    } else if (buttonId == "pause") {
+    } else if (buttonId == "bottomIds_2" || buttonId == "pause") {
         pauseGame();
         setMessage("Game paused.");
-    } else if (buttonId == "play") {
+    } else if (buttonId == "bottomIds_3" || buttonId == "play") {
         resumeGame();
         setMessage("Game resumed.");
     } else if (buttonId == "quit") {
