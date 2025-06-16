@@ -17,7 +17,7 @@ MapRenderer::MapRenderer(sf::RenderWindow& window)
     , gridColor(70, 70, 70)
     , levelDebugPrinted(false)
 {
-    if (!baseTexture.loadFromFile("assets/base.png")) {
+    if (!baseTexture.loadFromFile("assets/sprites/base.png")) {
         std::cerr << "Failed to load base texture!" << std::endl;
     }
     baseSprite.setTexture(baseTexture);

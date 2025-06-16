@@ -43,7 +43,7 @@ private:
         auto path8 = std::make_shared<PathNode>(8, "path", GridPosition(6, 20));
         auto path9 = std::make_shared<PathNode>(9, "path", GridPosition(6, 23));
         auto path10 = std::make_shared<PathNode>(10, "path", GridPosition(14, 23));
-        auto base = std::make_shared<PathNode>(11, "base", GridPosition(14, 24));
+        auto base = std::make_shared<PathNode>(11, "base", GridPosition(14, 26));
 
         // Add nodes to level
         level->addNode(spawn);
@@ -97,7 +97,7 @@ private:
         auto path7 = std::make_shared<PathNode>(7, "path", GridPosition(6, 19));
         auto path8 = std::make_shared<PathNode>(8, "path", GridPosition(14, 19));
         auto path9 = std::make_shared<PathNode>(9, "path", GridPosition(14, 25));
-        auto base = std::make_shared<PathNode>(10, "base", GridPosition(8, 26));
+        auto base = std::make_shared<PathNode>(10, "base", GridPosition(14, 26));
 
         // Add nodes to level
         level->addNode(spawn);

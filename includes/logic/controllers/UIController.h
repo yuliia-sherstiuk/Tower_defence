@@ -203,7 +203,7 @@ private:
 
     // Synchronization methods
     void syncUIWithGameData();
-    void syncFromGameController();  // NEW: Sync data from GameController
+    void syncFromGameController();
 
     // State management
     void onStateChange(GameState oldState, GameState newState);
