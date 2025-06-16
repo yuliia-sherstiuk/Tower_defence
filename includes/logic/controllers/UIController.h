@@ -1,9 +1,7 @@
-//
+
 // Created by chris on 14/06/2025.
 //
-//
-// Created by chris on 14/06/2025.
-//
+
 #ifndef UICONTROLLER_H
 #define UICONTROLLER_H
 
