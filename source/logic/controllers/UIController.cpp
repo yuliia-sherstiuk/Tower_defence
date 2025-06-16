@@ -5,6 +5,7 @@
 #include "../../../includes/logic/controllers/GameController.h"
 #include "../../../includes/logic/controllers/EventController.h"
 #include "../includes/graphics/views/WindowView.h"
+#include "../../includes/utils/LevelLoader.h"
 #include <iostream>
 #include <algorithm>
 
@@ -492,6 +493,12 @@ void UIController::setDifficulty(int difficulty) {
 void UIController::selectLevel(int levelNumber) {
     std::cout << "[DEBUG] UIController::selectLevel: Selecting level " << levelNumber << std::endl;
     gameData.selectedLevel = levelNumber;
+
+    auto level = LevelLoader::loadLevel(levelNumber);
+    if (level && windowView) {
+        windowView->setLevel(level);
+    }
+
     SoundController::getInstance().playButtonClickSound();
     if (windowView) {
         windowView->setMessage("Level " + std::to_string(levelNumber) + " selected!");

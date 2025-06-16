@@ -16,7 +16,7 @@ private:
     sf::RenderWindow window;
     std::shared_ptr<UIController> uiController;
     std::shared_ptr<EventController> eventController;
-    WindowView* windowView;
+    std::unique_ptr<WindowView> windowView;
 
 public:
     GameApplication();

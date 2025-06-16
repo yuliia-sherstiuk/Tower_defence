@@ -6,10 +6,12 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include "MapRenderer.h"
 
 class WindowView {
 public:
-    WindowView();
+    //WindowView();
+    explicit WindowView(sf::RenderWindow& window);
 
     // Core rendering
     void render(sf::RenderWindow& window);
@@ -39,11 +41,14 @@ public:
     void setScrollCallback(const std::function<void(bool)>& callback);
     void setRegisterCallback(const std::function<void(const std::string&)>& callback);
 
-    // Nouvelle méthode pour la conversion des coordonnées
+    // to convert coordinates
     sf::Vector2f getViewCoords(sf::RenderWindow& window, sf::Vector2i mousePos);
 
+    //Level
+    void setLevel(const std::shared_ptr<Level>& level);
+
 private:
-    // Dimensions de base et vue
+    // Dimension
     /*
     const float baseWidth = 1100;
     const float baseHeight = 720;
@@ -51,6 +56,9 @@ private:
     const float baseWidth = 2160;
     const float baseHeight = 1440;
 
+    sf::RenderWindow& window;
+    std::unique_ptr<MapRenderer> mapRenderer;
+    std::shared_ptr<Level> currentLevel;
     sf::View view;
 
     // UI Elements

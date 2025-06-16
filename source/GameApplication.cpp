@@ -7,14 +7,14 @@
 
 GameApplication::GameApplication()
     : window(sf::VideoMode(2160, 1440), "Tower Defense Game")
+    , windowView(std::make_unique<WindowView>(window))
     , uiController(std::make_shared<UIController>())
     , eventController(std::make_shared<EventController>())
-    , windowView(new WindowView())
 {
     std::cout << "[DEBUG] GameApplication: Constructor - Setting up controllers" << std::endl;
 
     // Connect all controllers together
-    uiController->connectWithWindowView(windowView);
+    uiController->connectWithWindowView(windowView.get());
     uiController->connectWithEventController(eventController);
 
     std::cout << "[DEBUG] GameApplication: All controllers connected successfully" << std::endl;
@@ -22,7 +22,6 @@ GameApplication::GameApplication()
 
 GameApplication::~GameApplication() {
     std::cout << "[DEBUG] GameApplication: Destructor - Cleaning up" << std::endl;
-    delete windowView;
 }
 
 void GameApplication::run() {
@@ -50,9 +49,7 @@ void GameApplication::run() {
 
         // Render everything
         window.clear();
-        if (windowView) {
-            windowView->render(window);
-        }
+        windowView->render(window);
         window.display();
     }
 
