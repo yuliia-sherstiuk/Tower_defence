@@ -1,19 +1,18 @@
 //
 // Created by chris on 16/06/2025.
 //
-//
-// Created by chris on 16/06/2025.
-//
 
 #ifndef MAP_RENDERER_H
 #define MAP_RENDERER_H
 
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include "../../../includes/utils/Level.h"
-#include "../../../includes/utils/GridPosition.h"
 #include <iostream>
 #include <cmath>
+#include <set>
+#include "../../../includes/utils/Level.h"
+#include "../../../includes/utils/GridPosition.h"
+#include "../../../includes/utils/PathNode.h"
 
 class MapRenderer {
 private:
@@ -43,6 +42,7 @@ private:
     void renderLevelElements();
     void renderTowerSpots();
     void printLevelDebugInfo();
+    void renderEnemyPath();
 };
 
 #endif // MAP_RENDERER_H

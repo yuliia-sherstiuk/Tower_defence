@@ -1,5 +1,7 @@
 //
 // Created by chris on 16/06/2025.
+//
+
 #include "../../../includes/graphics/views/MapRenderer.h"
 
 const float MapRenderer::CELL_SIZE = 60.0f;
@@ -46,45 +48,27 @@ void MapRenderer::render() {
 void MapRenderer::printLevelDebugInfo() {
     std::cout << "[DEBUG] MapRenderer: Level loaded with:" << std::endl;
 
-    // Collect nodes by type
-    std::vector<GridPosition> spawns, paths, bases;
+    // Print detailed info with coordinates
     for (const auto& node : currentLevel->getNodes()) {
         const GridPosition& nodePos = node->getGridPosition();
         const std::string& nodeType = node->getType();
 
-        if (nodeType == "spawn") spawns.push_back(nodePos);
-        else if (nodeType == "path") paths.push_back(nodePos);
-        else if (nodeType == "base") bases.push_back(nodePos);
+        if (nodeType == "spawn") {
+            std::cout << "[DEBUG] - Spawn at (" << nodePos.col << "," << nodePos.row << ")" << std::endl;
+        }
+        else if (nodeType == "path") {
+            std::cout << "[DEBUG] - Path at (" << nodePos.col << "," << nodePos.row << ")" << std::endl;
+        }
+        else if (nodeType == "base") {
+            std::cout << "[DEBUG] - Base at (" << nodePos.col << "," << nodePos.row << ")" << std::endl;
+        }
     }
 
-    // Print spawns
-    std::cout << "[DEBUG] Spawns (" << spawns.size() << "):";
-    for (const auto& pos : spawns) {
-        std::cout << " (" << pos.col << "," << pos.row << ")";
-    }
-    std::cout << std::endl;
-
-    // Print paths
-    std::cout << "[DEBUG] Paths (" << paths.size() << "):";
-    for (const auto& pos : paths) {
-        std::cout << " (" << pos.col << "," << pos.row << ")";
-    }
-    std::cout << std::endl;
-
-    // Print bases
-    std::cout << "[DEBUG] Bases (" << bases.size() << "):";
-    for (const auto& pos : bases) {
-        std::cout << " (" << pos.col << "," << pos.row << ")";
-    }
-    std::cout << std::endl;
-
-    // Print tower spots
-    std::cout << "[DEBUG] Tower spots (" << currentLevel->getTowerSpots().size() << "):";
+    // Print tower spots with coordinates
     for (const auto& spot : currentLevel->getTowerSpots()) {
         GridPosition gridPos = GridPosition::fromPixelPosition(spot);
-        std::cout << " (" << gridPos.col << "," << gridPos.row << ")";
+        std::cout << "[DEBUG] - Tower spot at (" << gridPos.col << "," << gridPos.row << ")" << std::endl;
     }
-    std::cout << std::endl;
 }
 
 void MapRenderer::renderGrid() {
@@ -102,52 +86,25 @@ void MapRenderer::renderGrid() {
 }
 
 void MapRenderer::renderLevelElements() {
+    // First, render the complete enemy path
+    renderEnemyPath();
+
+    // Then render special nodes (spawn, base) on top
     for (const auto& node : currentLevel->getNodes()) {
-        sf::RectangleShape cell(sf::Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
         const GridPosition& nodePos = node->getGridPosition();
         float x = GAME_FIELD_X + nodePos.col * CELL_SIZE;
         float y = GAME_FIELD_Y + nodePos.row * CELL_SIZE;
-        cell.setPosition(x, y);
 
         const std::string& nodeType = node->getType();
         if (nodeType == "spawn") {
+            sf::RectangleShape cell(sf::Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
+            cell.setPosition(x, y);
             cell.setFillColor(spawnColor);
             window.draw(cell);
-
-        }
-        else if (nodeType == "path") {
-            cell.setFillColor(pathColor);
-            window.draw(cell);
-
         }
         else if (nodeType == "base") {
             baseSprite.setPosition(x, y);
             window.draw(baseSprite);
-
-        }
-
-        const auto& connections = node->getConnections();
-        if (!connections.empty()) {
-            for (const auto& connectedNode : connections) {
-                sf::RectangleShape line(sf::Vector2f(2, 2));
-                line.setFillColor(sf::Color::Yellow);
-
-                float startX = x + CELL_SIZE / 2;
-                float startY = y + CELL_SIZE / 2;
-
-                const GridPosition& connPos = connectedNode->getGridPosition();
-                float endX = GAME_FIELD_X + connPos.col * CELL_SIZE + CELL_SIZE / 2;
-                float endY = GAME_FIELD_Y + connPos.row * CELL_SIZE + CELL_SIZE / 2;
-
-                float length = std::sqrt(std::pow(endX - startX, 2) + std::pow(endY - startY, 2));
-                float angle = std::atan2(endY - startY, endX - startX) * 180 / 3.14159f;
-
-                line.setSize(sf::Vector2f(length, 2));
-                line.setPosition(startX, startY);
-                line.setRotation(angle);
-
-                window.draw(line);
-            }
         }
     }
 }
@@ -160,5 +117,72 @@ void MapRenderer::renderTowerSpots() {
                             GAME_FIELD_Y + gridPos.row * CELL_SIZE);
         towerSpot.setFillColor(towerSpotColor);
         window.draw(towerSpot);
+
+    }
+}
+
+void MapRenderer::renderEnemyPath() {
+    // Find the spawn node
+    std::shared_ptr<PathNode> currentNode = nullptr;
+    for (const auto& node : currentLevel->getNodes()) {
+        if (node->getType() == "spawn") {
+            currentNode = node;
+            break;
+        }
+    }
+
+    if (!currentNode) return;
+
+    std::set<std::pair<int, int>> visitedNodes;
+
+    while (currentNode) {
+        const GridPosition& currentPos = currentNode->getGridPosition();
+        std::pair<int, int> nodeKey = {currentPos.col, currentPos.row};
+
+        if (visitedNodes.find(nodeKey) != visitedNodes.end()) {
+            break;
+        }
+        visitedNodes.insert(nodeKey);
+
+        // Get next node
+        const auto& connections = currentNode->getConnections();
+        if (connections.empty()) break;
+
+        std::shared_ptr<PathNode> nextNode = connections[0];
+        if (!nextNode) break;
+
+        const GridPosition& nextPos = nextNode->getGridPosition();
+
+        // Draw path between current and next node
+        int startCol = currentPos.col;
+        int startRow = currentPos.row;
+        int endCol = nextPos.col;
+        int endRow = nextPos.row;
+
+        // Determine direction and draw all cells between nodes
+        if (startCol == endCol) {
+            // Vertical path
+            int step = (endRow > startRow) ? 1 : -1;
+            for (int row = startRow; row != endRow + step; row += step) {
+                sf::RectangleShape pathCell(sf::Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
+                pathCell.setPosition(GAME_FIELD_X + startCol * CELL_SIZE,
+                                   GAME_FIELD_Y + row * CELL_SIZE);
+                pathCell.setFillColor(pathColor);
+                window.draw(pathCell);
+            }
+        } else if (startRow == endRow) {
+            // Horizontal path
+            int step = (endCol > startCol) ? 1 : -1;
+            for (int col = startCol; col != endCol + step; col += step) {
+                sf::RectangleShape pathCell(sf::Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
+                pathCell.setPosition(GAME_FIELD_X + col * CELL_SIZE,
+                                   GAME_FIELD_Y + startRow * CELL_SIZE);
+                pathCell.setFillColor(pathColor);
+                window.draw(pathCell);
+            }
+        }
+
+        currentNode = nextNode;
+        if (currentNode->getType() == "base") break;
     }
 }
