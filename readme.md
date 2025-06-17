@@ -680,23 +680,92 @@ Le diagramme de classes illustre les relations entre les différentes classes du
 - **`+ setDifficulty(string difficulty)`** : Change la difficulté du jeu.
 - **`+ resetSettings()`** : Réinitialise les paramètres aux valeurs par défaut.
 
-## Structure des fichiers
+## User Story
 
-
-```
-+--------------------+
-|     Utilisateur    |
-+--------------------+
-| - nom: string      |
-| - score: int       |
-+--------------------+
-| + startGame()      |
-| + accessOptions()  |
-| + viewScores()     |
-| + quitGame()       |
-+--------------------+
-
-```
+```mermaid
+graph TB
+    subgraph "🎮 TOWER DEFENSE - USER STORIES"
+        Player[👤 JOUEUR]
+    end
+    
+    subgraph "🏗️ Interface de Jeu Principal"
+        US01[US01: Démarrage de Partie<br/>START button → Nouvelle partie]
+        US02[US02: Sélection de Carte<br/>MAP 1/2 → Changer carte]
+        US03[US03: Choix de Difficulté<br/>Difficulty 1/2/3 → Niveau]
+        US04[US04: Placement de Tours<br/>TOWER 1/2/3 → Placer tours]
+    end
+    
+    subgraph "⚡ Gestion des Vagues"
+        US05[US05: Lancement de Vague<br/>NEXT WAVE → Déclencher vague]
+        US06[US06: Compte à Rebours<br/>COUNT DOWN → Temps restant]
+    end
+    
+    subgraph "📊 Suivi des Statistiques"
+        US07[US07: Affichage du Score<br/>SCORE: X → Performance temps réel]
+        US08[US08: Gestion de l'Or<br/>Gold: X → Budget disponible]
+        US09[US09: Suivi des Vies<br/>Lives: X → Situation critique]
+    end
+    
+    subgraph "🏆 Enregistrement des Scores"
+        US10[US10: Saisie du Nom<br/>Username field → Identité joueur]
+        US11[US11: Enregistrement Score<br/>Register button → Sauvegarder]
+        US12[US12: Consultation Classement<br/>Score list → Comparer performances]
+    end
+    
+    subgraph "🔊 Contrôles Audio & Interface"
+        US13[US13: Réglage Volume<br/>Volume slider → Ajuster audio]
+        US14[US14: Mute/Unmute<br/>Mute checkbox → Couper son]
+        US15[US15: Contrôles Partie<br/>PAUSE/PLAY/QUIT → Contrôler jeu]
+        US16[US16: Messages Info<br/>Message area → Informations]
+    end
+    
+    %% Relations du joueur vers les épics
+    Player --> US01
+    Player --> US02
+    Player --> US03
+    Player --> US04
+    Player --> US05
+    Player --> US06
+    Player --> US07
+    Player --> US08
+    Player --> US09
+    Player --> US10
+    Player --> US11
+    Player --> US12
+    Player --> US13
+    Player --> US14
+    Player --> US15
+    Player --> US16
+    
+    %% Dépendances fonctionnelles
+    US01 -.->|prerequis| US02
+    US01 -.->|prerequis| US03
+    US01 -.->|prerequis| US04
+    US01 -.->|prerequis| US05
+    
+    US04 -.->|consomme| US08
+    US05 -.->|génère| US07
+    US05 -.->|déclenche| US06
+    
+    US10 -.->|prerequis| US11
+    US11 -.->|alimente| US12
+    
+    %% Styles
+    classDef playerStyle fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#fff
+    classDef interfaceStyle fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
+    classDef waveStyle fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#fff
+    classDef statsStyle fill:#9C27B0,stroke:#4A148C,stroke-width:2px,color:#fff
+    classDef scoreStyle fill:#F44336,stroke:#B71C1C,stroke-width:2px,color:#fff
+    classDef audioStyle fill:#607D8B,stroke:#263238,stroke-width:2px,color:#fff
+    
+    class Player playerStyle
+    class US01,US02,US03,US04 interfaceStyle
+    class US05,US06 waveStyle
+    class US07,US08,US09 statsStyle
+    class US10,US11,US12 scoreStyle
+    class US13,US14,US15,US16 audioStyle
+    
+  ```  
 ## Structure des fichiers
 
 ```
