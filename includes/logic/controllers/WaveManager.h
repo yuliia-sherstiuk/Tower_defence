@@ -8,10 +8,12 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <SFML/Graphics.hpp>
 #include "../models/Wave.h"
 #include "../../utils/PathNode.h"
 #include "../../utils/Level.h"
 #include "../models/Enemy.h"
+#include "../../graphics/views/EnemyRenderer.h"
 
 class WaveManager {
 private:
@@ -21,6 +23,7 @@ private:
     bool isWaveManualStart;
     std::string currentDifficulty;
     static constexpr float WAVE_DELAY = 30.0f; //delay wave 30 sec
+    static EnemyRenderer enemyRenderer;
 
     // Helper method to get a valid spawn point
     std::shared_ptr<PathNode> getValidSpawnPoint() const;
@@ -42,6 +45,9 @@ public:
     //Difficulty
     void setDifficulty(const std::string& difficulty);
     std::string getDifficulty() const { return currentDifficulty; }
+
+    //Renderer
+    void renderEnemies(sf::RenderWindow& window);
 
     //init wave
     void initializeWave(const std::shared_ptr<PathNode>& spawnPoint);

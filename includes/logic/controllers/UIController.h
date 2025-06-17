@@ -60,6 +60,7 @@ public:
     int getCurrentScore() const { return gameData.score; }
     float getVolume() const { return gameData.volume; }
     bool isMuted() const { return gameData.isMuted; }
+    std::shared_ptr<WaveManager> getWaveManager() const { return waveManager; }
 
     //Game actions
     void startGame();

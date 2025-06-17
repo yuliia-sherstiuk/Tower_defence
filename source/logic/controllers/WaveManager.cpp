@@ -3,6 +3,8 @@
 //
 #include "../../../includes/logic/controllers/WaveManager.h"
 
+EnemyRenderer WaveManager::enemyRenderer;
+
 WaveManager::WaveManager()
     : waveTimer(0.0f)
     , isWaveManualStart(false)
@@ -120,4 +122,12 @@ std::shared_ptr<PathNode> WaveManager::getValidSpawnPoint() const {
 const std::vector<std::shared_ptr<Enemy>>& WaveManager::getEnemies() const {
     static const std::vector<std::shared_ptr<Enemy>> emptyVector;
     return currentWave ? currentWave->getEnemies() : emptyVector;
+}
+
+//Render enemies
+void WaveManager::renderEnemies(sf::RenderWindow& window) {
+    const auto& enemies = getEnemies();
+    for (const auto& enemy : enemies) {
+        enemyRenderer.renderEnemy(enemy, window);
+    }
 }

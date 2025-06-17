@@ -59,6 +59,12 @@ void GameApplication::run() {
         // Render everything
         window.clear();
         windowView->render(window);
+
+        // Enemy renderer
+        if (auto waveManager = uiController->getWaveManager()) {
+            waveManager->renderEnemies(window);
+        }
+
         window.display();
     }
 

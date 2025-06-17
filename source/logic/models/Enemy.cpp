@@ -17,7 +17,7 @@ Enemy::Enemy(int id, int health, float speed, int damage,
              std::shared_ptr<PathNode> startNode, EnemyType type)
     : id(id), health(health), speed(speed), damage(damage),
       currentNode(std::move(startNode)), nextNode(nullptr),
-      progress(0.0f), type(type) {
+      progress(0.0f), type(type), maxHealth(health) {
 
     if (currentNode) {
         position = currentNode->getPixelPosition();

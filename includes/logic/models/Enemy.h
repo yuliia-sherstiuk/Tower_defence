@@ -26,6 +26,7 @@ private:
 	int health;
 	float speed;
 	int damage;
+	int maxHealth;
 	Position position;
 	std::shared_ptr<PathNode> currentNode;
 	std::shared_ptr<PathNode> nextNode;
@@ -42,6 +43,7 @@ public:
 	// Getters
 	int getId() const { return id; }
 	int getHealth() const { return health; }
+	int getMaxHealth() const { return maxHealth; }
 	float getSpeed() const { return speed; }
 	int getDamage() const { return damage; }
 	const Position& getPosition() const { return position; }

@@ -385,6 +385,8 @@ void UIController::startGame() {
     if (canStartGame()) {
         if (gameStartCallback) gameStartCallback();
         waveManager->setDifficulty(difficultyToString(gameData.selectedDifficulty));
+        // Start first wave
+        waveManager->forceStartWave();
         std::cout << "[DEBUG] UIController::startGame: Game started with difficulty " << difficultyToString(gameData.selectedDifficulty) << std::endl;
     } else {
         std::cout << "[DEBUG] UIController::startGame: Cannot start game in current state" << std::endl;
