@@ -44,7 +44,380 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
 - **Factory** : Utilisé pour créer dynamiquement des instances de tours et d'ennemis.
 
 ## Diagrammes UML
+# Diagramme de classes
 
+```mermaid
+classDiagram
+    %% Application Layer
+    class GameApplication {
+        -window: sf::RenderWindow
+        -windowView: unique_ptr~WindowView~
+        -uiController: shared_ptr~UIController~
+        -eventController: shared_ptr~EventController~
+        -applicationRunning: bool
+        +GameApplication()
+        +run()
+    }
+
+    %% Controllers Layer
+    class UIController {
+        -currentState: GameState
+        -windowView: WindowView*
+        -eventController: shared_ptr~EventController~
+        -gameController: shared_ptr~GameController~
+        -waveManager: shared_ptr~WaveManager~
+        -economy: unique_ptr~Economy~
+        -gameData: GameData
+        +setState(GameState)
+        +startGame()
+        +pauseGame()
+        +update(float)
+        +handleClick(sf::Vector2f)
+    }
+
+    class GameController {
+        -game: unique_ptr~Game~
+        -scoreManager: unique_ptr~ScoreManager~
+        -currentPlayer: string
+        -currentScore: int
+        -windowView: WindowView*
+        -eventController: shared_ptr~EventController~
+        -gameRunning: bool
+        +startGame()
+        +update(float)
+        +loginPlayer(string)
+        +addPlayerScore(int)
+    }
+
+    class EventController {
+        -mousePosition: sf::Vector2f
+        -isDraggingVolume: bool
+        -buttons: unordered_map~string, ButtonInfo~
+        -keyCallback: KeyCallback
+        -mouseClickCallback: MouseClickCallback
+        +handleEvent(sf::Event, sf::RenderWindow)
+        +registerKeyCallback(KeyCallback)
+        +registerMouseClickCallback(MouseClickCallback)
+    }
+
+    class SoundController {
+        -soundBuffers: map~string, sf::SoundBuffer~
+        -sounds: map~string, unique_ptr~sf::Sound~~
+        -currentMusic: unique_ptr~sf::Music~
+        -masterVolume: float
+        -soundVolume: float
+        -musicVolume: float
+        -muted: bool
+        +getInstance(): SoundController&
+        +playSound(string)
+        +setMasterVolume(float)
+        +mute()
+        +unmute()
+    }
+
+    class WaveManager {
+        -currentWave: shared_ptr~Wave~
+        -currentLevel: shared_ptr~Level~
+        -waveTimer: float
+        -isWaveManualStart: bool
+        -currentDifficulty: string
+        -enemyRenderer: EnemyRenderer
+        +setLevel(shared_ptr~Level~)
+        +startNewWave(shared_ptr~PathNode~)
+        +update(float)
+        +isWaveComplete(): bool
+        +renderEnemies(sf::RenderWindow)
+    }
+
+    %% Models Layer
+    class Game {
+        -running: bool
+        -paused: bool
+        -gameOver: bool
+        -gameTime: float
+        -baseHealth: int
+        -currentScore: int
+        -waveManager: unique_ptr~WaveManager~
+        -economy: unique_ptr~Economy~
+        -currentLevel: shared_ptr~Level~
+        -towers: vector~shared_ptr~Tower~~
+        +start()
+        +pause()
+        +update(float)
+        +placeTower(string, Position): bool
+        +getEnemies(): vector~shared_ptr~Enemy~~
+    }
+
+    class Enemy {
+        -id: int
+        -health: int
+        -maxHealth: int
+        -speed: float
+        -damage: int
+        -position: Position
+        -currentNode: shared_ptr~PathNode~
+        -nextNode: shared_ptr~PathNode~
+        -progress: float
+        -type: EnemyType
+        +reward: int
+        +Enemy(int, int, float, int, shared_ptr~PathNode~, EnemyType)
+        +move(float)
+        +takeDamage(int)
+        +isDead(): bool
+        +hasReachedEnd(): bool
+    }
+
+    class Tower {
+        -instance: Tower
+        -baseHealth: int
+        +name: string
+        +health: int
+        +atk: int
+        +level: int
+        +atkMultiplier: double
+        +visible: bool
+        +spritePath: string
+        +price: int
+        +getInstance(): Tower&
+        +attack(Enemy*)
+        +upgrade()
+        +takeDamage(int)
+        +createTower(string): Tower*
+    }
+
+    class Wave {
+        -enemies: vector~shared_ptr~Enemy~~
+        -waveNumber: int
+        -difficulty: string
+        -spawnNode: shared_ptr~PathNode~
+        -isComplete: bool
+        -enemiesToSpawn: int
+        -spawnTimer: float
+        -spawnInterval: float
+        +Wave(int, string, shared_ptr~PathNode~)
+        +spawnEnemies(float)
+        +update(float)
+        +isWaveComplete(): bool
+        +areAllEnemiesDead(): bool
+    }
+
+    class Economy {
+        +goldAmount: int
+        +profitMultiplier: int
+        +earnGold(vector~Enemy*~)
+        +getGoldAmount(): int
+        +buyTower(Tower*): bool
+    }
+
+    class ScoreManager {
+        +scoreList: vector~scoreEntry~
+        +addScore(string, int)
+        +getHighScores(): vector~scoreEntry~
+    }
+
+    %% Views Layer
+    class WindowView {
+        -window: sf::RenderWindow&
+        -mapRenderer: unique_ptr~MapRenderer~
+        -currentLevel: shared_ptr~Level~
+        -view: sf::View
+        -font: sf::Font
+        -gameField: sf::RectangleShape
+        -sidePanel: sf::RectangleShape
+        -currentScore: int
+        -playerMoney: int
+        -baseLives: int
+        +WindowView(sf::RenderWindow&)
+        +render(sf::RenderWindow&)
+        +updateScore(int)
+        +updateMoney(int)
+        +handleClick(sf::Vector2f)
+        +setLevel(shared_ptr~Level~)
+    }
+
+    class MapRenderer {
+        -window: sf::RenderWindow&
+        -enemyRenderer: unique_ptr~EnemyRenderer~
+        -currentLevel: shared_ptr~Level~
+        -currentWave: shared_ptr~Wave~
+        -baseTexture: sf::Texture
+        -baseSprite: sf::Sprite
+        +CELL_SIZE: float
+        +GAME_FIELD_X: float
+        +GAME_FIELD_Y: float
+        +MapRenderer(sf::RenderWindow&)
+        +setLevel(shared_ptr~Level~)
+        +render()
+        -renderGrid()
+        -renderEnemies()
+    }
+
+    class EnemyRenderer {
+        -enemySprites: sf::Sprite[3]
+        -font: sf::Font
+        -textures: sf::Texture[3]
+        +EnemyRenderer()
+        +loadSprites()
+        +renderEnemy(shared_ptr~Enemy~, sf::RenderWindow&)
+        +renderHealthBar(shared_ptr~Enemy~, sf::RenderWindow&)
+    }
+
+    class towerView {
+        +displayTower(Tower*)
+    }
+
+    %% Utility Classes
+    class Level {
+        -levelNumber: int
+        -nodes: vector~shared_ptr~PathNode~~
+        -spawnPoint: shared_ptr~PathNode~
+        -basePoint: shared_ptr~PathNode~
+        -towerSpots: vector~Position~
+        +Level(int)
+        +addNode(shared_ptr~PathNode~)
+        +addTowerSpot(Position)
+        +isValidTowerPosition(Position): bool
+        +isValid(): bool
+    }
+
+    class PathNode {
+        -id: int
+        -type: string
+        -gridPos: GridPosition
+        -connections: vector~shared_ptr~PathNode~~
+        +PathNode(int, string, GridPosition)
+        +addConnection(shared_ptr~PathNode~)
+        +findNextNode(shared_ptr~PathNode~): shared_ptr~PathNode~
+        +getPixelPosition(): Position
+    }
+
+    class LevelLoader {
+        +loadLevel(int): shared_ptr~Level~
+        -configureLevelOne(shared_ptr~Level~)
+        -configureLevelTwo(shared_ptr~Level~)
+    }
+
+    %% Utility Structures
+    class Position {
+        +x: float
+        +y: float
+        +Position(float, float)
+        +operator+(Position): Position
+        +distance(Position): float
+    }
+
+    class GridPosition {
+        +row: int
+        +col: int
+        +CELL_SIZE: int
+        +GridPosition(int, int)
+        +toPixelPosition(): Position
+        +fromPixelPosition(Position): GridPosition
+    }
+
+    class scoreEntry {
+        +name: string
+        +score: int
+    }
+
+    %% Tower Variants
+    class Puncher {
+        +Puncher()
+        +attack(Enemy*)
+        +upgrade()
+    }
+
+    class Freezer {
+        +Freezer()
+        +attack(Enemy*)
+        +upgrade()
+    }
+
+    class Bomber {
+        +Bomber()
+        +attack(Enemy*)
+        +upgrade()
+    }
+
+    class Base {
+        +Base()
+        +takeDamage(int)
+    }
+
+    %% Enums
+    class EnemyType {
+        <<enumeration>>
+        PRIVATE
+        CORPORAL
+        SERGEANT
+    }
+
+    class GameState {
+        <<enumeration>>
+        MENU
+        PLAYING
+        PAUSED
+        GAME_OVER
+    }
+
+    %% Relationships
+    GameApplication --> UIController
+    GameApplication --> EventController
+    GameApplication --> WindowView
+
+    UIController --> GameController
+    UIController --> WaveManager
+    UIController --> Economy
+    UIController --> WindowView
+    UIController --> EventController
+
+    GameController --> Game
+    GameController --> ScoreManager
+    GameController --> WindowView
+    GameController --> EventController
+
+    Game --> WaveManager
+    Game --> Economy
+    Game --> Level
+    Game --> Tower
+    Game --> Enemy
+
+    WaveManager --> Wave
+    WaveManager --> Level
+    WaveManager --> EnemyRenderer
+
+    Wave --> Enemy
+    Wave --> PathNode
+
+    WindowView --> MapRenderer
+    WindowView --> Level
+
+    MapRenderer --> EnemyRenderer
+    MapRenderer --> Level
+    MapRenderer --> Wave
+
+    Level --> PathNode
+    Level --> Position
+
+    PathNode --> GridPosition
+    PathNode --> Position
+
+    Enemy --> PathNode
+    Enemy --> Position
+    Enemy --> EnemyType
+
+    Tower <|-- Puncher
+    Tower <|-- Freezer
+    Tower <|-- Bomber
+    Tower <|-- Base
+
+    ScoreManager --> scoreEntry
+
+    SoundController --> SoundController : Singleton
+
+    LevelLoader --> Level
+    
+  ```  
 ### Diagramme de classes
 
 Le diagramme de classes illustre les relations entre les différentes classes du projet :
