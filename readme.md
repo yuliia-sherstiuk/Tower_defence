@@ -44,7 +44,6 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
 - **Factory** : Utilisé pour créer dynamiquement des instances de tours et d'ennemis.
 
 ## Diagrammes UML
-# Diagramme de classes
 
 ```mermaid
 classDiagram
