@@ -3,6 +3,9 @@
 //
 
 #include "../../../includes/graphics/views/MapRenderer.h"
+#include "../../../includes/graphics/views/EnemyRenderer.h"
+#include "../../../includes/logic/models/Enemy.h"
+#include "../../../includes/logic/models/Wave.h"
 
 const float MapRenderer::CELL_SIZE = 60.0f;
 const float MapRenderer::GAME_FIELD_X = 20.0f;
@@ -16,6 +19,7 @@ MapRenderer::MapRenderer(sf::RenderWindow& window)
     , defaultColor(50, 50, 50)
     , gridColor(70, 70, 70)
     , levelDebugPrinted(false)
+    , enemyRenderer(std::make_unique<EnemyRenderer>())
 {
     if (!baseTexture.loadFromFile("assets/sprites/base.png")) {
         std::cerr << "Failed to load base texture!" << std::endl;
@@ -31,17 +35,36 @@ void MapRenderer::setLevel(const std::shared_ptr<Level>& level) {
     std::cout << "[DEBUG] MapRenderer: Setting new level" << std::endl;
 }
 
+// Add method to set current wave
+void MapRenderer::setCurrentWave(const std::shared_ptr<Wave>& wave) {
+    currentWave = wave;
+    std::cout << "[DEBUG] MapRenderer: Setting current wave" << std::endl;
+}
+
 void MapRenderer::render() {
     if (!currentLevel) return;
 
     renderGrid();
     renderLevelElements();
     renderTowerSpots();
+    renderEnemies();
 
     // Print debug info only once per level
     if (!levelDebugPrinted) {
         printLevelDebugInfo();
         levelDebugPrinted = true;
+    }
+}
+
+// Method to render enemies
+void MapRenderer::renderEnemies() {
+    if (!currentWave || !enemyRenderer) return;
+
+    const auto& enemies = currentWave->getEnemies();
+    for (const auto& enemy : enemies) {
+        if (enemy && !enemy->isDead()) {
+            enemyRenderer->renderEnemy(enemy, window);
+        }
     }
 }
 

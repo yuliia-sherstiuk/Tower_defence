@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Bienvenue dans le projet de Tower Defense ! 
-Ce jeu de stratégie vous met au défi de défendre une zone contre des vagues incessantes d'ennemis en utilisant des tours stratégiquement placées. 
-Ce document vous guidera à travers l'architecture du projet, les fonctionnalités, et les instructions pour le lancement du jeu.
+Bienvenue dans le projet de Tower Defense !
+Ce jeu de stratégie vous met au défi de défendre une zone contre des vagues incessantes d'ennemis en utilisant des tours stratégiquement placées.
+Ce document vous guidera à travers l'architecture du projet, les fonctionnalités et les instructions pour le lancement du jeu.
 
 ## Architecture du Projet
 
@@ -19,30 +19,36 @@ Le projet est structuré selon le modèle architectural MVC (Modèle-Vue-Contrô
         - `Wave` : Gère les vagues d'ennemis.
         - `Game` : Logique principale du jeu.
         - `ScoreManager` : Gère le score et les tableaux des scores.
+        - `Economy` : Gère les ressources financières du joueur.
+        - `Level` : Représente le niveau du jeu avec ses chemins et ses points de spawn.
 
 - **Vue (View)** : Interface utilisateur.
     - **Composants** :
+        - `WindowView` : Gère la fenêtre principale du jeu.
         - `MainMenu` : Menu principal du jeu.
         - `GameView` : Interface de jeu en cours.
         - `ScoreBoard` : Affichage des scores.
         - `Settings` : Options de jeu.
+        - `EnemyRenderer` : Gère l'affichage des ennemis et de leur barre de vie.
 
 - **Contrôleur (Controller)** : Gère les interactions entre le modèle et la vue.
     - **Classes** :
         - `GameController` : Contrôle le flux du jeu.
         - `MenuController` : Gère les interactions du menu.
         - `SettingsController` : Gère les options de configuration.
+        - `EventController` : Gère les événements d'entrée utilisateur.
 
 ### Design Patterns Utilisés
 
-- **Singleton** : Pour le gestionnaire du son et la gestion du score, garantissant qu'il n'y a qu'une seule instance de ces classes.
-- **Factory** : Pour créer dynamiquement des instances de tours et d'ennemis.
+- **Singleton** : Utilisé pour le gestionnaire du son et la gestion du score, garantissant qu'il n'y a qu'une seule instance de ces classes.
+- **Factory** : Utilisé pour créer dynamiquement des instances de tours et d'ennemis.
 
 ## Diagrammes UML
 
-### **Diagramme de classes** :
+### Diagramme de classes
 
-Le diagramme de classes illustre les relations entre les différentes classes du projet.
+Le diagramme de classes illustre les relations entre les différentes classes du projet :
+
 
 ```
             MODEL
@@ -56,7 +62,8 @@ Le diagramme de classes illustre les relations entre les différentes classes du
 +------------------------------+
 | + startGame()                |
 | + endGame()                  |
-| + updateScore()              |
+| + updateScore(int)           |
+| + placeTower(Tower)          |
 +------------------------------+
 
 +------------------------------+
@@ -68,267 +75,241 @@ Le diagramme de classes illustre les relations entre les différentes classes du
 +------------------------------+
 | + spawnEnemies()             |
 | + nextWave()                 |
+| + update(float)              |
 +------------------------------+
 
 +------------------------------+
 |      Enemy                   |
 +------------------------------+
+| - id: int                    |
 | - health: int                |
 | - speed: float               |
 | - damage: int                |
+| - position: Position         |
+| - currentNode: PathNode      |
+| - nextNode: PathNode         |
 +------------------------------+
-| + move()                     |
+| + move(float)                |
 | + attack()                   |
 | + takeDamage(int)            |
+| + isDead(): boolean          |
+| + setNextNode(PathNode)      |
 +------------------------------+
 
 +------------------------------+
 |      Tower                   |
 +------------------------------+
+| - name: string               |
 | - damage: int                |
 | - range: float               |
 | - upgradeLevel: int          |
+| - health: int                |
 +------------------------------+
 | + attack(Enemy)              |
 | + upgrade()                  |
+| + takeDamage(int)            |
 +------------------------------+
 
 +------------------------------+
-|   ScoreManager               |
+|      Economy                 |
 +------------------------------+
-| - score: int                 |
-| - highScores: List<int>      |
+| - goldAmount: int            |
+| - profitMultiplier: int      |
 +------------------------------+
-| + addScore(int)              |
-| + getHighScores()            |
-+------------------------------+
-
-        VUE
-        
-+------------------------------+
-|        Window                |
-+------------------------------+
-| - window: RenderWindow       |
-| - videoMode: VideoMode       |
-| - event: Event               |
-| - frameRate: int             |
-| - isFullscreen: boolean      |
-| - title: string              |
-+------------------------------+
-| + setup()                    |
-| + events()                   |
-| + clear()                    |
-| + display()                  |
-| + isOpen()                   |
-| + close()                    |
-| + setFrameRate(int)          |
-| + toggleFullscreen()         |
+| + earnGold(List<Enemy>)      |
+| + buyTower(Tower)            |
+| + getGoldAmount(): int       |
 +------------------------------+
 
 +------------------------------+
-|        MainMenu              |
+|      Level                   |
 +------------------------------+
-| - options: List<string>      |
-| - selectedOption: int        |
+| - levelNumber: int           |
+| - nodes: List<PathNode>      |
+| - spawnPoint: PathNode       |
+| - basePoint: PathNode        |
+| - towerSpots: List<Position> |
 +------------------------------+
-| + display()                  |
-| + handleInput()              |
-| + update()                   |
-+------------------------------+
-
-+------------------------------+
-|        GameView              |
-+------------------------------+
-| - gameMap: Map               |
-| - towers: List<Tower>        |
-| - enemies: List<Enemy>       |
-| - playerHealth: int          |
-+------------------------------+
-| + renderGame()               |
-| + update()                   |
-| + showGameOver()             |
+| + addNode(PathNode)          |
+| + isValid(): boolean         |
+| + getSpawnPoint(): PathNode  |
+| + addTowerSpot(Position)     |
 +------------------------------+
 
 +------------------------------+
-|        ScoreBoard            |
+|      PathNode                |
 +------------------------------+
-| - currentScore: int          |
-| - highScores: List<int>      |
+| - id: int                    |
+| - type: string               |
+| - gridPos: GridPosition      |
+| - connections: List<PathNode>|
 +------------------------------+
-| + displayScores()            |
-| + updateScore(int)           |
-| + showHighScores()           |
+| + addConnection(PathNode)    |
+| + findNextNode(PathNode)     |
+| + getGridPosition():         |
+|         GridPosition         |
 +------------------------------+
 
 +------------------------------+
-|        Settings              |
+|      WaveManager             |
 +------------------------------+
-| - volume: int                |
+| - currentWave: Wave          |
+| - waveTimer: float           |
+| - isWaveManualStart: boolean |
 | - difficulty: string         |
 +------------------------------+
-| + displaySettings()          |
-| + changeVolume(int)          |
+| + startNewWave(PathNode)     |
+| + update(float)              |
+| + renderEnemies()            |
 | + setDifficulty(string)      |
 +------------------------------+
 
-        CONTROLLEUR
-
 +------------------------------+
-|       GameController         |
+|      UIController            |
 +------------------------------+
-| - game: Game                 |
-| - gameView: GameView         |
+| - currentState: GameState    |
+| - windowView: WindowView     |
+| - eventController:           |
+|          EventController     |
+| - gameData: GameData         |
 +------------------------------+
 | + startGame()                |
-| + updateGame()               |
-| + endGame()                  |
+| + pauseGame()                |
+| + update(float)              |
+| + setVolume(float)           |
+| + showMessage(string, float) |
 +------------------------------+
 
 +------------------------------+
-|      MenuController          |
+|      ScoreManager            |
 +------------------------------+
-| - mainMenu: MainMenu         |
+| - scoreList: List<scoreEntry>|
 +------------------------------+
-| + selectOption(int option)   |
-| + showCredits()              |
-| + quitGame()                 |
+| + addScore(string, int)      |
+| + getHighScores():           |
+|        List<scoreEntry>      |
 +------------------------------+
 
 +------------------------------+
-|     SettingsController       |
+|      SoundController         |
 +------------------------------+
-| - settings: Settings         |
+| - soundBuffers: Map<string,  | 
+|           SoundBuffer>       |
+| - currentMusic: Music        |
+| - masterVolume: float        |
+| - soundVolume: float         |
+| - musicVolume: float         |
+| - muted: boolean             |
 +------------------------------+
-| + changeVolume(int volume)   |
-| + setDifficulty(string)      |
-| + resetSettings()            |
+| + loadSound(string, string)  |
+| + playSound(string)          |
+| + toggleMute()               |
+| + setMasterVolume(float)     |
++------------------------------+
+
++------------------------------+
+|      WindowView              |
++------------------------------+
+| - window: RenderWindow       |
+| - font: Font                 |
+| - UIElements: List<Text>     |
+| - messageText: Text          |
+| - scoreText: Text            |
+| - livesText: Text            |
++------------------------------+
+| + render()                   |
+| + updateVolumeDisplay(float) |
+| + handleClick(Vector2f)      |
+| + updateScore(int)           |
+| + updateLives(int)           |
 +------------------------------+
 
 ```
-Rôle de chaque fonction dans les classes du diagramme de classes
 
-#### 1. Classe `Game`
+## Rôle de chaque fonction dans les classes
 
-- **`+ startGame()`** : Cette méthode initialise le jeu, configure les paramètres de départ, et commence la première vague d'ennemis. 
-                        Elle est responsable de l'organisation générale du flux de jeu.
+### 1. Classe `Game`
 
-- **`+ endGame()`** : Cette méthode termine le jeu, que ce soit par une victoire ou une défaite.
-                      Elle peut afficher les scores finaux et éventuellement retourner au menu principal.
+- **`+ startGame()`** : Initialise le jeu, configure les paramètres de départ, et commence la première vague d'ennemis.
+- **`+ endGame()`** : Termine le jeu, que ce soit par une victoire ou une défaite, et affiche les scores finaux.
+- **`+ updateScore()`** : Met à jour le score en fonction des actions du joueur, comme la destruction d'ennemis.
 
-- **`+ updateScore()`** : Cette méthode met à jour le score en fonction des actions du joueur, comme la destruction d'ennemis. 
-                          Elle interagit avec le `ScoreManager` pour garantir que le score est correct et à jour.
+### 2. Classe `Wave`
 
-#### 2. Classe `Wave`
+- **`+ spawnEnemies()`** : Crée et déploie une liste d'ennemis pour la vague actuelle, en fonction de la difficulté.
+- **`+ nextWave()`** : Prépare et lance la prochaine vague d'ennemis.
 
-- **`+ spawnEnemies()`** : Cette méthode est responsable de la création et du déploiement d'une liste d'ennemis pour la vague actuelle. 
-                            Elle utilise des paramètres comme le nombre d'ennemis et leur type, en fonction de la difficulté de la vague.
+### 3. Classe `Enemy`
 
-- **`+ nextWave()`** : Cette méthode prépare et lance la prochaine vague d'ennemis. 
-                      Elle peut inclure des logiques pour augmenter la difficulté ou le nombre d'ennemis à mesure que le jeu progresse.
+- **`+ move()`** : Gère le déplacement des ennemis.
+- **`+ attack()`** : Définit le comportement de l'ennemi lorsqu'il attaque.
+- **`+ takeDamage(int)`** : Réduit la santé de l'ennemi en fonction des dégâts subis.
 
-#### 3. Classe `Enemy`
+### 4. Classe `Tower`
 
-- **`move`** : Cette méthode gère le déplacement des ennemis.
+- **`+ attack(Enemy)`** : Permet à la tour d'attaquer un ennemi spécifique.
+- **`+ upgrade()`** : Améliore la tour en augmentant ses statistiques.
 
-- **`+ attack()`** : Cette méthode définit le comportement de l'ennemi lorsqu'il attaque, par exemple, infligeant des dégâts à la zone protégée ou aux tours. 
-                    Elle peut également inclure des animations ou des effets sonores.
+### 5. Classe `ScoreManager`
 
-- **`+ takeDamage(int)`** : Cette méthode réduit la santé de l'ennemi en fonction des dégâts subis. 
-                            Elle vérifie également si la santé de l'ennemi atteint zéro pour le détruire et éventuellement notifier le `Game` pour le score.
+- **`+ addScore(int)`** : Ajoute un certain nombre de points au score du joueur.
+- **`+ getHighScores()`** : Retourne une liste des meilleurs scores.
 
-#### 4. Classe `Tower`
+### 6. Classe `WindowView`
 
-- **`+ attack(Enemy)`** : Cette méthode permet à la tour d'attaquer un ennemi spécifique, infligeant des dégâts en fonction de ses caractéristiques. 
-                            Elle peut également gérer les animations d'attaque ou les effets spéciaux.
+- **`+ setup()`** : Configure la fenêtre SFML avec tous les paramètres nécessaires.
+- **`+ events()`** : Gère les événements de la fenêtre.
+- **`+ clear()`** : Efface le contenu de la fenêtre.
+- **`+ display()`** : Affiche le contenu rendu.
+- **`+ isOpen()`** : Vérifie si la fenêtre est ouverte.
+- **`+ close()`** : Ferme proprement la fenêtre.
+- **`+ setFrameRate(int)`** : Définit le taux de rafraîchissement.
+- **`+ toggleFullscreen()`** : Bascule entre mode fenêtré et plein écran.
 
-- **`+ upgrade()`** : Cette méthode améliore la tour en augmentant ses statistiques (dégâts, portée, etc.). 
-                      Elle peut affecter l'apparence de la tour.
+### 7. Classe `MainMenu`
 
-#### 5. Classe `ScoreManager`
+- **`+ display()`** : Affiche les options du menu principal.
+- **`+ handleInput()`** : Gère les interactions utilisateur pour sélectionner une option dans le menu.
+- **`+ update()`** : Met à jour l'affichage du menu.
 
-- **`+ addScore(int)`** : Cette méthode ajoute un certain nombre de points au score du joueur. 
-                            Elle peut être appelée après la destruction d'un ennemi ou à la fin d'une vague victorieuse.
+### 8. Classe `GameView`
 
-- **`+ getHighScores()`** : Cette méthode retourne une liste des meilleurs scores, permettant au joueur de voir ses performances par rapport à d'autres joueurs. 
-                              Elle peut également trier et stocker les scores pour une utilisation future.
+- **`+ renderGame()`** : Dessine tous les éléments du jeu.
+- **`+ update()`** : Met à jour l'affichage en fonction des actions du joueur.
+- **`+ showGameOver()`** : Affiche l'écran de fin de jeu.
 
-#### 6. Classe `Window`
+### 9. Classe `ScoreBoard`
 
-- **`setup()`** : Configure la fenêtre SFML initiale avec tous les paramètres nécessaires
+- **`+ displayScores()`** : Affiche le score actuel et le tableau des meilleurs scores.
+- **`+ updateScore(int)`** : Met à jour le score affiché.
+- **`+ showHighScores()`** : Affiche une liste des meilleurs scores enregistrés.
 
-- **`events()`** : Gère tous les événements de la fenêtre (souris, clavier, système)
+### 10. Classe `Settings`
 
-- **`clear()`** : Efface le contenu de la fenêtre.
+- **`+ displaySettings()`** : Affiche les options de configuration.
+- **`+ changeVolume(int)`** : Modifie le niveau du volume sonore.
+- **`+ setDifficulty(string)`** : Change le niveau de difficulté du jeu.
 
-- **`display()`** : Affiche le contenu rendu.
+### 11. Classe `GameController`
 
-- **`isOpen()`** : Vérifie si la fenêtre est ouverte.
+- **`+ startGame()`** : Démarre un nouveau jeu en initialisant le modèle.
+- **`+ updateGame()`** : Met à jour l'état du jeu.
+- **`+ endGame()`** : Gère la logique de fin de jeu.
 
-- **`close()`** : Ferme proprement la fenêtre.
+### 12. Classe `MenuController`
 
-- **`setFrameRate()`** : Définit le taux de rafraîchissement.
+- **`+ selectOption(int option)`** : Gère la sélection d'une option dans le menu.
+- **`+ showCredits()`** : Affiche les crédits du jeu.
+- **`+ quitGame()`** : Gère la logique pour quitter le jeu.
 
-- **`toggleFullscreen()`** : Bascule entre mode fenêtré et plein écran.
+### 13. Classe `SettingsController`
 
-#### 7. Classe `MainMenu`
+- **`+ changeVolume(int volume)`** : Met à jour le volume sonore.
+- **`+ setDifficulty(string difficulty)`** : Change la difficulté du jeu.
+- **`+ resetSettings()`** : Réinitialise les paramètres aux valeurs par défaut.
 
-- **`display()`** : Affiche les options du menu principal comme "Démarrer le Jeu", "Options", "Scores", "Crédits" et "Quitter".
+## Structure des fichiers
 
-- **`handleInput()`** : Gère les interactions utilisateur, comme les clics ou les pressions de touches, pour sélectionner une option dans le menu.
-
-- **`update()`** : Met à jour l'affichage du menu si nécessaire, par exemple, en surlignant une option sélectionnée.
-
-#### 8. Classe `GameView`
-
-- **`renderGame()`** : Dessine tous les éléments du jeu, y compris les tours, les ennemis, et les barres de vie.
-
-- **`update()`** : Met à jour l'affichage en fonction des actions du joueur et des événements en cours, comme les attaques des tours et les mouvements des ennemis.
-
-- **`showGameOver()`** : Affiche l'écran de fin de jeu lorsque le joueur perd ou termine toutes les vagues.
-
-#### 9. Classe `ScoreBoard`
-
-- **`displayScores()`** : Affiche le score actuel et le tableau des meilleurs scores.
-
-- **`updateScore(int)`** : Met à jour le score affiché en fonction des changements dans le jeu.
-
-- **`showHighScores()`** : Affiche une liste des meilleurs scores enregistrés.
-
-#### 10. Classe `Settings`
-
-- **`displaySettings()`** : Affiche les options de configuration disponibles.
-
-- **`changeVolume(int)`** : Modifie le niveau du volume sonore en fonction des réglages choisis par l'utilisateur.
-
-- **`setDifficulty(string)`** : Change le niveau de difficulté du jeu en fonction de la sélection de l'utilisateur.
-
-#### 11. Classe `GameController`
-
-- **`startGame()`** : Démarre un nouveau jeu en initialisant le modèle et en affichant la vue du jeu.
-
-- **`updateGame()`** : Met à jour l'état du jeu, gére les vagues d'ennemis et les attaques des tours.
-
-- **`endGame()`** : Gère la logique de fin de jeu et passe à l'affichage des résultats.
-
-#### 12. Classe `MenuController`
-
-- **`selectOption(int option)`** : Gère la sélection d'une option dans le menu, en appelant les fonctions appropriées pour démarrer le jeu, accéder aux paramètres, etc.
-
-- **`showCredits()`** : Affiche les crédits du jeu lorsque l'utilisateur choisit cette option. (Liste des contributeurs, autres credits... comme l'utilisation de design tiers)
-
-- **`quitGame()`** : Gère la logique pour quitter le jeu de manière appropriée.
-
-#### 13. Classe `SettingsController`
-
-- **`changeVolume(int volume)`** : Appelle la méthode de la vue pour mettre à jour le volume sonore et le modèle pour sauvegarder le nouveau paramètre.
-
-- **`setDifficulty(string difficulty)`** : Change la difficulté du jeu en mettant à jour le modèle et en informant la vue.
-
-- **`resetSettings()`** : Réinitialise les paramètres aux valeurs par défaut.
-
-
-### **Diagramme utilisateur** : 
-Montre les interactions de l'utilisateur avec le système.
 
 ```
 +--------------------+
@@ -351,55 +332,64 @@ _ source
    |
    |__ logic
    |    |___ models
-   |    |      |__ Game.cpp
-   |    |      |__ Wave.cpp
+   |    |      |__ Economy.cpp
    |    |      |__ Enemy.cpp
-   |    |      |__ Tower.cpp
+   |    |      |__ Game.cpp
    |    |      |__ ScoreManager.cpp
+   |    |      |__ Tower.cpp
+   |    |      |__ Wave.cpp
+   |    |      |__ towerVariants.cpp
    |    |
    |    |___ controllers
    |           |__ GameController.cpp
-   |           |__ MenuController.cpp
-   |           |__ SettingsController.cpp
+   |           |__ WaveManager.cpp
+   |           |__ SoundController.cpp
+   |           |__ UIController.cpp
+   |           |__ EventController.cpp
    |
    |__ graphics
    |    |___ views
-   |    |    |__ Window.cpp
-   |    |    |__ MainMenu.cpp
-   |    |    |__ GameView.cpp
-   |    |    |__ ScoreBoard.cpp
-   |    |    |__ Settings.cpp
+   |    |    |__ WindowView.cpp
+   |    |    |__ towerView.cpp
+   |    |    |__ MapRenderer.cpp
+   |    |    |__ EnemyRenderer.cpp
    |    |
    |    |___ assets
-   |         |__images
-   |         |__sounds
+   |         |__ images
+   |         |__ sounds
    |
    |___ utils
-         |__ ?
-         |__ ?
+         |__ GridPosition.h
+         |__ Level.h
+         |__ LevelLoader.h
+         |__ PathNode.h
+         |__ Position.h
          
 _ includes
    |
    |__ logic
    |    |___ models
-   |    |      |__ Game.h
-   |    |      |__ Wave.h
+   |    |      |__ Economy.h
    |    |      |__ Enemy.h
-   |    |      |__ Tower.h
+   |    |      |__ Game.h
    |    |      |__ ScoreManager.h
+   |    |      |__ Tower.h
+   |    |      |__ Wave.h
+   |    |      |__ towerVariants.h
    |    |
    |    |___ controllers
    |           |__ GameController.h
-   |           |__ MenuController.h
-   |           |__ SettingsController.h
+   |           |__ WaveManager.h
+   |           |__ SoundController.h
+   |           |__ UIController.h
+   |           |__ EventController.h
    |
    |__ graphics
    |    |___ views
-   |         |__ Window.h
-   |         |__ MainMenu.h
-   |         |__ GameView.h
-   |         |__ ScoreBoard.h
-   |         |__ Settings.h
+   |         |__ WindowView.h
+   |         |__ towerView.h
+   |         |__ MapRenderer.h
+   |         |__ EnemyRenderer.h
    |
    |___ utils
            |__ GridPosition.h
@@ -407,7 +397,6 @@ _ includes
            |__ LevelLoader.h
            |__ PathNode.h
            |__ Position.h
-           
 ```
 
 ## Fonctionnalités du Jeu
@@ -423,8 +412,8 @@ _ includes
 
 ## Conclusion
 
-Ce projet de Tower Defense est une excellente occasion de mettre en pratique des concepts de conception logicielle. 
-Grâce à l'utilisation du MVC et de design patterns, nous visons à créer un jeu structuré et évolutif. 
+Ce projet de Tower Defense est une excellente occasion de mettre en pratique des concepts de conception logicielle.
+Grâce à l'utilisation du MVC et de design patterns, nous visons à créer un jeu structuré et évolutif.
 
 ## Instructions de Lancement
 

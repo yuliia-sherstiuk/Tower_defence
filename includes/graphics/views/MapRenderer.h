@@ -13,21 +13,25 @@
 #include "../../../includes/utils/Level.h"
 #include "../../../includes/utils/GridPosition.h"
 #include "../../../includes/utils/PathNode.h"
+#include "../../../includes/graphics/views/EnemyRenderer.h"
+
+class EnemyRenderer;
+class Wave;
 
 class MapRenderer {
 private:
-
     sf::RenderWindow& window;
-    std::shared_ptr<Level> currentLevel;
-    bool levelDebugPrinted;
-    sf::Texture baseTexture;
-    sf::Sprite baseSprite;
-
     const sf::Color spawnColor;
     const sf::Color pathColor;
     const sf::Color towerSpotColor;
     const sf::Color defaultColor;
     const sf::Color gridColor;
+    bool levelDebugPrinted;
+    std::unique_ptr<EnemyRenderer> enemyRenderer;
+    std::shared_ptr<Level> currentLevel;
+    std::shared_ptr<Wave> currentWave;
+    sf::Texture baseTexture;
+    sf::Sprite baseSprite;
 
 public:
     static const float CELL_SIZE;
@@ -36,6 +40,7 @@ public:
 
     explicit MapRenderer(sf::RenderWindow& window);
     void setLevel(const std::shared_ptr<Level>& level);
+    void setCurrentWave(const std::shared_ptr<Wave>& wave);
     void render();
 
 private:
@@ -44,6 +49,7 @@ private:
     void renderTowerSpots();
     void printLevelDebugInfo();
     void renderEnemyPath();
+    void renderEnemies();
 };
 
 #endif // MAP_RENDERER_H
